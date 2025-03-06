@@ -3,19 +3,19 @@
         <div class="container-login">
           <div class="card card-login" style="height: 100%;">
             <div class="area-logo">
-              <img src="../assets/logo.png" class="card-img-top" alt="...">
+              <img src="../assets/images/logo.png" class="card-img-top" alt="...">
 
             </div>
             <div class="card-body">
               <h1 class="card-title display-4">Bem-vindo de volta</h1>
               <form action="">
                 <div class="mb-3">
-                  <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                  <!-- <label for="exampleFormControlInput1" class="form-label">Email address</label> -->
                   <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
                 </div>
 
                 <div class="mb-3">
-                  <label for="password" class="form-label">Example textarea</label>
+                  <!-- <label for="password" class="form-label">Example textarea</label> -->
                   <input type="password" class="form-control" id="password" placeholder="senha">
                 </div>
 
@@ -49,7 +49,7 @@
 .container-login{
   width: 40%;
   max-width: 600px;
-  height: 60%;
+  height: 65%;
 }
 
 .card-login{
@@ -57,7 +57,8 @@
   height: 100%;
   display: flex;
   justify-content: space-evenly;
-  border-radius: 12px;
+  border-radius: 30px;
+  background-color: #B288C0;
   
 }
 
@@ -70,29 +71,32 @@
 }
 
 .card-img-top{
-  height: 120px;
-  width: 25% ;
+  height: 140px;
+  width: auto ;
 }
 
 .card-body{
+  width: 100%;
   height: 75%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-
+  align-items: center;
+  gap: 30px;
   
 }
 
 .card-title{
   text-align: center;
-  height: 15%;
+  height: 20%;
+  width: 80%;
 }
 
 .card-body form{
-  height: 85%;
+  height: 80%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 .card-body form input{
@@ -103,6 +107,7 @@
 .card-body form button{
   padding: 15px;
   width: 100%;
+  background-color: #2176AE;
 }
 </style>
   
