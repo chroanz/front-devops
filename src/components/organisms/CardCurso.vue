@@ -12,7 +12,7 @@
         </div>
         <div class="bottom">
             <div>{{ curso.aulas?.length ?? 0 }} Aulas</div>
-            <div> <button class="btn-matricula" @click="handleMatricula" v-if="matriculavel">
+            <div> <button class="btn-matricula" @click="handleMatricula" v-if="matriculavel && !this.matriculado">
                     Fazer Matrícula
                 </button></div>
             <div>{{ curso.exercicios?.length ?? 0 }} Exercícios</div>
@@ -28,7 +28,8 @@ export default {
     data() {
         return {
             user: {},
-            infoSrc: info
+            infoSrc: info,
+            matriculado: Boolean
         }
     },
     props: {
@@ -37,8 +38,11 @@ export default {
     },
     emits: ['navigate'],
     mounted() {
+        this.matriculado = false;
         const user = JSON.parse(localStorage.getItem('loggedUser') ?? '{}');
         this.user = user;
+        const matriculados = user.cursos_matriculados ?? [];
+        this.matriculado = matriculados.includes(this.curso.id ?? 0);
     },
     methods: {
         getUser() {
