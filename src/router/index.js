@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../components/HelloWorld.vue';
 import Login from '../components/LoginComponent.vue';
+import PreRecuperarSenha from '@/components/PreRecuperarSenha.vue';
+import FormRecuperarSenha from '@/components/FormRecuperarSenha.vue';
 
 const routes = [
   {
@@ -12,6 +14,16 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/pre-recuperar-senha',
+    name: 'PreRecoverPassword',
+    component: PreRecuperarSenha
+  },
+  {
+    path: '/recuperar-senha',
+    name: 'FormRecuperarSenha',
+    component: FormRecuperarSenha
   }
 ];
 
