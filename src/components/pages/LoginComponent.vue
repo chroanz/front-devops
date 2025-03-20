@@ -8,7 +8,7 @@
         <h2>Bem-vindo de volta!</h2>
 
         <div class="input-container">
-          <input type="text" id="email" required>
+          <input type="email" id="email" required>
           <label for="email">E-mail</label>
         </div>
 
@@ -17,7 +17,7 @@
           <label for="password">Senha</label>
         </div>
 
-        <button>Entrar</button>
+        <button type="submit">Entrar</button>
         <a href="#">Esqueci a senha</a>
       </form>
     </div>
