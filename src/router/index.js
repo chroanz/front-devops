@@ -3,6 +3,7 @@ import Home from '../components/HelloWorld.vue';
 import Login from '../components/LoginComponent.vue';
 import PreRecuperarSenha from '@/components/PreRecuperarSenha.vue';
 import FormRecuperarSenha from '@/components/FormRecuperarSenha.vue';
+import BarraDeBusca from '@/components/BarraDeBusca.vue';
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/recuperar-senha',
     name: 'FormRecuperarSenha',
     component: FormRecuperarSenha
+  },
+  {
+    path: '/barra-de-busca',
+    name: 'BarraDeBusca',
+    component: BarraDeBusca
   }
 ];
 
