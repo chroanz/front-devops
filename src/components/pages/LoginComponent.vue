@@ -5,7 +5,7 @@
         <img src="../../assets/images/logo.png" alt="Logo Librear">
       </div>
       <form action="#" class="form-login">
-        <h2>Bem-vindo de volta</h2>
+        <h2>Bem-vindo de volta!</h2>
 
         <div class="input-container">
           <input type="text" id="email" required>
