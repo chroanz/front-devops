@@ -45,11 +45,10 @@ export default {};
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
 }
 
 .form-area-img {
-  margin-top: 10px;
+  margin-top: 4em;
   background-color: #FFF;
   width: 240px;
   height: 228px;
@@ -70,6 +69,7 @@ export default {};
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 15px;
 }
 
