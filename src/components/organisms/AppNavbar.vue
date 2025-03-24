@@ -112,6 +112,7 @@ export default {
     background-color: rgba(178, 136, 192, 1);
     padding-left: 24px;
     padding-right: 24px;
+    margin-bottom: 1em;
   }
 
 

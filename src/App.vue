@@ -1,14 +1,30 @@
 <template>
   <div id="app">
-    <router-view></router-view> 
+    <template v-if="showLayoutComponents">
+      <AppNavbar />
+      <router-view></router-view>
+    </template>
+    <template v-else>
+      <router-view></router-view>
+    </template>
   </div>
 </template>
 
 <script>
 import './assets/css/styles.css';
+import AppNavbar from './components/organisms/AppNavbar.vue';
 
 export default {
-  name: 'App' 
+  name: 'App',
+  components: {
+    AppNavbar
+  },
+  computed: {
+    showLayoutComponents() {
+      const excludedRoutes = ['Login'];
+      return !excludedRoutes.includes(this.$route.name)
+    }
+  }
 };
 </script>
 
