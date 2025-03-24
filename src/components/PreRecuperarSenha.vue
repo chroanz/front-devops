@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex justify-content-center align-items-center">
         <form action="#" class="form-pw-recovery p-5">
-            <img src="assets/logo.png" alt="Logo do sistema" class="logo">
+            <img src="../assets/images/logo.png" alt="Logo do sistema" class="logo">
             <br>
             <br>
             <h2 class="fw-bolder">Recuperar senha</h2>
