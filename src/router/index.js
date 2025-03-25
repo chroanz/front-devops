@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../components/pages/HelloWorld.vue';
+import homepage from '../components/pages/homepage.vue';
 import Login from '../components/pages/LoginComponent.vue';
 import PreRecuperarSenha from '@/components/PreRecuperarSenha.vue';
 import FormRecuperarSenha from '@/components/FormRecuperarSenha.vue';
@@ -10,7 +10,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
+    component: homepage,
   },
   {
     path: '/login',
