@@ -1,4 +1,7 @@
+
+
 <template>
+ 
 
    <nav class="navbar navbar-light">
     <div class="container-fluid">
@@ -184,7 +187,7 @@ export default {
 
 
 .div-barra-de-busca {
-         width: clamp(300px, 100%, 650px);
+         width: clamp(300px, 100%, 660px);
          
      }
  
@@ -292,8 +295,6 @@ export default {
   .dropdown-info{
     display: none;
   }
-
-
 
   @media (max-width: 768px) { 
 
