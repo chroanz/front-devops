@@ -44,7 +44,7 @@
          <div class="info-icon"></div>
      </div>
 
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand2" href="#">
 
           <div class="info-login-icon"></div> <!-- Ícone de informação -->
           <img :src="require('@/assets/login-icon.png')" alt="Login">
@@ -75,7 +75,7 @@ export default {
 
     if (!barraDeBusca || !offcanvasBody || !navbar) return;
 
-    if (window.innerWidth <= 1024) { // Defina um breakpoint adequado para notebooks
+    if (window.innerWidth <= 1063) { 
       if (!offcanvasBody.contains(barraDeBusca)) {
         offcanvasBody.insertBefore(barraDeBusca, offcanvasBody.firstChild);
       }
@@ -113,8 +113,6 @@ export default {
 
   .navbar {
     background-color: rgba(178, 136, 192, 1);
-    padding-left: 24px;
-    padding-right: 24px;
     margin-bottom: 1em;
   }
 
@@ -124,7 +122,7 @@ export default {
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 0 70px 0 30px; 
+  padding: 0 50px 0 50px; 
   }
 
 
@@ -153,7 +151,6 @@ export default {
     background-color: transparent; 
     border: none;
     font-size: 19px;
-    margin-right: 240px;
   }
 
 
@@ -187,8 +184,8 @@ export default {
 
 
 .div-barra-de-busca {
-         width: clamp(300px, 100%, 660px);
-         /* margin-right: 200px; */
+         width: clamp(300px, 100%, 680px);
+         margin: 0 auto;
          
      }
  
@@ -201,7 +198,6 @@ export default {
      }
  
      .barra-de-busca {
-         padding: 1rem 3rem;
          width: 100%;
          border-radius: 5rem;
          font-size: 1rem;
@@ -254,7 +250,7 @@ export default {
   /* ICON LOGIN */
 
 
-  .navbar-brand {
+  .navbar-brand2 {
     display: flex;
     align-items: center;
     gap: 10px; 
@@ -267,7 +263,6 @@ export default {
     height: 20px;
     background-image: url('@/assets/info-login-icon.png');
     margin-top: 20px;
-    margin-left: 220px;
     background-size: contain;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -297,14 +292,22 @@ export default {
     display: none;
   }
 
-
-  @media (min-width: 1025px) { 
+  @media (min-width: 1492px) { 
   .div-barra-de-busca {
     display: block !important;
-    width: clamp(300px, 100%, 660px);
+    width: clamp(300px, 100%, 750px);
     margin: 0 auto;
   }
 }
+
+  @media (max-width: 1201px) and (min-width: 1050px) {
+    .container-fluid {
+    padding: 0 10px 0 10px !important;
+  }
+}
+
+
+
 
 @media (max-width: 1024px) {
   .div-barra-de-busca {
@@ -329,7 +332,6 @@ export default {
     background-color: transparent; 
     border: none;
     font-size: 24px;
-    margin-right: 1px;
   }
 
   .offcanvas-body .barra-de-busca {
@@ -359,14 +361,23 @@ export default {
     height: 20px;
     background-image: url('@/assets/info-login-icon.png');
     margin-top: 20px;
-    margin-left: 1px;
-    /* margin-right: 10px; */
     background-size: contain;
     background-repeat: no-repeat;
     cursor: pointer;
     position: relative;
 }
 
+}
+
+
+@media (max-width: 428px){
+  .info-login-icon{
+    display: none !important;
+  }
+
+  .navbar-brand2{
+    display: none !important;
+  }
 }
 
   </style>
