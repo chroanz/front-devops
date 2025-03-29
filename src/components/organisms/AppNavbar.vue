@@ -80,9 +80,7 @@ export default {
         offcanvasBody.insertBefore(barraDeBusca, offcanvasBody.firstChild);
       }
     } else {
-      if (!navbar.contains(barraDeBusca)) {
-        navbar.insertBefore(barraDeBusca, navbar.children[1]); 
-      }
+      navbar.insertBefore(barraDeBusca, navbar.children[2]); 
     }
   },
 
@@ -300,6 +298,20 @@ export default {
   }
 
 
+  @media (min-width: 1025px) { 
+  .div-barra-de-busca {
+    display: block !important;
+    width: clamp(300px, 100%, 660px);
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 1024px) {
+  .div-barra-de-busca {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
 
 
   @media (max-width: 768px) { 
