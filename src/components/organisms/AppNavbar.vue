@@ -38,11 +38,9 @@
 
       <!-- CAMPO DE BUSCA -->
 
-      <div class="form-group position-relative div-barra-de-busca" ref="barraDeBusca">
-         <input class="barra-de-busca" type="text" name="busca" id="busca" placeholder="Pesquise um curso ou categoria">
-         <img :src="require('@/assets/lupa-icon.png')" alt="Ícone de lupa" class="lupa-icon">
-         <div class="info-icon"></div>
-     </div>
+      <div ref="barraDeBusca" class="div-barra-de-busca">
+        <BarraDeBusca />
+      </div>
 
       <a class="navbar-brand2" href="#">
 
@@ -57,8 +55,14 @@
 
 
 <script>
+
+import BarraDeBusca from "../BarraDeBusca.vue";
+
 export default {
   name: "AppNavbar",
+  components: {
+    BarraDeBusca,
+  },
   mounted() {
     this.moveBarraDeBusca(); 
     this.addInfoLoginClickListener(); 
