@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex justify-content-center align-items-center">
-        <form action="#" class="form-pw-recovery p-5">
+        <form @submit.prevent="handleSubmit" action="#" class="form-pw-recovery p-5">
             <img src="../assets/images/logo.png" alt="Logo do sistema" class="logo">
             <br>
             <br>
@@ -33,7 +33,12 @@
 
 <script>
     export default {
-        name: 'FormRecuperarSenha'
+        name: 'FormRecuperarSenha',
+        methods: {
+            handleSubmit() {
+                this.$router.push('/login')
+            }
+        }
     }
 </script>
 
