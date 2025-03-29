@@ -1,54 +1,5 @@
 <template>
     <div>
-        <nav class="navbar navbar-dark navbar-expand-lg" style="background-color: #b070b0;">
-                <div class="container-fluid">
-                    <!-- Logo -->
-                    <a class="navbar-brand" href="#">
-                    <div class="logo">
-                        <img :src="require('@/assets/images/logo.png')" alt="Logo" class="logo-img" style="max-height: 90px; object-fit: contain;">
-                    </div>
-                    </a>
-                
-                    <!-- Botão de toggle para telas menores -->
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                    </button>
-                
-                    <div class="collapse navbar-collapse" id="navbarContent">
-                    <!-- Dropdown de Categorias -->
-                    <div class="dropdown me-3">
-                        <button class="btn dropdown-toggle d-flex align-items-center text-dark" type="button" id="categoriesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-list me-1 fs-4"></i> Categorias
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
-                        <li><a class="dropdown-item" href="#">Deficiência visual</a></li>
-                        <li><a class="dropdown-item" href="#">Deficiência auditiva</a></li>
-                        <li><a class="dropdown-item" href="#">Surdocegueira</a></li>
-                        </ul>
-                    </div>
-                    
-                    <!-- Formulário de pesquisa -->
-                    <form class="d-flex flex-grow-1 me-3">
-                        <div class="input-group">
-                        <input class="form-control rounded-pill" type="search" placeholder="Pesquise um curso ou categoria">
-                        <button class="btn btn-light rounded-pill" type="submit" style="margin-left: -40px; z-index: 50;">
-                            <i class="bi bi-search"></i>
-                        </button>
-                        </div>
-                    </form>
-                    
-                    <!-- Ícones à direita -->
-                    <div class="d-flex align-items-center">
-                        <button class="btn btn-link text-light me-3">
-                        <i class="bi bi-bell-fill fs-4"></i>
-                        </button>
-                        <button class="btn btn-link text-light">
-                        <i class="bi bi-person-circle fs-4"></i>
-                        </button>
-                    </div>
-                    </div>
-                </div>
-        </nav>
 
       <!-- Carousel centralizado com altura maior e preparado para imagens -->
       <div class="container mt-4">
