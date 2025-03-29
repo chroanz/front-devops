@@ -68,21 +68,23 @@ export default {
     window.removeEventListener("resize", this.moveBarraDeBusca);
   },
   methods: {
-    moveBarraDeBusca() {
-      const barraDeBusca = this.$refs.barraDeBusca;
-      const offcanvasBody = document.querySelector(".offcanvas-body");
-      const navbar = document.querySelector(".container-fluid");
+  moveBarraDeBusca() {
+    const barraDeBusca = this.$refs.barraDeBusca;
+    const offcanvasBody = document.querySelector(".offcanvas-body");
+    const navbar = document.querySelector(".container-fluid");
 
-      if (window.innerWidth <= 768) {
-        if (barraDeBusca && offcanvasBody && !offcanvasBody.contains(barraDeBusca)) {
-          offcanvasBody.insertBefore(barraDeBusca, offcanvasBody.firstChild);
-        }
-      } else {
-        if (barraDeBusca && navbar && !navbar.contains(barraDeBusca)) {
-          navbar.insertBefore(barraDeBusca, navbar.children[1]); 
-        }
+    if (!barraDeBusca || !offcanvasBody || !navbar) return;
+
+    if (window.innerWidth <= 1024) { // Defina um breakpoint adequado para notebooks
+      if (!offcanvasBody.contains(barraDeBusca)) {
+        offcanvasBody.insertBefore(barraDeBusca, offcanvasBody.firstChild);
       }
-    },
+    } else {
+      if (!navbar.contains(barraDeBusca)) {
+        navbar.insertBefore(barraDeBusca, navbar.children[1]); 
+      }
+    }
+  },
 
     addInfoLoginClickListener() {
       const infoLoginIcon = document.querySelector('.info-login-icon');
@@ -124,7 +126,7 @@ export default {
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 0 20px; 
+  padding: 0 70px 0 30px; 
   }
 
 
@@ -188,6 +190,7 @@ export default {
 
 .div-barra-de-busca {
          width: clamp(300px, 100%, 660px);
+         /* margin-right: 200px; */
          
      }
  
@@ -266,7 +269,7 @@ export default {
     height: 20px;
     background-image: url('@/assets/info-login-icon.png');
     margin-top: 20px;
-    margin-left: 380px;
+    margin-left: 220px;
     background-size: contain;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -296,14 +299,25 @@ export default {
     display: none;
   }
 
+
+
+
   @media (max-width: 768px) { 
+
+    .container-fluid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0 2px 0 2px; 
+  }
 
 
     .btn-primary {
     background-color: transparent; 
     border: none;
     font-size: 24px;
-    margin-right: 20px;
+    margin-right: 1px;
   }
 
   .offcanvas-body .barra-de-busca {
@@ -333,7 +347,8 @@ export default {
     height: 20px;
     background-image: url('@/assets/info-login-icon.png');
     margin-top: 20px;
-    margin-left: 3px;
+    margin-left: 1px;
+    /* margin-right: 10px; */
     background-size: contain;
     background-repeat: no-repeat;
     cursor: pointer;

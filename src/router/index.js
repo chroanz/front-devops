@@ -54,6 +54,15 @@ const routes = [
       header: AppNavbar,
     },
   },
+
+  {
+    path: "/homepage",
+    name: "homepage",
+    components: {
+      default: homepage,
+      header: AppNavbar,
+    },
+  }
 ];
 
 const router = createRouter({
