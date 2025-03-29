@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../components/pages/HelloWorld.vue';
 import homepage from '../components/pages/homepage.vue';
 import Login from '../components/pages/LoginComponent.vue';
 import PreRecuperarSenha from '@/components/PreRecuperarSenha.vue';
@@ -13,7 +12,7 @@ const routes = [
     path: "/",
     name: "Home",
     components: {
-      default: Home,
+      default: homepage,
       header: AppNavbar,
     },
   },
@@ -51,15 +50,6 @@ const routes = [
     name: "BarraDeBusca",
     components: {
       default: BarraDeBusca,
-      header: AppNavbar,
-    },
-  },
-
-  {
-    path: "/homepage",
-    name: "homepage",
-    components: {
-      default: homepage,
       header: AppNavbar,
     },
   }
