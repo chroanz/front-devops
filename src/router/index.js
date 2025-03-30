@@ -1,17 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import homepage from '../components/pages/homepage.vue';
+import Home from '../components/pages/homepage.vue';
 import Login from '../components/pages/LoginComponent.vue';
 import PreRecuperarSenha from '@/components/PreRecuperarSenha.vue';
 import FormRecuperarSenha from '@/components/FormRecuperarSenha.vue';
 import DetalheCursoComponent from '@/components/pages/DetalheCursoComponent.vue';
 import AppNavbar from "@/components/organisms/AppNavbar.vue";
+import CreateCourse from '@/components/pages/CreateCourse.vue';
 
 const routes = [
   {
     path: "/",
     name: "Home",
     components: {
-      default: homepage,
+      default: Home,
       header: AppNavbar,
     },
   },
@@ -41,6 +42,14 @@ const routes = [
     name: "FormRecuperarSenha",
     components: {
       default: FormRecuperarSenha,
+      header: AppNavbar,
+    },
+  },
+  {
+    path: "/create-course",
+    name: "CreateCourse",
+    components: {
+      default: CreateCourse,
       header: AppNavbar,
     },
   },
