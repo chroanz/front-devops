@@ -1,14 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../components/pages/HelloWorld.vue';
-import homepage from '../components/pages/homepage.vue';
+import Home from '../components/pages/homepage.vue';
 import Login from '../components/pages/LoginComponent.vue';
 import PreRecuperarSenha from '@/components/PreRecuperarSenha.vue';
 import FormRecuperarSenha from '@/components/FormRecuperarSenha.vue';
 import BarraDeBusca from '@/components/BarraDeBusca.vue';
 import DetalheCursoComponent from '@/components/pages/DetalheCursoComponent.vue';
 import AppNavbar from "@/components/organisms/AppNavbar.vue";
-import CreateCourse from '@/components/pages/CreateCourse.vue';
 import CreateLessons from '@/components/pages/CreateLessons.vue';
+import CreateHomeWork from '@/components/pages/CreateHomeWork.vue';
 
 const routes = [
   {
@@ -61,6 +60,14 @@ const routes = [
     name: "CreateLessons",
     components: {
       default: CreateLessons,
+      header: AppNavbar,
+    },
+  },
+  {
+    path: "/create-exercise/:id",
+    name: "CreateHomeWork",
+    components: {
+      default: CreateCreateHomeWork,
       header: AppNavbar,
     },
   }
