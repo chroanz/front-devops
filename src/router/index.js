@@ -64,10 +64,10 @@ const routes = [
     },
   },
   {
-    path: "/create-exercise/:id",
+    path: "/create-exercise",
     name: "CreateHomeWork",
     components: {
-      default: CreateCreateHomeWork,
+      default: CreateHomeWork,
       header: AppNavbar,
     },
   }
