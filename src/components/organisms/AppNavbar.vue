@@ -38,13 +38,11 @@
 
       <!-- CAMPO DE BUSCA -->
 
-      <div class="form-group position-relative div-barra-de-busca" ref="barraDeBusca">
-         <input class="barra-de-busca" type="text" name="busca" id="busca" placeholder="Pesquise um curso ou categoria">
-         <img :src="require('@/assets/lupa-icon.png')" alt="Ícone de lupa" class="lupa-icon">
-         <div class="info-icon"></div>
-     </div>
+      <div ref="barraDeBusca" class="div-barra-de-busca">
+        <BarraDeBusca />
+      </div>
 
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand2" href="#">
 
           <div class="info-login-icon"></div> <!-- Ícone de informação -->
           <img :src="require('@/assets/login-icon.png')" alt="Login">
@@ -57,8 +55,14 @@
 
 
 <script>
+
+import BarraDeBusca from "../BarraDeBusca.vue";
+
 export default {
   name: "AppNavbar",
+  components: {
+    BarraDeBusca,
+  },
   mounted() {
     this.moveBarraDeBusca(); 
     this.addInfoLoginClickListener(); 
@@ -68,21 +72,21 @@ export default {
     window.removeEventListener("resize", this.moveBarraDeBusca);
   },
   methods: {
-    moveBarraDeBusca() {
-      const barraDeBusca = this.$refs.barraDeBusca;
-      const offcanvasBody = document.querySelector(".offcanvas-body");
-      const navbar = document.querySelector(".container-fluid");
+  moveBarraDeBusca() {
+    const barraDeBusca = this.$refs.barraDeBusca;
+    const offcanvasBody = document.querySelector(".offcanvas-body");
+    const navbar = document.querySelector(".container-fluid");
 
-      if (window.innerWidth <= 768) {
-        if (barraDeBusca && offcanvasBody && !offcanvasBody.contains(barraDeBusca)) {
-          offcanvasBody.insertBefore(barraDeBusca, offcanvasBody.firstChild);
-        }
-      } else {
-        if (barraDeBusca && navbar && !navbar.contains(barraDeBusca)) {
-          navbar.insertBefore(barraDeBusca, navbar.children[1]); 
-        }
+    if (!barraDeBusca || !offcanvasBody || !navbar) return;
+
+    if (window.innerWidth <= 1063) { 
+      if (!offcanvasBody.contains(barraDeBusca)) {
+        offcanvasBody.insertBefore(barraDeBusca, offcanvasBody.firstChild);
       }
-    },
+    } else {
+      navbar.insertBefore(barraDeBusca, navbar.children[2]); 
+    }
+  },
 
     addInfoLoginClickListener() {
       const infoLoginIcon = document.querySelector('.info-login-icon');
@@ -113,8 +117,6 @@ export default {
 
   .navbar {
     background-color: rgba(178, 136, 192, 1);
-    padding-left: 24px;
-    padding-right: 24px;
     margin-bottom: 1em;
   }
 
@@ -124,7 +126,7 @@ export default {
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 0 20px; 
+  padding: 0 50px 0 50px; 
   }
 
 
@@ -153,7 +155,6 @@ export default {
     background-color: transparent; 
     border: none;
     font-size: 19px;
-    margin-right: 240px;
   }
 
 
@@ -187,7 +188,8 @@ export default {
 
 
 .div-barra-de-busca {
-         width: clamp(300px, 100%, 660px);
+         width: clamp(300px, 100%, 680px);
+         margin: 0 auto;
          
      }
  
@@ -200,7 +202,6 @@ export default {
      }
  
      .barra-de-busca {
-         padding: 1rem 3rem;
          width: 100%;
          border-radius: 5rem;
          font-size: 1rem;
@@ -253,7 +254,7 @@ export default {
   /* ICON LOGIN */
 
 
-  .navbar-brand {
+  .navbar-brand2 {
     display: flex;
     align-items: center;
     gap: 10px; 
@@ -266,7 +267,6 @@ export default {
     height: 20px;
     background-image: url('@/assets/info-login-icon.png');
     margin-top: 20px;
-    margin-left: 380px;
     background-size: contain;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -296,14 +296,46 @@ export default {
     display: none;
   }
 
+  @media (min-width: 1492px) { 
+  .div-barra-de-busca {
+    display: block !important;
+    width: clamp(300px, 100%, 750px);
+    margin: 0 auto;
+  }
+}
+
+  @media (max-width: 1201px) and (min-width: 1050px) {
+    .container-fluid {
+    padding: 0 10px 0 10px !important;
+  }
+}
+
+
+
+
+@media (max-width: 1024px) {
+  .div-barra-de-busca {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
+
   @media (max-width: 768px) { 
+
+    .container-fluid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0 2px 0 2px; 
+  }
 
 
     .btn-primary {
     background-color: transparent; 
     border: none;
     font-size: 24px;
-    margin-right: 20px;
   }
 
   .offcanvas-body .barra-de-busca {
@@ -333,13 +365,23 @@ export default {
     height: 20px;
     background-image: url('@/assets/info-login-icon.png');
     margin-top: 20px;
-    margin-left: 3px;
     background-size: contain;
     background-repeat: no-repeat;
     cursor: pointer;
     position: relative;
 }
 
+}
+
+
+@media (max-width: 428px){
+  .info-login-icon{
+    display: none !important;
+  }
+
+  .navbar-brand2{
+    display: none !important;
+  }
 }
 
   </style>

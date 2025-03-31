@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex justify-content-center align-items-center">
-        <form action="#" class="form-pw-recovery p-5">
+        <form @submit.prevent="handlesubmit" action="#" class="form-pw-recovery p-5">
             <img src="../assets/images/logo.png" alt="Logo do sistema" class="logo">
             <br>
             <br>
@@ -14,7 +14,7 @@
                 <input class="form-control" type="email" id="email" name="email" placeholder="Insira seu e-mail" maxlength="50" minlength="10" required>
             </div>
             <br>
-            <button class="btn-action w-100 px-3 py-2" type="submit">Enviar</button>
+            <button class="btn-action w-100 px-3 py-2" id="btn-enviar" type="submit">Enviar</button>
             <div class="w-100 text-start">
                 <br>
                 <a class="text-decoration-none text-dark" href="/login">Voltar</a>
@@ -25,7 +25,12 @@
 
 <script>
     export default {
-        name: 'PreRecuperarSenha'
+        name: 'PreRecuperarSenha',
+        methods: {
+            handlesubmit() {
+                this.$router.push('/recuperar-senha');
+            }
+        }
     }
 </script>
 

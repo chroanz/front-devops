@@ -3,11 +3,12 @@ import Home from '../components/pages/homepage.vue';
 import Login from '../components/pages/LoginComponent.vue';
 import PreRecuperarSenha from '@/components/PreRecuperarSenha.vue';
 import FormRecuperarSenha from '@/components/FormRecuperarSenha.vue';
-import BarraDeBusca from '@/components/BarraDeBusca.vue';
 import DetalheCursoComponent from '@/components/pages/DetalheCursoComponent.vue';
 import AppNavbar from "@/components/organisms/AppNavbar.vue";
 import CreateLessons from '@/components/pages/CreateLessons.vue';
 import CreateHomeWork from '@/components/pages/CreateHomeWork.vue';
+import CreateCourse from '@/components/pages/CreateCourse.vue';
+
 
 const routes = [
   {
@@ -48,10 +49,10 @@ const routes = [
     },
   },
   {
-    path: "/barra-de-busca",
-    name: "BarraDeBusca",
+    path: "/create-course",
+    name: "CreateCourse",
     components: {
-      default: BarraDeBusca,
+      default: CreateCourse,
       header: AppNavbar,
     },
   },

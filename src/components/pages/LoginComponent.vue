@@ -4,7 +4,7 @@
       <div class="form-area-img">
         <img src="../../assets/images/logo.png" alt="Logo Librear">
       </div>
-      <form action="#" class="form-login">
+      <form @submit.prevent="handleSubmit" action="#" class="form-login">
         <h2>Bem-vindo de volta!</h2>
 
         <div class="input-container">
@@ -18,14 +18,20 @@
         </div>
 
         <button type="submit">Entrar</button>
-        <a href="#">Esqueci a senha</a>
+        <a href="/pre-recuperar-senha">Esqueci a senha</a>
       </form>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    handleSubmit() {
+      this.$router.push('/')
+    }
+  }
+};
 </script>
 
 <style>

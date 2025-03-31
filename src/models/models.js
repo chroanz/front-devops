@@ -15,6 +15,7 @@ export const Exercicio = {
 
 export const Curso = {
     id: { type: Number, default: null },
+    type: Number, // 1 Cegueira, 2 Surdez, 3 Surdocegueira,
     nome: String,
     descricao: String,
     imagem: String,
