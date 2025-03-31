@@ -57,7 +57,7 @@ const routes = [
     },
   },
   {
-    path: "/create-lesson",
+    path: "/create-lesson/:id",
     name: "CreateLessons",
     components: {
       default: CreateLessons,
