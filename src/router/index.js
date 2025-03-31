@@ -5,7 +5,10 @@ import PreRecuperarSenha from '@/components/PreRecuperarSenha.vue';
 import FormRecuperarSenha from '@/components/FormRecuperarSenha.vue';
 import DetalheCursoComponent from '@/components/pages/DetalheCursoComponent.vue';
 import AppNavbar from "@/components/organisms/AppNavbar.vue";
+import CreateLessons from '@/components/pages/CreateLessons.vue';
+import CreateHomeWork from '@/components/pages/CreateHomeWork.vue';
 import CreateCourse from '@/components/pages/CreateCourse.vue';
+
 
 const routes = [
   {
@@ -53,6 +56,22 @@ const routes = [
       header: AppNavbar,
     },
   },
+  {
+    path: "/create-lesson/:id",
+    name: "CreateLessons",
+    components: {
+      default: CreateLessons,
+      header: AppNavbar,
+    },
+  },
+  {
+    path: "/create-exercise",
+    name: "CreateHomeWork",
+    components: {
+      default: CreateHomeWork,
+      header: AppNavbar,
+    },
+  }
 ];
 
 const router = createRouter({
