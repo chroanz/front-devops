@@ -7,6 +7,8 @@ import FormRecuperarSenha from '@/components/FormRecuperarSenha.vue';
 import BarraDeBusca from '@/components/BarraDeBusca.vue';
 import DetalheCursoComponent from '@/components/pages/DetalheCursoComponent.vue';
 import AppNavbar from "@/components/organisms/AppNavbar.vue";
+import CreateCourse from '@/components/pages/CreateCourse.vue';
+import CreateLessons from '@/components/pages/CreateLessons.vue';
 
 const routes = [
   {
@@ -54,6 +56,14 @@ const routes = [
       header: AppNavbar,
     },
   },
+  {
+    path: "/create-lesson",
+    name: "CreateLessons",
+    components: {
+      default: CreateLessons,
+      header: AppNavbar,
+    },
+  }
 ];
 
 const router = createRouter({
