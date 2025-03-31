@@ -8,7 +8,7 @@ import AppNavbar from "@/components/organisms/AppNavbar.vue";
 import CreateLessons from '@/components/pages/CreateLessons.vue';
 import CreateHomeWork from '@/components/pages/CreateHomeWork.vue';
 import CreateCourse from '@/components/pages/CreateCourse.vue';
-
+import SignupADM from '@/components/ModalSignupADM.vue';
 
 const routes = [
   {
@@ -71,7 +71,15 @@ const routes = [
       default: CreateHomeWork,
       header: AppNavbar,
     },
+  },
+  {
+    path: "/signupADM",
+    name: "SignupADM",
+    components: {
+      default: SignupADM,
+    },
   }
+  
 ];
 
 const router = createRouter({
