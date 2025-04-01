@@ -86,11 +86,7 @@ export default {
         offcanvasBody.insertBefore(barraDeBusca, offcanvasBody.firstChild);
       }
     } else {
-<<<<<<< HEAD
       navbar.insertBefore(barraDeBusca, navbar.children[2]); 
-=======
-        navbar.insertBefore(barraDeBusca, navbar.children[2]); 
->>>>>>> 97a0fd9 (refactor: modificação do estilo do compoenent login)
     }
   },
 
