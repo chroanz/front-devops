@@ -21,7 +21,7 @@ export default {
   },
   computed: {
     showLayoutComponents() {
-      const excludedRoutes = ['Login'];
+      const excludedRoutes = [''];
       return !excludedRoutes.includes(this.$route.name)
     }
   }

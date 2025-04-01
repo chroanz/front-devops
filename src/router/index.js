@@ -24,7 +24,10 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: Login,
+    components: {
+      default: Login,
+      header: AppNavbar
+    }
   },
   {
     path: "/curso/:id",

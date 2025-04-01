@@ -4,7 +4,7 @@
       <div class="form-area-img">
         <img src="../../assets/images/logo.png" alt="Logo Librear">
       </div>
-      <form @submit.prevent="handleSubmit" action="#" class="form-login">
+      <form action="#" class="form-login">
         <h2>Bem-vindo de volta!</h2>
 
         <div class="input-container">
@@ -18,36 +18,28 @@
         </div>
 
         <button type="submit">Entrar</button>
-        <a href="/pre-recuperar-senha">Esqueci a senha</a>
+        <a href="#">Esqueci a senha</a>
       </form>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  methods: {
-    handleSubmit() {
-      this.$router.push('/')
-    }
-  }
-};
+export default {};
 </script>
 
 <style>
 .container-login {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 110px);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .form-login-area {
-  width: 28%;
-  min-width: 320px;
-  height: 85%;
-  min-height: 620px;
+  width: 630px;
+  height: 95%;
   background-color: var(--color-secondary);
   border-radius: 30px;
   display: flex;
@@ -135,5 +127,30 @@ export default {
 {
   color: #000;
   text-decoration: none;
+}
+
+@media (max-height: 900px) {
+
+  .form-login-area {
+    max-width: 92%;
+    height: calc(100vh - 108px);
+  }
+
+    .form-login h2 {
+    font-size: 28px;
+    max-width: 320px;
+  }
+
+.input-container {
+  position: relative;
+  width: 300px;
+}
+
+  .input-container input {
+    width: 100%;
+    padding: 8px 6px;
+    font-size: 12px;
+  }
+
 }
 </style>
