@@ -9,6 +9,8 @@ import CreateLessons from '@/components/pages/CreateLessons.vue';
 import CreateHomeWork from '@/components/pages/CreateHomeWork.vue';
 import CreateCourse from '@/components/pages/CreateCourse.vue';
 import SignupADM from '@/components/ModalSignupADM.vue';
+import CoursesPage from '@/components/pages/CoursesPage.vue';
+
 
 const routes = [
   {
@@ -77,6 +79,14 @@ const routes = [
     name: "SignupADM",
     components: {
       default: SignupADM,
+    }
+  },
+  {
+    path: "/courses",
+    name: "CoursesPage",
+    components: {
+      default: CoursesPage,
+      header: AppNavbar,
     },
   }
   
