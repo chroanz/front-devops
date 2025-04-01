@@ -28,37 +28,13 @@
 import CardCurso from '../organisms/CardCurso.vue';
 import StripAula from '../molecules/StripAula.vue';
 import StripExercicio from '../molecules/StripExercicio.vue';
+import { listaCursos } from '@/models/mock-data';
 
 export default {
     name: 'DetalheCursoComponent',
     data() {
         return {
-            cursos: {
-                1: {
-                    id: 1, nome: 'Aprendendo Libras', descricao: 'Aprenda a utilizar a Língua Brasileira de Sinais (Libras) e garanta o atendimento e o tratamento adequado às pessoas com deficiência auditiva', imagem: 'curso_libras.png', aulas: [
-                        {
-                            sequencia: 1,
-                            titulo: 'Teste',
-                            duracaoMinutos: 3
-                        },
-                        {
-                            sequencia: 2,
-                            titulo: 'Teste 2',
-                            duracaoMinutos: 4
-                        }
-                    ],
-                    exercicios: [
-                        {
-                            sequencia: 1,
-                            titulo: 'Teste 1'
-                        },
-                        {
-                            sequencia: 2,
-                            titulo: 'Teste 3'
-                        }
-                    ]
-                }
-            },
+            cursos: listaCursos,
             curso: {}
         }
     },
@@ -74,11 +50,12 @@ export default {
     },
     mounted() {
         const id = this.$route.params.id;
-        if (!this.cursos[id]) {
+        const existente = this.cursos.find(curso => curso.id == id);
+        if (!existente) {
             console.log('Curso não existe')
             return;
         }
-        this.curso = this.cursos[id]
+        this.curso = existente;
     }
 }
 </script>
