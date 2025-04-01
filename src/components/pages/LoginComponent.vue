@@ -44,8 +44,10 @@ export default {
 }
 
 .form-login-area {
-  width: 630px;
-  height: 95%;
+  width: 28%;
+  min-width: 320px;
+  height: 85%;
+  min-height: 620px;
   background-color: var(--color-secondary);
   border-radius: 30px;
   display: flex;
