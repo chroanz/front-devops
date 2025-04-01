@@ -5,7 +5,7 @@
 
    <nav class="navbar navbar-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="/">
         <img :src="require('@/assets/logosur.png')" alt="Logo">
       </a>
 
@@ -26,6 +26,8 @@
           <div class="titulo-offcanvas">Veja nossas categorias de aulas</div>
 
           <ul>
+            <li class="nav-item"><a class="nav-link" href="/courses">Todos os cursos</a></li>
+            <hr>
             <li class="nav-item"><a class="nav-link" href="#">Deficiência Visual</a></li>
             <hr>
             <li class="nav-item"><a class="nav-link" href="#">Deficiência Auditiva</a></li>
