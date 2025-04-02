@@ -1,6 +1,6 @@
 <template>
   <div class="progress-bar">
-    <div class="progress-bar-fill" :style="{ width: progress + '%' }"></div>
+    <div class="progress-bar-fill" :style="{ width: progress + '%', 'background-color': color }"></div>
   </div>
 </template>
 
@@ -14,6 +14,11 @@ export default {
       validator(value) {
         return value >= 0 && value <= 100;
       }
+    },
+    color: {
+      type: String,
+      required: false,
+      default: getComputedStyle(document.documentElement)?.getPropertyValue('--color-action')?.trim() ?? '#4caf50'
     }
   }
 };
@@ -21,7 +26,7 @@ export default {
 
 <style scoped>
 .progress-bar {
-  width: 80%;
+  width: 100%;
   height: 20px;
   background-color: #e0e0e0;
   border-radius: 10px;
@@ -31,7 +36,6 @@ export default {
 
 .progress-bar-fill {
   height: 100%;
-  background-color: #4caf50;
   border-radius: 10px 0 0 10px;
   transition: width 0.3s ease;
 }
