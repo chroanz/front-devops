@@ -129,7 +129,7 @@ export default {};
   text-decoration: none;
 }
 
-@media (max-height: 900px) {
+@media (max-height: 1200px)  and (max-width: 600px){
 
   .form-login-area {
     max-width: 92%;
@@ -141,16 +141,32 @@ export default {};
     max-width: 320px;
   }
 
-.input-container {
-  position: relative;
-  width: 300px;
-}
+  .input-container {
+    position: relative;
+    width: 300px;
+  }
 
   .input-container input {
     width: 100%;
     padding: 8px 6px;
     font-size: 12px;
   }
+
+  .form-area-img {
+  margin-top: 4em;
+  background-color: #FFF;
+  width: 200px;
+  height: 180px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-area-img img {
+  height: 90%;
+  width: 100%;
+}
 
 }
 </style>
