@@ -1,16 +1,18 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../components/pages/homepage.vue';
-import Login from '../components/pages/LoginComponent.vue';
-import PreRecuperarSenha from '@/components/PreRecuperarSenha.vue';
-import FormRecuperarSenha from '@/components/FormRecuperarSenha.vue';
-import DetalheCursoComponent from '@/components/pages/DetalheCursoComponent.vue';
+import { createRouter, createWebHistory } from "vue-router";
+import Home from "../components/pages/homepage.vue";
+import Login from "../components/pages/LoginComponent.vue";
+import PreRecuperarSenha from "@/components/PreRecuperarSenha.vue";
+import FormRecuperarSenha from "@/components/FormRecuperarSenha.vue";
+import DetalheCursoComponent from "@/components/pages/Cursos/DetalheCursoComponent.vue";
 import AppNavbar from "@/components/organisms/AppNavbar.vue";
-import CreateLessons from '@/components/pages/CreateLessons.vue';
-import CreateHomeWork from '@/components/pages/CreateHomeWork.vue';
-import CreateCourse from '@/components/pages/CreateCourse.vue';
-import SignupADM from '@/components/ModalSignupADM.vue';
-import CoursesPage from '@/components/pages/CoursesPage.vue';
-
+import CreateLessons from "@/components/pages/Cursos/CreateLessons.vue";
+import CreateHomeWork from "@/components/pages/Cursos/CreateHomeWork.vue";
+import CreateCourse from "@/components/pages/Cursos/CreateCourse.vue";
+import SignupADM from "@/components/ModalSignupADM.vue";
+import CoursesPage from "@/components/pages/Cursos/CoursesPage.vue";
+import AcompanhamentoComponent from "@/components/pages/Cursos/AcompanhamentoComponent.vue";
+import AulaView from '@/components/organisms/AulaView.vue';
+import LeituraView from '@/components/organisms/LeituraView.vue';
 
 const routes = [
   {
@@ -26,8 +28,25 @@ const routes = [
     name: "Login",
     components: {
       default: Login,
-      header: AppNavbar
-    }
+      header: AppNavbar,
+    },
+  },
+  {
+    path: "/curso/:id/acompanhar",
+    name: "AcompanharCurso",
+    component: AcompanhamentoComponent,
+    children: [
+      {
+        path: "aula/:atividadeId",
+        name: "AssistirAula",
+        component: AulaView
+      },
+      {
+        path: "leitura/:atividadeId",
+        name: "RealizarLeitura",
+        component: LeituraView
+      }
+    ]
   },
   {
     path: "/curso/:id",
@@ -82,7 +101,7 @@ const routes = [
     name: "SignupADM",
     components: {
       default: SignupADM,
-    }
+    },
   },
   {
     path: "/courses",
@@ -91,8 +110,7 @@ const routes = [
       default: CoursesPage,
       header: AppNavbar,
     },
-  }
-  
+  },
 ];
 
 const router = createRouter({

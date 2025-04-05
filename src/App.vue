@@ -21,7 +21,7 @@ export default {
   },
   computed: {
     showLayoutComponents() {
-      const excludedRoutes = [''];
+      const excludedRoutes = ['AcompanharCurso', 'AssistirAula', 'RealizarLeitura'];
       return !excludedRoutes.includes(this.$route.name)
     }
   }
