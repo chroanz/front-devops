@@ -12,8 +12,8 @@
         </div>
         <div class="bottom">
             <div>{{ curso.aulas?.length ?? 0 }} Aulas</div>
-            <div> <button class="btn-matricula" @click="handleMatricula" v-if="matriculavel && !this.matriculado">
-                    Fazer Matrícula
+            <div> <button class="btn-matricula" @click="handleMatricula" v-if="matriculavel">
+                    {{ this.textoBotao }}
                 </button></div>
             <div>{{ curso.leituras?.length ?? 0 }} Leituras</div>
         </div>
@@ -31,6 +31,14 @@ export default {
             matriculado: Boolean
         }
     },
+    computed: {
+        textoBotao(){
+            if (this.matriculado) {
+                return 'Entrar no Curso'
+            }
+            return 'Fazer Matrícula'
+        }
+    },
     props: {
         curso: Object,
         matriculavel: Boolean
@@ -41,6 +49,7 @@ export default {
         const user = JSON.parse(localStorage.getItem('loggedUser') ?? '{}');
         this.user = user;
         const matriculados = user.cursos_matriculados ?? [];
+        console.log(matriculados)
         this.matriculado = matriculados.includes(this.curso.id ?? 0);
     },
     methods: {
@@ -54,6 +63,12 @@ export default {
             return require(`@/assets/images/${name}`);
         },
         handleMatricula() {
+            if (this.matriculado) {
+                const url = `/curso/${this.curso.id}/acompanhar`;
+                console.log(url)
+                this.$emit('navigate', url)
+                return;
+            }
             if (this.getUser()) {
                 alert('Matrícula habilitada')
             } else {

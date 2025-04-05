@@ -50,7 +50,7 @@ export default {
         return {
             curso: null,
             listaAtividades: [],
-            aulaAtual: null,
+            atividadeAtual: null,
             percentualProgresso: 0
         }
     },
@@ -60,16 +60,19 @@ export default {
                 this.isAtividadeAtual(item)
             )
             return indexAtual < this.listaAtividades.length - 1
+        },
+        aulaAtual() {
+          return this.atividadeAtual  
         }
     },
     methods: {
         fecharCurso() {
             this.$router.push('/cursos')
         },
-        navegarPara(item) {
+        async navegarPara(item) {
             const rota = item.tipo === 'aula' ? 'aula' : 'leitura'
-            this.aulaAtual = item
-            this.$router.push(`/curso/${this.curso.id}/acompanhar/${rota}/${item.id}`)
+            this.atividadeAtual = item
+            await this.$router.push(`/curso/${this.curso.id}/acompanhar/${rota}/${item.id}`)
         },
         isAtividadeAtual(item) {
             return item.id == this.$route.params.atividadeId
@@ -119,14 +122,15 @@ export default {
 
             // Se não houver atividade selecionada, seleciona a primeira
             if (!this.$route.params.atividadeId && this.listaAtividades.length > 0) {
-                this.navegarPara(this.listaAtividades[0])
+               await this.navegarPara(this.listaAtividades[0])
+            } else {
+                // Atualiza a aula atual
+                const atividadeAtual = this.listaAtividades.find(item =>
+                    this.isAtividadeAtual(item)
+                )
+                this.atividadeAtual = atividadeAtual
             }
 
-            // Atualiza a aula atual
-            const atividadeAtual = this.listaAtividades.find(item =>
-                this.isAtividadeAtual(item)
-            )
-            this.aulaAtual = atividadeAtual
         }
     }
 }
