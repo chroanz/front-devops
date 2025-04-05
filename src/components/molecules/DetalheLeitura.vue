@@ -1,7 +1,6 @@
 <template>
     <div class="cards d-flex flex-row align-items-center px-2 border-0" role="button" :style="{
-        'background-color': this.color,
-        'color': this.leitura.lido ? this.iconColor : 'inherit'
+        'background-color': backgroundColor,
     }">
         <div class="col-1">
             <SvgIcon icon="book" :color=this.iconColor size="32px" />
@@ -23,6 +22,11 @@ export default {
             return this.leitura.lido
                 ? getComputedStyle(document.documentElement)?.getPropertyValue('--color-verde')?.trim()
                 : '#000000'
+        },
+        backgroundColor() {
+            return this.active
+                ? getComputedStyle(document.documentElement)?.getPropertyValue('--color-secondary-active')?.trim()
+                : this.color
         }
     },
     props: {

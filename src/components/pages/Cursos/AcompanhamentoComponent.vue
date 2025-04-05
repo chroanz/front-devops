@@ -22,9 +22,9 @@
             <div id="direita" class="lista-atividades">
                 <template v-for="item in listaAtividades" :key="item.id">
                     <DetalheAula v-if="item.tipo === 'aula'" :aula="item" @click="navegarPara(item)"
-                        :class="{ 'ativo': isAtividadeAtual(item) }" />
+                        :active="isAtividadeAtual(item)" />
                     <DetalheLeitura v-else :leitura="item" @click="navegarPara(item)"
-                        :class="{ 'ativo': isAtividadeAtual(item) }" />
+                        :active="isAtividadeAtual(item)" />
                 </template>
             </div>
         </div>
@@ -62,7 +62,7 @@ export default {
             return indexAtual < this.listaAtividades.length - 1
         },
         aulaAtual() {
-          return this.atividadeAtual  
+            return this.atividadeAtual
         }
     },
     methods: {
@@ -122,7 +122,7 @@ export default {
 
             // Se não houver atividade selecionada, seleciona a primeira
             if (!this.$route.params.atividadeId && this.listaAtividades.length > 0) {
-               await this.navegarPara(this.listaAtividades[0])
+                await this.navegarPara(this.listaAtividades[0])
             } else {
                 // Atualiza a aula atual
                 const atividadeAtual = this.listaAtividades.find(item =>
@@ -183,7 +183,6 @@ export default {
 
 .lista-atividades {
     width: 30%;
-    padding: 1rem;
     background-color: var(--color-secondary);
 }
 

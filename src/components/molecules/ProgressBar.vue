@@ -1,6 +1,6 @@
 <template>
   <div class="progress-bar">
-    <div class="progress-bar-fill" :style="{ width: progress + '%', 'background-color': color }"></div>
+    <div class="progress-bar-fill" :style="progressBarStyle"></div>
   </div>
 </template>
 
@@ -20,6 +20,15 @@ export default {
       required: false,
       default: getComputedStyle(document.documentElement)?.getPropertyValue('--color-verde')?.trim() ?? '#4caf50'
     }
+  },
+  computed: {
+    progressBarStyle() {
+      return {
+        width: this.progress + '%',
+        backgroundColor: this.color,
+        borderRadius: this.progress === 100 ? '6px' : '10px 0 0 10px'
+      }
+    }
   }
 };
 </script>
@@ -28,15 +37,15 @@ export default {
 .progress-bar {
   width: 100%;
   height: 20px;
-  background-color: #e0e0e0;
+  background-color: #555555;
   border-radius: 10px;
   overflow: hidden;
-  padding: 0;
+  padding: 4px;
 }
 
 .progress-bar-fill {
   height: 100%;
-  border-radius: 10px 0 0 10px;
-  transition: width 0.3s ease;
+  transition: all 0.3s ease;
+  
 }
 </style>

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import './assets/css/styles.css';
+import '@/assets/css/styles.css';
 import AppNavbar from './components/organisms/AppNavbar.vue';
 
 export default {

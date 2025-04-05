@@ -1,15 +1,9 @@
 <template>
-    <div class="cards d-flex flex-row align-items-center px-2 border-0" role="button"
-        :style="{
-            'background-color': this.color,
-            'color': this.aula.vista ? this.iconColor : 'inherit'
-        }">
+    <div class="cards d-flex flex-row align-items-center px-2 border-0" role="button" :style="{
+        'background-color': backgroundColor,
+    }">
         <div class="col-1">
-            <SvgIcon
-            icon="video-camera"
-            :color=this.iconColor
-            size="32px"
-            />
+            <SvgIcon icon="video-camera" :color=this.iconColor size="32px" />
         </div>
         <div class="col-1 text-center">{{ aula.sequencia }}</div>
         <div class="col-8 text-truncate px-2">{{ aula.titulo }}</div>
@@ -28,6 +22,11 @@ export default {
             return this.aula.vista
                 ? getComputedStyle(document.documentElement)?.getPropertyValue('--color-verde')?.trim()
                 : '#000000'
+        },
+        backgroundColor() {
+            return this.active
+                ? getComputedStyle(document.documentElement)?.getPropertyValue('--color-secondary-active')?.trim()
+                : this.color
         }
     },
     props: {
@@ -35,6 +34,10 @@ export default {
         color: {
             type: String,
             default: getComputedStyle(document.documentElement)?.getPropertyValue('--color-secondary')?.trim() ?? '#ffffff'
+        },
+        active: {
+            type: Boolean,
+            default: false
         },
     },
     components: {
@@ -51,7 +54,8 @@ export default {
     width: 100%;
     font-size: .75em;
 }
-.cards:hover{
+
+.cards:hover {
     background-color: var(--color-secondary-hover) !important;
 }
 
