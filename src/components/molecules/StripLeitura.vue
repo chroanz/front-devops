@@ -1,20 +1,20 @@
 <template>
     <div class="cards d-flex flex-row align-items-center px-2">
         <div class="col-1">
-            <img src="../../assets/images/book.svg" class="img-fluid">
+            <img src="@/assets/icons/book.svg" class="img-fluid">
         </div>
-        <div class="col-1 text-center">{{ exercicio.sequencia }}</div>
-        <div class="col-8 text-truncate px-2">{{ exercicio.titulo }}</div>
+        <div class="col-1 text-center">{{ leitura.sequencia }}</div>
+        <div class="col-8 text-truncate px-2">{{ leitura.titulo }}</div>
     </div>
 </template>
 
 <script>
-import { Exercicio } from '@/models/models';
+import { Leitura } from '@/models/models';
 
 export default {
-    name: "StripExercicio",
+    name: "StripLeitura",
     props: {
-        exercicio:Exercicio
+        leitura: Leitura
     }
 }
 </script>

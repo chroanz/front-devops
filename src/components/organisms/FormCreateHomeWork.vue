@@ -3,17 +3,20 @@
         <form @submit.prevent="submitForm" class="d-flex flex-column ">
             <div class="mb-3">
                 <label for="homeWorkName" class="form-label">Titulo</label>
-                <input type="text" class="form-control" id="homeWorkName" v-model="homeWork.titulo" required placeholder="Nome do Exercicio">
+                <input type="text" class="form-control" id="homeWorkName" v-model="homeWork.titulo" required
+                    placeholder="Nome do Leitura">
             </div>
 
             <div class="col-12 mb-3 flex-row d-flex justify-content-between">
                 <div class="col-sm-6 w-50" style="max-width: 49%;">
                     <label for="homeWorkDescription" class="form-label">Sequencia</label>
-                    <input type="text" class="form-control" id="homeWorkName" v-model="homeWork.sequencia" required placeholder="Numero da sequencia">
+                    <input type="text" class="form-control" id="homeWorkName" v-model="homeWork.sequencia" required
+                        placeholder="Numero da sequencia">
                 </div>
                 <div class="col-sm-6 w-50" style="max-width: 49%;">
                     <label for="homeWorkVideo" class="form-label">Video</label>
-                <input type="file" class="form-control" id="homeWorkVideo" required placeholder="Arquivo do exercicio">
+                    <input type="file" class="form-control" id="homeWorkVideo" required
+                        placeholder="Arquivo do leitura">
                 </div>
             </div>
             <div class="d-flex align-items-end">

@@ -15,12 +15,11 @@
             <div> <button class="btn-matricula" @click="handleMatricula" v-if="matriculavel && !this.matriculado">
                     Fazer Matrícula
                 </button></div>
-            <div>{{ curso.exercicios?.length ?? 0 }} Exercícios</div>
+            <div>{{ curso.leituras?.length ?? 0 }} Leituras</div>
         </div>
     </div>
 </template>
 <script>
-import { Curso } from '@/models/models';
 import info from '@/assets/images/info.svg';
 
 export default {
@@ -33,7 +32,7 @@ export default {
         }
     },
     props: {
-        curso: Curso,
+        curso: Object,
         matriculavel: Boolean
     },
     emits: ['navigate'],
@@ -115,7 +114,8 @@ export default {
 .btn-matricula:hover {
     opacity: 1;
 }
-img.icone{
+
+img.icone {
     width: 16px;
     height: 16px;
 }

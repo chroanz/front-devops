@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import CardCurso from '../organisms/CardCurso.vue';
+import CardCurso from '../../organisms/CardCurso.vue';
 
 export default {
     name: 'CoursesPage',
@@ -31,7 +31,7 @@ export default {
                             duracaoMinutos: 4
                         }
                     ],
-                    exercicios: [
+                    leituras: [
                         {
                             sequencia: 1,
                             titulo: 'Teste 1'
@@ -55,7 +55,7 @@ export default {
                             duracaoMinutos: 4
                         }
                     ],
-                    exercicios: [
+                    leituras: [
                         {
                             sequencia: 1,
                             titulo: 'Teste 1'

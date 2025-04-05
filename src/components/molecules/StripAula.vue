@@ -1,7 +1,7 @@
 <template>
     <div class="cards d-flex flex-row align-items-center px-2">
         <div class="col-1">
-            <img src="../../assets/images/video-camera.svg" class="img-fluid">
+            <img src="@/assets/icons/video-camera.svg" class="img-fluid">
         </div>
         <div class="col-1 text-center">{{ aula.sequencia }}</div>
         <div class="col-8 text-truncate px-2">{{ aula.titulo }}</div>

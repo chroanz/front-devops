@@ -1,21 +1,21 @@
 <template>
-    <div class="container"  v-if="this.curso.nome">
+    <div class="container" v-if="this.curso.nome">
         <div>
-            <CardCurso :curso="this.curso" :matriculavel="true" @navigate="handleNavigate"/>
+            <CardCurso :curso="this.curso" :matriculavel="true" @navigate="handleNavigate" />
         </div>
         <div class="detalhes">
             <div class="left">
                 <div>Aulas</div>
                 <div class="strips">
-                    <StripAula v-for="aula in this.curso.aulas ?? []" :key="aula.sequencia"
-                        :aula="aula" />
+                    <StripAula v-for="aula in this.curso.aulas ?? []" :key="aula.sequencia" :aula="aula" color="#ffffff"
+                        :marcarVisto=false />
                 </div>
             </div>
             <div class="right">
-                <div>Exercícios</div>
+                <div>Leituras</div>
                 <div class="strips">
-                    <StripExercicio v-for="exercicio in this.curso.exercicios ?? []" :key="exercicio.sequencia"
-                        :exercicio="exercicio" />
+                    <StripLeitura v-for="leitura in this.curso.leituras ?? []" :key="leitura.sequencia"
+                        :leitura="leitura" :marcarVisto=true />
                 </div>
             </div>
         </div>
@@ -25,10 +25,10 @@
     </div>
 </template>
 <script>
-import CardCurso from '../organisms/CardCurso.vue';
-import StripAula from '../molecules/StripAula.vue';
-import StripExercicio from '../molecules/StripExercicio.vue';
+import CardCurso from '@/components/organisms/CardCurso.vue';
+import StripAula from '@/components/molecules/StripAula.vue';
 import { listaCursos } from '@/models/mock-data';
+import StripLeitura from '@/components/molecules/StripLeitura.vue';
 
 export default {
     name: 'DetalheCursoComponent',
@@ -41,7 +41,7 @@ export default {
     components: {
         CardCurso,
         StripAula,
-        StripExercicio
+        StripLeitura
     },
     methods: {
         handleNavigate(path) {
@@ -52,6 +52,7 @@ export default {
         const id = this.$route.params.id;
         const existente = this.cursos.find(curso => curso.id == id);
         if (!existente) {
+
             console.log('Curso não existe')
             return;
         }
@@ -60,23 +61,27 @@ export default {
 }
 </script>
 <style scoped>
-.container{
+.container {
     width: 80%;
     display: flex;
     flex-direction: column;
     gap: 2em;
 }
-.detalhes{
+
+.detalhes {
     display: flex;
     justify-content: space-between;
 }
-.left{
+
+.left {
     text-align: start;
 }
-.right{
+
+.right {
     text-align: end;
 }
-.strips{
+
+.strips {
     display: flex;
     flex-direction: column;
     gap: 10px;

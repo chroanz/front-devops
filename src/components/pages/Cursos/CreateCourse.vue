@@ -10,7 +10,7 @@
   </template>
   
   <script>
-  import FormCreateCourse from '../organisms/FormCreateCourse.vue';
+  import FormCreateCourse from '../../organisms/FormCreateCourse.vue';
   
   export default {
     name: 'CreateCourse',
