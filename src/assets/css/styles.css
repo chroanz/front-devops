@@ -4,6 +4,8 @@
     --color-primary: #F5F5F5;
     --color-secondary: #B288C0;
     --color-action: #2176AE;
+    --color-verde: #57CA22;
+    --color-secondary-hover: rgba(213, 163, 230, 0.7);
 }
 
 body {
