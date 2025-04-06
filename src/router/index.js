@@ -13,6 +13,7 @@ import CoursesPage from "@/components/pages/Cursos/CoursesPage.vue";
 import AcompanhamentoComponent from "@/components/pages/Cursos/AcompanhamentoComponent.vue";
 import AulaView from '@/components/organisms/AulaView.vue';
 import LeituraView from '@/components/organisms/LeituraView.vue';
+import CardBusca from "@/components/organisms/CardBusca.vue";
 
 const routes = [
   {
@@ -108,6 +109,14 @@ const routes = [
     name: "CoursesPage",
     components: {
       default: CoursesPage,
+      header: AppNavbar,
+    },
+  },
+  {
+    path: "/cardbusca",
+    name: "CardBusca",
+    components: {
+      default: CardBusca,
       header: AppNavbar,
     },
   },
