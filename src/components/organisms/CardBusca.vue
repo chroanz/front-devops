@@ -158,7 +158,6 @@
       height: 220px;
     }
   
-  
     /*ÍCONE INFORMAÇÃO*/
   
     .icone-card {
