@@ -66,7 +66,7 @@
                         <span class="star filled">★</span>
                     </div>
                     <p class="card-text text-muted mb-3">Aprenda a comunicação em Língua Brasileira de Sinais (Libras).</p>
-                    <a href="#" class="btn btn-custom">Ver Detalhes</a>
+                    <a href="/curso/3" class="btn btn-custom">Ver Detalhes</a>
                 </div>
             </div>
         </div>

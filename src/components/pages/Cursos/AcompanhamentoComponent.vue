@@ -5,7 +5,7 @@
                 <a @click="fecharCurso" role="button">
                     <SvgIcon icon="close" size="24px" color="#000000" />
                 </a>
-                <h3>{{ aulaAtual?.titulo || 'Carregando...' }}</h3>
+                <h6>{{ aulaAtual?.titulo || 'Carregando...' }}</h6>
             </div>
             <div class="header-right col-8">
                 <h2 class="col-6">{{ curso?.nome }}</h2>
@@ -151,6 +151,9 @@ export default {
     padding: 1rem;
     background-color: var(--color-secondary);
     color: #000000;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .header-curso>div {
@@ -187,7 +190,7 @@ export default {
 }
 
 h2,
-h3 {
+h6 {
     margin: 0
 }
 </style>

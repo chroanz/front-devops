@@ -49,7 +49,6 @@ export default {
         const user = JSON.parse(localStorage.getItem('loggedUser') ?? '{}');
         this.user = user;
         const matriculados = user.cursos_matriculados ?? [];
-        console.log(matriculados)
         this.matriculado = matriculados.includes(this.curso.id ?? 0);
     },
     methods: {
@@ -65,7 +64,6 @@ export default {
         handleMatricula() {
             if (this.matriculado) {
                 const url = `/curso/${this.curso.id}/acompanhar`;
-                console.log(url)
                 this.$emit('navigate', url)
                 return;
             }

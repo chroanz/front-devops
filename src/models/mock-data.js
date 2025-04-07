@@ -108,7 +108,7 @@ export const listaCursos = [
     leituras: [
       {
         sequencia: 1,
-        titulo: "Exercício de Acessibilidade",
+        titulo: "Leitura sobre aplicação de acessibilidade no ensino de libras",
         curso_id: 3,
         id: 778,
         lido: false,
