@@ -15,6 +15,7 @@ import AcompanhamentoComponent from "@/components/pages/Cursos/AcompanhamentoCom
 import AulaView from '@/components/organisms/AulaView.vue';
 import LeituraView from '@/components/organisms/LeituraView.vue';
 import CardBusca from "@/components/organisms/CardBusca.vue";
+import SobreNos from "@/components/pages/SobreNos.vue";
 
 const routes = [
   {
@@ -126,6 +127,14 @@ const routes = [
     name: "CardBusca",
     components: {
       default: CardBusca,
+      header: AppNavbar,
+    },
+  },
+  {
+    path: "/SobreNos",
+    name: "SobreNos",
+    components: {
+      default: SobreNos,
       header: AppNavbar,
     },
   },
