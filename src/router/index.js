@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../components/pages/homepage.vue";
 import Login from "../components/pages/LoginComponent.vue";
+import Cadastro from "../components/pages/CadastroComponent.vue";
 import PreRecuperarSenha from "@/components/PreRecuperarSenha.vue";
 import FormRecuperarSenha from "@/components/FormRecuperarSenha.vue";
 import DetalheCursoComponent from "@/components/pages/Cursos/DetalheCursoComponent.vue";
@@ -29,6 +30,14 @@ const routes = [
     name: "Login",
     components: {
       default: Login,
+      header: AppNavbar,
+    },
+  },
+  {
+    path: "/cadastro",
+    name: "Cadastro",
+    components: {
+      default: Cadastro,
       header: AppNavbar,
     },
   },
