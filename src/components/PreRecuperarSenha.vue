@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex justify-content-center align-items-center">
-        <form @submit.prevent="handlesubmit" action="#" class="form-pw-recovery p-5">
+        <form @submit.prevent="submitForm" class="form-pw-recovery p-5">
             <img src="../assets/images/logo.png" alt="Logo do sistema" class="logo">
             <br>
             <br>
@@ -11,10 +11,12 @@
             <div class="form-group text-start">
                 <label for="email">Email</label>
                 <br>
-                <input class="form-control" type="email" id="email" name="email" placeholder="Insira seu e-mail" maxlength="50" minlength="10" required>
+                <input class="form-control" type="email" id="email" v-model="email" placeholder="Insira seu e-mail" maxlength="50" minlength="10" required>
             </div>
             <br>
-            <button class="btn-action w-100 px-3 py-2" id="btn-enviar" type="submit">Enviar</button>
+            <button class="btn-action w-100 px-3 py-2" id="btn-enviar" type="submit" :disabled="isSubmitting">
+                {{ isSubmitting ? 'Enviando...' : 'Enviar' }}
+            </button>
             <div class="w-100 text-start">
                 <br>
                 <a class="text-decoration-none text-dark" href="/login">Voltar</a>
@@ -26,9 +28,37 @@
 <script>
     export default {
         name: 'PreRecuperarSenha',
+        data() {
+            return {
+                email: '',
+                isSubmitting: false
+            }
+        },
         methods: {
-            handlesubmit() {
-                this.$router.push('/recuperar-senha');
+            async submitForm() {
+                try {
+                    this.isSubmitting = true;
+                    const response = await fetch('http://127.0.0.1:8000/api/forgot-password', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email: this.email }),
+                    });
+                    
+                    if (response.ok) {
+                        alert('Solicitação enviada com sucesso! Verifique seu e-mail para recuperar sua senha.');
+                        this.email = '';
+                    } else {
+                        const data = await response.json();
+                        alert(data.message || 'Ocorreu um erro ao enviar a solicitação. Tente novamente.');
+                    }
+                } catch (error) {
+                    console.error('Erro:', error);
+                    alert('Ocorreu um erro ao enviar a solicitação. Tente novamente.');
+                } finally {
+                    this.isSubmitting = false;
+                }
             }
         }
     }

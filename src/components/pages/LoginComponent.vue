@@ -18,7 +18,7 @@
         </div>
 
         <button type="submit">Entrar</button>
-        <a href="#">Esqueci a senha</a>
+        <a href="/pre-recuperar-senha">Esqueci a senha</a>
       </form>
     </div>
   </div>
