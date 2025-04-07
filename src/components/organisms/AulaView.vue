@@ -13,7 +13,7 @@
             <h3>Transcrição</h3>
             <div v-html="transcricao"></div>
         </div>
-        <button @click="marcarComoConcluida" class="btn-concluir">
+        <button @click="marcarComoConcluida" class="btn btn-primary action">
             Marcar como concluída
         </button>
     </div>
@@ -71,6 +71,9 @@ export default {
     height: 0;
     overflow: hidden;
     margin-bottom: 20px;
+}
+.action{
+    background-color: var(--color-action);
 }
 
 .video-container iframe,

@@ -43,6 +43,11 @@ const routes = [
     },
   },
   {
+    path: "/cursos",
+    name: "ListaCursos",
+    component: CoursesPage
+  },
+  {
     path: "/curso/:id/acompanhar",
     name: "AcompanharCurso",
     component: AcompanhamentoComponent,

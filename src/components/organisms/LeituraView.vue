@@ -1,16 +1,13 @@
 <template>
     <div class="aula-container">
-        <div class="video-container">
-            <!-- Componente de vídeo aqui -->
-        </div>
         <div class="transcricao">
             <h3>{{ this.leituraAtual.titulo }}</h3>
             <div v-html="texto"></div>
         </div>
-        <button @click="marcarComoConcluida" class="btn-concluir">
-            Marcar como concluída
-        </button>
     </div>
+    <button @click="marcarComoConcluida" class="btn btn-primary action">
+        Marcar como concluída
+    </button>
 </template>
 
 <script>
@@ -40,3 +37,11 @@ export default {
     emits: ['atividade-concluida']
 }
 </script>
+<style scoped>
+.action{
+    background-color: var(--color-action);
+}
+.aula-container{
+    padding: 8px
+}
+</style>
