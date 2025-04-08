@@ -16,6 +16,7 @@ import AulaView from '@/components/organisms/AulaView.vue';
 import LeituraView from '@/components/organisms/LeituraView.vue';
 import CardBusca from "@/components/organisms/CardBusca.vue";
 import SobreNos from "@/components/pages/SobreNos.vue";
+import CardShowClass from "@/components/CardShowClass.vue";
 
 const routes = [
   {
@@ -141,6 +142,13 @@ const routes = [
     components: {
       default: SobreNos,
       header: AppNavbar,
+    },
+  },
+  {
+    path: "/cardshowclass",
+    name: "CardShowClass",
+    components: {
+      default: CardShowClass,
     },
   },
 ];
