@@ -33,9 +33,10 @@ export default {
         },
         aulaAtual() {
             const curso = listaCursos.find(c => c.id === this.cursoId)
-            return curso?.aulas.find(a => a.sequencia === this.aulaId) || {}
+            return curso?.aulas.find(a => a.id === this.aulaId) || {}
         },
         isYoutubeVideo() {
+            console.log(this.aulaAtual.videoUrl)
             return this.aulaAtual.videoUrl?.includes('youtube.com') ||
                 this.aulaAtual.videoUrl?.includes('youtu.be')
         },

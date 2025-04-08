@@ -19,7 +19,7 @@ export const listaCursos = [
         titulo: "Teste 2",
         duracaoMinutos: 4,
         curso_id: 1,
-        videoUrl: "https://youtube.com/watch?v=example2",
+        videoUrl: "https://www.youtube.com/watch?v=-ZDkdbPqUZg",
         id: 978,
       },
     ],
