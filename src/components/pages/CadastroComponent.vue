@@ -23,17 +23,21 @@
           </div>
   
           <button type="submit">Cadastrar</button>
-          <a href="#">Já tem uma conta? Entrar</a>
+          <router-link to="/login" class="link-btn">Já tem uma conta? Entrar</router-link>
+
         </form>
       </div>
     </div>
   </template>
   
   <script>
-  export default {};
+    export default {};
   </script>
   
   <style scoped>
+  .link-btn:hover{
+    color: #00000091;
+  }
   .container-login {
     width: 100%;
     min-height: calc(100vh - 110px);
