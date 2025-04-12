@@ -23,7 +23,7 @@
         </div>
 
         <button type="submit">Cadastrar</button>
-        <router-link to="/login" class="login-link">Já tem uma conta? Entrar</router-link>
+        <router-link to="/login" class="link-btn">Já tem uma conta? Entrar</router-link>
       </form>
     </div>
 

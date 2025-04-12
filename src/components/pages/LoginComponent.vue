@@ -18,7 +18,8 @@
         </div>
 
         <button type="submit">Entrar</button>
-        <a href="/pre-recuperar-senha">Esqueci a senha</a>
+        <a href="/pre-recuperar-senha" class="link-btn">Esqueci a senha</a>
+        <router-link to="/cadastro" class="link-btn">Não possui conta? Cadastre-se</router-link>
       </form>
     </div>
   </div>
@@ -29,6 +30,9 @@ export default {};
 </script>
 
 <style>
+.link-btn:hover{
+  color: #00000091;
+}
 .container-login {
   width: 100%;
   height: calc(100vh - 110px);
