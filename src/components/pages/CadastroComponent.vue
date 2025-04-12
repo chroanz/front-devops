@@ -1,38 +1,108 @@
 <template>
-    <div class="container-login">
-      <div class="form-login-area">
-        <div class="form-area-img">
-          <img src="../../assets/images/logo.png" alt="Logo Librear" />
-        </div>
-        <form action="#" class="form-login">
-          <h2>Crie sua conta</h2>
-  
-          <div class="input-container">
-            <input type="text" id="name" required />
-            <label for="name">Nome</label>
-          </div>
-  
-          <div class="input-container">
-            <input type="email" id="email" required />
-            <label for="email">E-mail</label>
-          </div>
-  
-          <div class="input-container">
-            <input type="password" id="password" required />
-            <label for="password">Senha</label>
-          </div>
-  
-          <button type="submit">Cadastrar</button>
-          <router-link to="/login" class="link-btn">Já tem uma conta? Entrar</router-link>
+  <div class="container-login">
+    <div class="form-login-area">
+      <div class="form-area-img">
+        <img src="../../assets/images/logo.png" alt="Logo Librear" />
+      </div>
+      <form @submit.prevent="validateForm" class="form-login">
+        <h2>Crie sua conta</h2>
 
-        </form>
+        <div class="input-container">
+          <input type="text" id="name" v-model="form.name" required />
+          <label for="name">Nome</label>
+        </div>
+
+        <div class="input-container">
+          <input type="email" id="email" v-model="form.email" required />
+          <label for="email">E-mail</label>
+        </div>
+
+        <div class="input-container">
+          <input type="password" id="password" v-model="form.password" required />
+          <label for="password">Senha</label>
+        </div>
+
+        <button type="submit">Cadastrar</button>
+        <router-link to="/login" class="login-link">Já tem uma conta? Entrar</router-link>
+      </form>
+    </div>
+
+    <!-- Modal de Erro -->
+    <div
+      class="modal fade"
+      id="errorModal"
+      tabindex="-1"
+      aria-labelledby="errorModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="errorModalLabel">Erro no Cadastro</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+          </div>
+          <div class="modal-body">
+            <ul>
+              <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          </div>
+        </div>
       </div>
     </div>
-  </template>
-  
-  <script>
-    export default {};
-  </script>
+  </div>
+</template>
+
+<script>
+import { Modal } from 'bootstrap';
+export default {
+  data() {
+    return {
+      form: {
+        name: '',
+        email: '',
+        password: ''
+      },
+      errors: []
+    };
+  },
+  methods: {
+    validateForm() {
+      this.errors = [];
+
+      const { name, email, password } = this.form;
+
+      // Validação de campos vazios
+      if (!name || !email || !password) {
+        this.errors.push('Por favor, preencha todos os campos.');
+      }
+
+      // Validação de emaiils válidos, posso mudar dps, foi só para teste
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook|yahoo)\.com$/;
+      if (!emailRegex.test(email)) {
+        this.errors.push('Insira um e-mail válido (gmail, hotmail, outlook ou yahoo com .com).');
+      }
+
+      // Validação qualquer de senha, posso fazer uma regex dps.
+      if (password.length < 5) {
+        this.errors.push('A senha deve conter pelo menos 5 caracteres.');
+      }
+
+      // Caso haja erros, exibir eles
+      if (this.errors.length > 0) {
+        const modal = new Modal(document.getElementById('errorModal'));
+        modal.show();
+
+        return;
+      }
+
+      alert('Formulário válido! Enviando dados...');
+    }
+  }
+};
+</script>
   
   <style scoped>
   .link-btn:hover{
