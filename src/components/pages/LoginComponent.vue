@@ -4,16 +4,16 @@
       <div class="form-area-img">
         <img src="../../assets/images/logo.png" alt="Logo Librear">
       </div>
-      <form action="#" class="form-login">
+      <form action="#" class="form-login" @submit.prevent="handleLogin">
         <h2>Bem-vindo de volta!</h2>
 
         <div class="input-container">
-          <input type="email" id="email" required>
+          <input type="email" id="email" required v-model="email" />
           <label for="email">E-mail</label>
         </div>
 
         <div class="input-container">
-          <input type="password" id="password" required>
+          <input type="password" id="password" required v-model="password" />
           <label for="password">Senha</label>
         </div>
 
@@ -22,12 +22,85 @@
         <router-link to="/cadastro" class="link-btn">Não possui conta? Cadastre-se</router-link>
       </form>
     </div>
+
+    <div
+      class="modal fade"
+      id="errorModal"
+      tabindex="-1"
+      aria-labelledby="errorModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="errorModalLabel">Erro no Login</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+          </div>
+          <div class="modal-body">
+            <ul>
+              <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+import api from '@/services/api';
+import { Modal } from 'bootstrap';
+
+export default {
+  data() {
+    return {
+      email: '',
+      password: '',
+      errors: []
+    };
+  },
+  methods: {
+    async handleLogin() {
+      this.errors = []; 
+
+      if (!this.email || !this.password) {
+        this.errors.push('Por favor, preencha todos os campos.');
+      }
+
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook|yahoo)\.com$/;
+      if (this.email && !emailRegex.test(this.email)) {
+        this.errors.push('Insira um e-mail válido (gmail, hotmail, outlook ou yahoo com .com).');
+      }
+
+      if (this.errors.length > 0) {
+        const modal = new Modal(document.getElementById('errorModal'));
+        modal.show();
+        return;
+      }
+
+      try {
+        const response = await api.post('/login', {
+          email: this.email,
+          password: this.password,
+        });
+
+        localStorage.setItem('access_token', response.data.access_token);
+
+        this.$router.push('/');
+      } catch (error) {
+        console.error('Erro no login:', error);
+        this.errors.push('Credenciais inválidas!');
+        const modal = new Modal(document.getElementById('errorModal'));
+        modal.show();
+      }
+    },
+  },
+};
 </script>
+
 
 <style>
 .link-btn:hover{
