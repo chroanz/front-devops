@@ -17,6 +17,7 @@ import LeituraView from '@/components/organisms/LeituraView.vue';
 import CardBusca from "@/components/organisms/CardBusca.vue";
 import SobreNos from "@/components/pages/SobreNos.vue";
 import CardShowClass from "@/components/CardShowClass.vue";
+import OPerfil from "@/components/pages/OPerfil.vue";
 
 const routes = [
   {
@@ -149,6 +150,13 @@ const routes = [
     name: "CardShowClass",
     components: {
       default: CardShowClass,
+    },
+  },
+  {
+    path: "/OPerfil",
+    name: "Perfil",
+    components: {
+      default: OPerfil,
     },
   },
 ];

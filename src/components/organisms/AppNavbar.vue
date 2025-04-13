@@ -119,7 +119,7 @@ export default {
 
   .navbar {
     background-color: rgba(178, 136, 192, 1);
-    margin-bottom: 1em;
+    margin-bottom: 1px;
   }
 
 
