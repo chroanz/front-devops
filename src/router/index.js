@@ -18,7 +18,7 @@ import CardBusca from "@/components/organisms/CardBusca.vue";
 import SobreNos from "@/components/pages/SobreNos.vue";
 import CardShowClass from "@/components/CardShowClass.vue";
 import OPerfil from "@/components/pages/OPerfil.vue";
-
+import EditUser from "@/components/pages/EditUser.vue";
 const routes = [
   {
     path: "/",
@@ -158,6 +158,14 @@ const routes = [
     components: {
       default: OPerfil,
     },
+  },
+  {
+    path: "/edituser",
+    name: "edituser",
+    components:{
+      default: EditUser,
+      header: AppNavbar,
+    }
   },
 ];
 
