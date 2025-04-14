@@ -2,7 +2,7 @@
     <div class="card_curso">
         <div class="top">
             <div>
-                <img :src="getImageUrl(curso.imagem)">
+                <img :src="curso.imagem_url || ''" alt="Imagem do curso" />
             </div>
             <div class="textos">
                 <h2>{{ curso.nome }}</h2>

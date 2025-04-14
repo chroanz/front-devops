@@ -122,12 +122,13 @@ const routes = [
     },
   },
   {
-    path: "/courses",
+    path: "/courses/:term?",
     name: "CoursesPage",
     components: {
       default: CoursesPage,
       header: AppNavbar,
     },
+    props: (route) => ({ term: route.params.term }),
   },
   {
     path: "/cardbusca",
