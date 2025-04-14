@@ -172,7 +172,7 @@
           <div class="col-md-3">
             <h6 class="text-black mb-2">Quem somos</h6>
             <ul class="list-unstyled">
-              <li><a href="/SobreNos" class="text-black text-decoration-none">Missão e visão</a></li>
+              <li><a href="/SobreNos" class="text-black text-decoration-none">MSobre nós</a></li>
               <li><a href="/OPerfil" class="text-black text-decoration-none">Outros clientes</a></li>
             </ul>
           </div>
