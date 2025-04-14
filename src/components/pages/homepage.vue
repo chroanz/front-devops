@@ -369,4 +369,4 @@ opacity: 0.7;
 .text-black {
   color: black !important;
 }
-</style>
+</style>  
