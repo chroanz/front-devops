@@ -3,7 +3,7 @@
     <!-- Header do perfil com nome do usuário e botão editar -->
     <div class="bg-purple py-3 px-5 d-flex justify-content-between align-items-center">
       <h2 class="m-0 text-black">Perfil de {{ usuario.nome }}</h2>
-      <button class="btn btn-light btn-sm">Editar Perfil</button>
+      <button class="btn btn-light btn-sm"> <a style="text-decoration: none; color: black;" href="/edituser">Editar Perfil</a></button>
     </div>
 
     <!-- Foto e informações do perfil -->
