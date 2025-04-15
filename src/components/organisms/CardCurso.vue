@@ -32,7 +32,7 @@ export default {
         }
     },
     computed: {
-        textoBotao(){
+        textoBotao() {
             if (this.matriculado) {
                 return 'Entrar no Curso'
             }
@@ -68,7 +68,11 @@ export default {
                 return;
             }
             if (this.getUser()) {
-                alert('Matrícula habilitada')
+                alert('Matrícula realizada!')
+                const user = this.getUser();
+                user.cursos_matriculados.push(this.curso.id);
+                localStorage.setItem('loggedUser', JSON.stringify(user));
+                this.matriculado = true;
             } else {
                 alert('Não logado');
                 this.$emit('navigate', '/login');
@@ -103,6 +107,7 @@ export default {
     flex-direction: column;
     align-items: start;
     text-align: justify;
+    flex: 1;
 }
 
 .card_curso {
@@ -131,5 +136,43 @@ export default {
 img.icone {
     width: 16px;
     height: 16px;
+}
+
+@media (max-width: 768px) {
+    .top {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .top img {
+        width: 100%;
+        height: auto;
+        max-width: 300px;
+    }
+
+    .textos {
+        text-align: center;
+        align-items: center;
+    }
+
+    .bottom {
+        flex-direction: column;
+        gap: 1em;
+    }
+
+    .card_curso {
+        padding: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-matricula {
+        padding: 0.5em 1.5em;
+        width: 100%;
+    }
+
+    .card_curso {
+        padding: 0.8em;
+    }
 }
 </style>
