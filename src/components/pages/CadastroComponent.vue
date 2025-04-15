@@ -207,8 +207,13 @@ export default {
     text-decoration: none;
   }
   
-  @media (max-width: 600px) {
+  @media (max-width: 700px) {
+    .container-login
+    {
+      padding: 0px;
+    }
     .form-login-area {
+      border-radius: 0px;
       width: 100%;
       padding: 1.5em 0;
     }
@@ -224,7 +229,7 @@ export default {
     }
   
     .form-login {
-      width: 90%;
+      width: 100%;
       gap: 10px;
     }
   

@@ -209,8 +209,9 @@ export default {
 @media (max-height: 1200px)  and (max-width: 700px){
 
   .form-login-area {
-    max-width: 92%;
-    height: calc(100vh - 108px);
+    max-width: 100%;
+    border-radius: 0px;
+    height: calc(100vh - 72px);
   }
 
     .form-login h2 {
