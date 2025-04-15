@@ -42,6 +42,11 @@ export default {
     components: {
         CardCurso
     },
+    watch: {
+        term(newTerm) {
+            this.fetchCursos(newTerm);
+        }
+    },
     methods: {
         handleNavigate(url) {
             this.$router.push(url);
@@ -49,13 +54,13 @@ export default {
         goToCourse(id) {
             this.$router.push(`/curso/${id}`)
         },
-        async fetchCursos(seachTerm = null) {
+        async fetchCursos(searchTerm = null) {
             this.loading = true;
             this.error = null;
             try {
                 let url = 'http://localhost:8000/api/cursos';
-                if (seachTerm) {
-                    url += `?search=${seachTerm}`;
+                if (searchTerm) {
+                    url += `/search/${searchTerm}`;
                 }
                 const response = await axios.get(url);
                 this.cursos = response.data;
