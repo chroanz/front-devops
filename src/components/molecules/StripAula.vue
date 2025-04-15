@@ -26,8 +26,8 @@ export default {
     height: 60px;
     border: 1px solid black;
     background-color: var(--color-primary);
-    width: 30em;
     font-size: .75em;
+    max-width: 30em;
 }
 
 .img-fluid {

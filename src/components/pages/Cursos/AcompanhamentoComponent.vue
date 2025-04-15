@@ -1,16 +1,19 @@
 <template>
     <div class="curso-container">
         <div id="superior" class="header-curso">
-            <div class="col-4">
+            <div class="col-auto d-flex align-items-center gap-3">
                 <a @click="fecharCurso" role="button">
                     <SvgIcon icon="close" size="24px" color="#000000" />
                 </a>
-                <h6>{{ aulaAtual?.titulo || 'Carregando...' }}</h6>
+                <a @click="toggleMenu" role="button" class="d-md-none">
+                    <SvgIcon icon="menu" size="24px" color="#000000" />
+                </a>
+                <h6 class="d-none d-md-block">{{ aulaAtual?.titulo || 'Carregando...' }}</h6>
             </div>
-            <div class="header-right col-8">
-                <h2 class="col-6">{{ curso?.nome }}</h2>
-                <ProgressBar :progress=this.percentualProgresso />
-                <a @click="proximaAtividade" :disabled="!temProximaAtividade" role="button" class="col-1">
+            <div class="header-right flex-grow-1">
+                <h2 class="d-none d-md-block col-6">{{ curso?.nome }}</h2>
+                <ProgressBar :progress=this.percentualProgresso class="flex-grow-1" />
+                <a @click="proximaAtividade" :disabled="!temProximaAtividade" role="button" class="col-auto">
                     <SvgIcon icon="arrow-right" size="32px" color="#000000" />
                 </a>
             </div>
@@ -19,7 +22,12 @@
             <div id="centro" class="content-principal">
                 <router-view @atividade-concluida="atualizarProgresso"></router-view>
             </div>
-            <div id="direita" class="lista-atividades">
+            <div id="direita" class="lista-atividades" :class="{ 'menu-active': menuActive }">
+                <div class="lista-header d-md-none">
+                    <a @click="toggleMenu" role="button">
+                        <SvgIcon icon="close" size="24px" color="#000000" />
+                    </a>
+                </div>
                 <template v-for="item in listaAtividades" :key="item.id">
                     <DetalheAula v-if="item.tipo === 'aula'" :aula="item" @click="navegarPara(item)"
                         :active="isAtividadeAtual(item)" />
@@ -51,7 +59,8 @@ export default {
             curso: null,
             listaAtividades: [],
             atividadeAtual: null,
-            percentualProgresso: 0
+            percentualProgresso: 0,
+            menuActive: false
         }
     },
     computed: {
@@ -69,10 +78,16 @@ export default {
         fecharCurso() {
             this.$router.push('/cursos')
         },
+        toggleMenu() {
+            this.menuActive = !this.menuActive;
+        },
         async navegarPara(item) {
             const rota = item.tipo === 'aula' ? 'aula' : 'leitura'
             this.atividadeAtual = item
             await this.$router.push(`/curso/${this.curso.id}/acompanhar/${rota}/${item.id}`)
+            if (window.innerWidth < 768) {
+                this.menuActive = false;
+            }
         },
         isAtividadeAtual(item) {
             return item.id == this.$route.params.atividadeId
@@ -142,6 +157,7 @@ export default {
     flex-direction: column;
     height: 100vh;
     color: #000000;
+    overflow: hidden;
 }
 
 .header-curso {
@@ -163,34 +179,63 @@ export default {
     flex-grow: 1;
 }
 
-.content-container {
-    display: flex;
-    flex: 1;
-}
-
 .header-right {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1rem;
 }
 
 .header-right>div {
     width: 30%;
 }
 
+.content-container {
+    display: flex;
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
 .content-principal {
     flex: 1;
     min-width: 70%;
-
+    overflow-y: auto;
 }
 
 .lista-atividades {
     width: 30%;
     background-color: var(--color-secondary);
+    overflow-y: auto;
+}
+
+.lista-header {
+    padding: 1rem;
+    text-align: right;
 }
 
 h2,
 h6 {
     margin: 0
+}
+
+@media (max-width: 767px) {
+    .lista-atividades {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        height: 100vh;
+        z-index: 1000;
+        transition: right 0.3s ease;
+    }
+
+    .lista-atividades.menu-active {
+        right: 0;
+    }
+
+    .content-principal {
+        width: 100%;
+    }
 }
 </style>

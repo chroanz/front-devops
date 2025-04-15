@@ -66,24 +66,54 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 2em;
+    margin: 0 auto;
+    padding: 1em;
 }
 
 .detalhes {
     display: flex;
     justify-content: space-between;
+    gap: 2em;
 }
 
 .left {
     text-align: start;
+    flex: 1;
 }
 
 .right {
     text-align: end;
+    flex: 1;
 }
 
 .strips {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    .detalhes {
+        flex-direction: column;
+    }
+
+    .right {
+        text-align: start;
+    }
+
+    .strips {
+        margin-top: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        padding: 0.5em;
+    }
 }
 </style>
