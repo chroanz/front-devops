@@ -25,7 +25,7 @@
             </div>
             <div class="d-flex align-items-end">
                 <button type="submit" class="btn btn-primary m-1">Criar Curso</button>
-                <a href="" class="btn btn-secondary m-1">Cancelar</a>
+                <a href="/" class="btn btn-secondary m-1">Cancelar</a>
             </div>
         </form>
     </div>
