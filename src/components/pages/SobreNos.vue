@@ -142,9 +142,8 @@
       <div class="col-md-3">
         <h6 class="text-black mb-3">Quem somos</h6>
         <ul class="list-unstyled">
-          <li><a href="#" class="text-black text-decoration-none">Missão</a></li>
-          <li><a href="#" class="text-black text-decoration-none">Visão</a></li>
-          <li><a href="#" class="text-black text-decoration-none">outros clientes</a></li>
+          <li><a href="/SobreNos" class="text-black text-decoration-none">Sobre nós</a></li>
+          <li><a href="/OPerfil" class="text-black text-decoration-none">Perfil</a></li>
         </ul>
       </div>
     </div>
