@@ -206,7 +206,7 @@ export default {
   text-decoration: none;
 }
 
-@media (max-height: 1200px)  and (max-width: 600px){
+@media (max-height: 1200px)  and (max-width: 700px){
 
   .form-login-area {
     max-width: 92%;
