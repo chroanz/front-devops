@@ -87,7 +87,7 @@ export default {
           password: this.password,
         });
 
-        localStorage.setItem('access_token', response.data.access_token);
+        sessionStorage.setItem('access_token', response.data.access_token);
 
         this.$router.push('/');
       } catch (error) {

@@ -8,17 +8,17 @@
         <h2>Crie sua conta</h2>
 
         <div class="input-container">
-          <input type="text" id="name" v-model="form.name" required />
+          <input type="text" id="name" v-model="form.name" name="name" required />
           <label for="name">Nome</label>
         </div>
 
         <div class="input-container">
-          <input type="email" id="email" v-model="form.email" required />
+          <input type="email" id="email" v-model="form.email" name="email" required />
           <label for="email">E-mail</label>
         </div>
 
         <div class="input-container">
-          <input type="password" id="password" v-model="form.password" required />
+          <input type="password" id="password" v-model="form.password" name="password" required />
           <label for="password">Senha</label>
         </div>
 
@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import api from '@/services/api';
 import { Modal } from 'bootstrap';
 export default {
   data() {
@@ -69,7 +70,7 @@ export default {
     };
   },
   methods: {
-    validateForm() {
+    async validateForm() {
       this.errors = [];
 
       const { name, email, password } = this.form;
@@ -86,19 +87,45 @@ export default {
       }
 
       // Validação qualquer de senha, posso fazer uma regex dps.
-      if (password.length < 5) {
+      if (password.length < 3) {
         this.errors.push('A senha deve conter pelo menos 5 caracteres.');
       }
 
-      // Caso haja erros, exibir eles
       if (this.errors.length > 0) {
         const modal = new Modal(document.getElementById('errorModal'));
         modal.show();
-
         return;
       }
 
-      alert('Formulário válido! Enviando dados...');
+      try
+      {
+          await api.post("/user", {
+          email: this.form.email,
+          name: this.form.name,
+          password: this.form.password,
+       })
+       this.$router.push('/login');
+
+      }
+      catch(error)
+      {
+        if (error.response?.data?.errors) {
+        const allErrors = error.response.data.errors;
+        for (const key in allErrors) {
+          if (Object.hasOwn(allErrors, key)) {
+            this.errors.push(...allErrors[key]);
+          }
+        }
+      } else if (error.response?.data?.msg) {
+        this.errors.push(error.response.data.msg); 
+      } else {
+        this.errors.push('Erro inesperado ao cadastrar. Tente novamente.');
+      }
+
+      const modal = new Modal(document.getElementById('errorModal'));
+      modal.show();
+      }
+
     }
   }
 };
