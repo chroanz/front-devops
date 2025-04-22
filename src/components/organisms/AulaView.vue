@@ -1,11 +1,11 @@
 <template>
-    <div class="aula-container">
+    <div v-if="!loading" class="aula-container">
         <div class="video-container">
             <iframe v-if="isYoutubeVideo" :src="embedYoutubeUrl" frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
             </iframe>
-            <video v-else controls :src="aulaAtual.videoUrl" class="video-player">
+            <video v-else controls :src="aulaAtual?.videoUrl" class="video-player">
                 Seu navegador não suporta a tag de vídeo.
             </video>
         </div>
@@ -20,20 +20,22 @@
 </template>
 
 <script>
-import { listaCursos } from '@/models/mock-data'
+import aulaService from '@/services/aulaService'
 
 export default {
     name: 'AulaView',
+    data() {
+        return {
+            aulaAtual: null,
+            loading: true
+        }
+    },
     computed: {
         cursoId() {
             return parseInt(this.$route.params.id)
         },
         aulaId() {
             return parseInt(this.$route.params.atividadeId)
-        },
-        aulaAtual() {
-            const curso = listaCursos.find(c => c.id === this.cursoId)
-            return curso?.aulas.find(a => a.id === this.aulaId) || {}
         },
         isYoutubeVideo() {
             console.log(this.aulaAtual.videoUrl)
@@ -49,6 +51,11 @@ export default {
             return this.aulaAtual.transcricao || 'Transcrição não disponível'
         }
     },
+    async created() {
+        const aula = await aulaService.get(this.aulaId);
+        this.aulaAtual = aula;
+        this.loading = false;
+    },
     methods: {
         getYoutubeVideoId(url) {
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
@@ -56,8 +63,13 @@ export default {
             return (match && match[2].length === 11) ? match[2] : null
         },
         marcarComoConcluida() {
-            // Lógica para marcar aula como concluída
-            this.$emit('atividade-concluida', this.$route.params.atividadeId)
+            try {
+                aulaService.marcarVisto(this.aulaId);
+                this.aulaAtual.visto = true;
+            } catch (error) {
+                console.log(error)
+            }
+            this.$emit('atividade-concluida', this.$route.params.atividadeId, 'aula');
         }
     },
     emits: ['atividade-concluida'],

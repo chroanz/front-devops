@@ -13,13 +13,13 @@
 
 <script>
 import { Aula } from '@/models/models';
-import SvgIcon from '../atoms/SvgIcon.vue';
+import SvgIcon from '@/components/atoms/SvgIcon.vue';
 
 export default {
     name: "DetalheAula",
     computed: {
         iconColor() {
-            return this.aula.vista
+            return this.aula.visto
                 ? getComputedStyle(document.documentElement)?.getPropertyValue('--color-verde')?.trim()
                 : '#000000'
         },

@@ -7,33 +7,22 @@
                 </span>
             </div>
         </div>
-        <Toast
-            v-if="showToast"
-            message="Lista de cursos carregada com sucesso!"
-            title="Sucesso"
-            background="#28a745"
-            color="#ffffff"
-            @close="showToast = false"
-        />
     </div>
 </template>
 
 <script>
 import CardCurso from '@/components/organisms/CardCurso.vue';
 import cursoService from '@/services/cursoService';
-import Toast from '@/components/organisms/Toast.vue';
 
 export default {
     name: 'CoursesPage',
     data() {
         return {
             cursos: [],
-            showToast: false
         }
     },
     components: {
         CardCurso,
-        Toast
     },
     methods: {
         handleNavigate(url) {
@@ -46,7 +35,10 @@ export default {
     created() {
         cursoService.listarCursos().then((cursos) => {
             this.cursos = cursos;
-            this.showToast = true;
+            this.$toast({
+                message: 'Cursos Carregados',
+                title: 'Carregamento concluído'
+            })
         });
     }
 }

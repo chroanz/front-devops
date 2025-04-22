@@ -70,7 +70,7 @@ export default {
         this.errors.push('Por favor, preencha todos os campos.');
       }
 
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook|yahoo)\.com$/;
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook|yahoo|admin)\.com$/;
       if (this.email && !emailRegex.test(this.email)) {
         this.errors.push('Insira um e-mail válido (gmail, hotmail, outlook ou yahoo com .com).');
       }

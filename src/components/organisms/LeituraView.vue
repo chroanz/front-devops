@@ -1,5 +1,5 @@
 <template>
-    <div class="aula-container">
+    <div v-if="!loading" class="aula-container">
         <div class="transcricao">
             <h3>{{ this.leituraAtual.titulo }}</h3>
             <div v-html="texto"></div>
@@ -11,12 +11,33 @@
 </template>
 
 <script>
-import { listaCursos } from '@/models/mock-data'
+import leituraService from '@/services/leituraService'
+
+
 export default {
     name: 'AulaView',
     methods: {
-        marcarComoConcluida() {
-            this.$emit('atividade-concluida', this.$route.params.atividadeId)
+        async marcarComoConcluida() {
+            try {
+                await leituraService.marcarVisto(this.leituraId);
+                this.$emit('atividade-concluida', this.$route.params.atividadeId, 'leitura')
+            } catch (error) {
+                if (error.response) {
+                    this.$toast({
+                        message: error.response.data.msg,
+                        title: 'Erro ao marcar como visto',
+                        type: 'error'
+                    })
+                } else {
+                    console.error(error.message)
+                }
+            }
+        }
+    },
+    data() {
+        return {
+            leituraAtual: null,
+            loading: true
         }
     },
     computed: {
@@ -26,22 +47,30 @@ export default {
         leituraId() {
             return parseInt(this.$route.params.atividadeId)
         },
-        leituraAtual() {
-            const curso = listaCursos.find(c => c.id === this.cursoId)
-            return curso?.leituras.find(a => a.sequencia === this.leituraId) || {}
-        },
         texto() {
-            return this.leituraAtual.texto || 'Texto não disponível'
+            return this.leituraAtual.conteudo || 'Texto não disponível'
         }
     },
-    emits: ['atividade-concluida']
+    async created() {
+        try {
+            const leitura = await leituraService.get(this.leituraId);
+            this.leituraAtual = leitura;
+            this.loading = false;
+        }
+        catch (error) {
+            console.log(error)
+
+        }
+    },
+    emits: ['atividade-concluida'],
 }
 </script>
 <style scoped>
-.action{
+.action {
     background-color: var(--color-action);
 }
-.aula-container{
+
+.aula-container {
     padding: 8px
 }
 </style>
