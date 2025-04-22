@@ -12,17 +12,17 @@
 
 <script>
 import CardCurso from '@/components/organisms/CardCurso.vue';
-import { listaCursos } from '@/models/mock-data'
+import cursoService from '@/services/cursoService';
 
 export default {
     name: 'CoursesPage',
     data() {
         return {
-            cursos: []
+            cursos: [],
         }
     },
     components: {
-        CardCurso
+        CardCurso,
     },
     methods: {
         handleNavigate(url) {
@@ -33,7 +33,13 @@ export default {
         }
     },
     created() {
-        this.cursos = listaCursos;
+        cursoService.listarCursos().then((cursos) => {
+            this.cursos = cursos;
+            this.$toast({
+                message: 'Cursos Carregados',
+                title: 'Carregamento concluído'
+            })
+        });
     }
 }
 </script>

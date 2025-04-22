@@ -1,5 +1,5 @@
 <template>
-    <div class="container" v-if="this.curso.nome">
+    <div class="container" v-if="this.curso.titulo">
         <div>
             <CardCurso :curso="this.curso" :matriculavel="true" @navigate="handleNavigate" />
         </div>
@@ -13,7 +13,7 @@
             </div>
             <div class="right">
                 <div>Leituras</div>
-                <div class="strips">
+                <div class="strips right">
                     <StripLeitura v-for="leitura in this.curso.leituras ?? []" :key="leitura.sequencia"
                         :leitura="leitura" :marcarVisto=true />
                 </div>
@@ -27,14 +27,13 @@
 <script>
 import CardCurso from '@/components/organisms/CardCurso.vue';
 import StripAula from '@/components/molecules/StripAula.vue';
-import { listaCursos } from '@/models/mock-data';
 import StripLeitura from '@/components/molecules/StripLeitura.vue';
+import cursoService from '@/services/cursoService';
 
 export default {
     name: 'DetalheCursoComponent',
     data() {
         return {
-            cursos: listaCursos,
             curso: {}
         }
     },
@@ -48,14 +47,10 @@ export default {
             this.$router.push(path)
         }
     },
-    mounted() {
+    async mounted() {
         const id = this.$route.params.id;
-        const existente = this.cursos.find(curso => curso.id == id);
-        if (!existente) {
-
-            console.log('Curso não existe')
-            return;
-        }
+        console.log(id)
+        const existente = await cursoService.get(id);
         this.curso = existente;
     }
 }
@@ -83,7 +78,6 @@ export default {
 
 .right {
     text-align: end;
-    flex: 1;
 }
 
 .strips {

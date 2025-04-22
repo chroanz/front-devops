@@ -10,4 +10,7 @@ module.exports = defineConfig({
       .type("asset/source")
       .end();
   },
+  configureWebpack: {
+    devtool: 'source-map'
+  }
 });

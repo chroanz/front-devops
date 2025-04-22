@@ -18,7 +18,7 @@ export default {
     name: "DetalheExercicio",
     computed: {
         iconColor() {
-            return this.leitura.lido
+            return this.leitura.visto
                 ? getComputedStyle(document.documentElement)?.getPropertyValue('--color-verde')?.trim()
                 : '#000000'
         },
