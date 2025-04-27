@@ -59,7 +59,15 @@ export default {
             return this.user;
         },
         getImageUrl(name) {
-            return require(`@/assets/images/${name}`);
+            if (!name) {
+                return undefined
+            }
+            try {
+                return require(`@/assets/images/${name}`);
+            } catch (error) {
+                console.warn(`Imagem não encontrada: ${name}`)
+                return undefined;
+            }
         },
         handleMatricula() {
             if (this.matriculado) {

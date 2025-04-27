@@ -11,7 +11,7 @@
                 <h6 class="d-none d-md-block">{{ aulaAtual?.titulo || 'Carregando...' }}</h6>
             </div>
             <div class="header-right flex-grow-1">
-                <h2 class="d-none d-md-block col-6">{{ curso?.nome }}</h2>
+                <h4 class="d-none d-md-block col-6">{{ this.curso?.titulo }}</h4>
                 <ProgressBar :progress=this.percentualProgresso class="flex-grow-1" />
                 <a @click="proximaAtividade" :disabled="!temProximaAtividade" role="button" class="col-auto">
                     <SvgIcon icon="arrow-right" size="32px" color="#000000" />
@@ -44,7 +44,7 @@ import DetalheAula from '@/components/molecules/DetalheAula.vue'
 import DetalheLeitura from '@/components/molecules/DetalheLeitura.vue'
 import SvgIcon from '@/components/atoms/SvgIcon.vue'
 import ProgressBar from '@/components/molecules/ProgressBar.vue'
-import { listaCursos } from '@/models/mock-data.js'
+import cursoService from '@/services/cursoService'
 
 export default {
     name: 'AcompanhamentoComponent',
@@ -100,36 +100,32 @@ export default {
                 this.navegarPara(this.listaAtividades[indexAtual + 1])
             }
         },
-        atualizarProgresso(id) {
+        atualizarProgresso(id, tipo) {
             // Lógica para marcar atividade como concluída e atualizar progresso
-            const idx = this.listaAtividades.findIndex((item) => item.id == id);
-            if (this.listaAtividades[idx].tipo == 'aula') {
-                this.listaAtividades[idx].vista = true;
-            } else {
-                this.listaAtividades[idx].lido = true;
-            }
-
-            const atividadesConcluidas = this.listaAtividades.filter(item => item.vista || item.lido).length
+            const idx = this.listaAtividades.findIndex((item) => item.id == id && item.tipo == tipo);
+            this.listaAtividades[idx].visto = true;
+            const atividadesConcluidas = this.listaAtividades.filter(item => item.visto).length
             this.percentualProgresso = Math.round((atividadesConcluidas / this.listaAtividades.length) * 100)
         }
     },
     async created() {
         const cursoId = parseInt(this.$route.params.id)
-        this.curso = listaCursos.find(c => c.id === cursoId)
+        const cursoAtual = await cursoService.get(cursoId);
+        this.curso = cursoAtual
         if (this.curso) {
             // Combina aulas e leituras em uma única lista ordenada
             const aulas = this.curso.aulas.map(aula => ({
                 ...aula,
                 sequencia: aula.sequencia,
                 tipo: 'aula',
-                vista: false
+                visto: aula.visto
             }))
 
             const leituras = this.curso.leituras.map(leitura => ({
                 ...leitura,
                 sequencia: leitura.sequencia,
                 tipo: 'leitura',
-                lido: false
+                visto: leitura.visto
             }))
 
             this.listaAtividades = [...aulas, ...leituras]
@@ -145,6 +141,8 @@ export default {
                 )
                 this.atividadeAtual = atividadeAtual
             }
+            const atividadesConcluidas = this.listaAtividades.filter(item => item.visto).length
+            this.percentualProgresso = Math.round((atividadesConcluidas / this.listaAtividades.length) * 100)
 
         }
     }
@@ -214,8 +212,11 @@ export default {
     text-align: right;
 }
 
+h1,
 h2,
-h6 {
+h3,
+h4,
+h5 h6 {
     margin: 0
 }
 

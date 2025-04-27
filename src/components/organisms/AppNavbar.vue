@@ -34,6 +34,8 @@
             <hr>
             <li class="nav-item"><a class="nav-link" href="/couses/surdocegueira">Surdocegueira</a></li>
             <hr>
+            <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+            <hr>
           </ul>
         </div>
       </div>

@@ -70,7 +70,7 @@ export default {
         this.errors.push('Por favor, preencha todos os campos.');
       }
 
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook|yahoo)\.com$/;
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook|yahoo|admin)\.com$/;
       if (this.email && !emailRegex.test(this.email)) {
         this.errors.push('Insira um e-mail válido (gmail, hotmail, outlook ou yahoo com .com).');
       }
@@ -87,7 +87,7 @@ export default {
           password: this.password,
         });
 
-        localStorage.setItem('access_token', response.data.access_token);
+        sessionStorage.setItem('access_token', response.data.access_token);
 
         this.$router.push('/');
       } catch (error) {
@@ -206,11 +206,12 @@ export default {
   text-decoration: none;
 }
 
-@media (max-height: 1200px)  and (max-width: 600px){
+@media (max-height: 1200px)  and (max-width: 700px){
 
   .form-login-area {
-    max-width: 92%;
-    height: calc(100vh - 108px);
+    max-width: 100%;
+    border-radius: 0px;
+    height: calc(100vh - 72px);
   }
 
     .form-login h2 {
