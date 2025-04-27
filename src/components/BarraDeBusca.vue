@@ -1,6 +1,6 @@
 <template>
     <div class="form-group position-relative div-barra-de-busca">
-        <input class="barra-de-busca" type="text" name="busca" id="busca" placeholder="Pesquise um curso ou categoria">
+        <input class="barra-de-busca" type="text" name="busca" id="busca" placeholder="Pesquise um curso ou categoria" v-model="busca" @keyup.enter="redirecionar">
         <img src="../../public/lupa.svg" alt="Ícone de lupa" class="icone-lupa">
     </div>
 </template>
@@ -12,6 +12,18 @@
         data() {
             return {
                 busca: ''
+            }
+        },
+        methods: {
+            redirecionar() {
+                const termo = this.busca.trim();
+                let url = '/courses';
+
+                if (termo !== '') {
+                    url += `/${encodeURIComponent(termo)}`;
+                }
+
+                window.location.href = url;
             }
         }
     }
