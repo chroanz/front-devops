@@ -28,11 +28,11 @@
           <ul>
             <li class="nav-item"><a class="nav-link" href="/courses">Todos os cursos</a></li>
             <hr>
-            <li class="nav-item"><a class="nav-link" href="#">Deficiência Visual</a></li>
+            <li class="nav-item"><a class="nav-link" href="/courses/visual">Deficiência Visual</a></li>
             <hr>
-            <li class="nav-item"><a class="nav-link" href="#">Deficiência Auditiva</a></li>
+            <li class="nav-item"><a class="nav-link" href="/courses/auditiva">Deficiência Auditiva</a></li>
             <hr>
-            <li class="nav-item"><a class="nav-link" href="#">Surdocegueira</a></li>
+            <li class="nav-item"><a class="nav-link" href="/couses/surdocegueira">Surdocegueira</a></li>
             <hr>
             <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
             <hr>
