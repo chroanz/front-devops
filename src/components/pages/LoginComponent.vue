@@ -88,7 +88,13 @@ export default {
         });
 
         sessionStorage.setItem('access_token', response.data.access_token);
-
+        const userResponse = await api.get("/user/me", {
+          headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
+          }
+        });
+        
+        sessionStorage.setItem("user", JSON.stringify(userResponse.data));
         this.$router.push('/');
       } catch (error) {
         console.error('Erro no login:', error);
