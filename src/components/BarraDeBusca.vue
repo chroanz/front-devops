@@ -1,32 +1,42 @@
 <template>
-    <div class="form-group position-relative div-barra-de-busca">
-        <input class="barra-de-busca" type="text" name="busca" id="busca" placeholder="Pesquise um curso ou categoria" v-model="busca" @keyup.enter="redirecionar">
+    <form class="form-group position-relative div-barra-de-busca" @submit.prevent="onSubmit">
+        <input 
+            class="barra-de-busca" 
+            type="text" 
+            name="busca" 
+            id="busca" 
+            placeholder="Pesquise um curso ou categoria" 
+            v-model="busca">
         <img src="../../public/lupa.svg" alt="Ícone de lupa" class="icone-lupa">
-    </div>
+    </form>
 </template>
 
 <script>
+export default {
+    name: 'BarraDeBusca',
+    props: {
+        baseUrl: {
+            type: String,
+            default: '/courses'
+        }
+    },
+    data() {
+        return {
+            busca: ''
+        }
+    },
+    methods: {
+        onSubmit() {
+            const termo = this.busca.trim();
 
-    export default {
-        name: 'BarraDeBusca',
-        data() {
-            return {
-                busca: ''
+            let url = this.baseUrl;
+            if (termo.length > 0) {
+                url += `/${encodeURIComponent(termo)}`;
             }
-        },
-        methods: {
-            redirecionar() {
-                const termo = this.busca.trim();
-                let url = '/courses';
-
-                if (termo !== '') {
-                    url += `/${encodeURIComponent(termo)}`;
-                }
-
-                window.location.href = url;
-            }
+            this.$emit('search', url);
         }
     }
+}
 </script>
 
 <style>

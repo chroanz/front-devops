@@ -43,7 +43,7 @@
       <!-- CAMPO DE BUSCA -->
 
       <div ref="barraDeBusca" class="div-barra-de-busca">
-        <BarraDeBusca />
+        <BarraDeBusca @search="handleSearch" />
       </div>
 
       <a class="navbar-brand2" href="#">
@@ -76,6 +76,9 @@ export default {
     window.removeEventListener("resize", this.moveBarraDeBusca);
   },
   methods: {
+    handleSearch(url) {
+      window.location.href = url;
+    },
   moveBarraDeBusca() {
     const barraDeBusca = this.$refs.barraDeBusca;
     const offcanvasBody = document.querySelector(".offcanvas-body");
