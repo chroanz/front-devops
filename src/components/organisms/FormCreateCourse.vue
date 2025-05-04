@@ -3,11 +3,11 @@
         <form @submit.prevent="submitForm" class="d-flex flex-column ">
             <div class="mb-3">
                 <label for="courseName" class="form-label">Nome do Curso</label>
-                <input type="text" class="form-control" id="courseName" v-model="course.name" required>
+                <input type="text" class="form-control" id="courseName" v-model="course.titulo" required>
             </div>
             <div class="mb-3">
                 <label for="courseDescription" class="form-label">Descrição</label>
-                <textarea class="form-control" id="courseDescription" v-model="course.description" required></textarea>
+                <textarea class="form-control" id="courseDescription" v-model="course.descricao" required></textarea>
             </div>
             <div class="col-12 mb-3 flex-row d-flex justify-content-between">
                 <div class="col-sm-6 w-50">
@@ -16,7 +16,8 @@
                 </div>
                 <div class="col-sm-6 w-50 mx-1">
                     <label for="type" class="form-label">Tipo do curso</label>
-                    <select name="type" v-model="course.type" class="form-control" id="type" required placeholder="Selecione o tipo de curso">
+                    <select name="type" v-model="course.categoria" class="form-control" id="type" required
+                        placeholder="Selecione o tipo de curso">
                         <option value="1">Deficiência visual</option>
                         <option value="2">Deficiência auditiva</option>
                         <option value="3">Surdocegueira</option>
@@ -32,25 +33,51 @@
 </template>
 
 <script>
+import cursoService from '@/services/cursoService';
+
 export default {
     name: 'FormCreateCourse',
     data() {
         return {
             course: {
-                name: '',
-                type: '',
-                description: '',
-                image: null,
+                titulo: '',
+                categoria: '',
+                descricao: '',
+                capa: null,
             },
         };
     },
     methods: {
         handleImageUpload(event) {
-            this.course.image = event.target.files[0];
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                this.course.capa = reader.result;
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
         },
-        submitForm() {
+        async submitForm() {
             console.log('Dados do curso:', this.course);
             // Aqui você pode adicionar a lógica para enviar os dados do curso para o backend
+            const response = await cursoService.createCurso(this.course)
+            if (!response.success) {
+                this.$toast({
+                    message: "Não foi possível criar curso: " + response.message,
+                    title: "Erro ao criar curso",
+                    type: 'error'
+                })
+            } else {
+                this.$toast({
+                    message: 'Curso criado com sucesso',
+                    title: 'Curso criado com sucesso',
+                    type: 'success'
+                    })
+                this.$router.push('/courses')
+            }
         },
     },
 } 

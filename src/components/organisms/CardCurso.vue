@@ -2,7 +2,7 @@
     <div class="card_curso">
         <div class="top">
             <div>
-                <img :src="curso.imagem_url || ''" alt="Imagem do curso" />
+                <img :src="getImageUrl(curso.capa) || ''" alt="Imagem do curso" />
             </div>
             <div class="textos">
                 <h2>{{ curso.nome }}</h2>
@@ -21,7 +21,7 @@
 </template>
 <script>
 import info from '@/assets/images/info.svg';
-
+import { baseURL } from '@/services/api';
 export default {
     name: "CardCurso",
     data() {
@@ -62,12 +62,10 @@ export default {
             if (!name) {
                 return undefined
             }
-            try {
-                return require(`@/assets/images/${name}`);
-            } catch (error) {
-                console.warn(`Imagem não encontrada: ${name}`)
-                return undefined;
+            if (name.startsWith('http')) {
+                return name;
             }
+            return baseURL + '/' + name;
         },
         handleMatricula() {
             if (this.matriculado) {
