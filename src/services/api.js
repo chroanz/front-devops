@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = process.env.VUE_APP_API_BASE_URL ?? 'http://localhost:8001';
+const baseURL = process.env.VUE_APP_API_BASE_URL ?? 'http://localhost:8000';
 const api = axios.create({
   baseURL: `${baseURL}/api`, // Aqui varia para alguns, pessoal. No meu roda nessa porta
 });
