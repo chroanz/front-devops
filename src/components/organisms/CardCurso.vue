@@ -12,9 +12,31 @@
         </div>
         <div class="bottom">
             <div>{{ curso.aulas?.length ?? 0 }} Aulas</div>
-            <div> <button class="btn-matricula" @click="handleMatricula" v-if="matriculavel">
-                    {{ this.textoBotao }}
-                </button></div>
+            <div class="d-flex justify-content-between w-75">
+                <button 
+                    class="btn-matricula" 
+                    @click="handleMatricula" 
+                    v-if="matriculavel && curso.id"
+                >
+                    {{ textoBotao }}
+                </button>
+                <div v-if="curso.id">
+                    <router-link 
+                        :to="getCreateLessonRoute" 
+                        class="btn btn-primary me-2"
+                        v-if="canShowButtons"
+                    >
+                        Adicionar Aula
+                    </router-link>
+                    <router-link 
+                        :to="getCreateHomeWorkRoute" 
+                        class="btn btn-secondary"
+                        v-if="canShowButtons"
+                    >
+                        Adicionar Leitura
+                    </router-link>
+                </div>
+            </div>
             <div>{{ curso.leituras?.length ?? 0 }} Leituras</div>
         </div>
     </div>
@@ -25,11 +47,29 @@ import { baseURL } from '@/services/api';
 import cursoService from '@/services/cursoService';
 export default {
     name: "CardCurso",
+    props: {
+        curso: {
+            type: Object,
+            required: true,
+            default: () => ({
+                id: null,
+                nome: '',
+                descricao: '',
+                imagem_url: '',
+                aulas: [],
+                leituras: []
+            })
+        },
+        matriculavel: {
+            type: Boolean,
+            default: false
+        }
+    },
     data() {
         return {
             user: {},
             infoSrc: info,
-            matriculado: Boolean
+            matriculado: false
         }
     },
     computed: {
@@ -38,11 +78,22 @@ export default {
                 return 'Entrar no Curso'
             }
             return 'Fazer Matrícula'
+        },
+        canShowButtons() {
+            return this.curso && this.curso.id;
+        },
+        getCreateLessonRoute() {
+            return this.curso.id ? {
+                name: 'CreateLessons',
+                params: { cursoId: this.curso.id }
+            } : { name: 'Home' };
+        },
+        getCreateHomeWorkRoute() {
+            return this.curso.id ? {
+                name: 'CreateHomeWork',
+                params: { cursoId: this.curso.id }
+            } : { name: 'Home' };
         }
-    },
-    props: {
-        curso: Object,
-        matriculavel: Boolean
     },
     emits: ['navigate'],
     mounted() {

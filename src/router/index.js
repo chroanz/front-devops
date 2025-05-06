@@ -107,7 +107,7 @@ const routes = [
     },
   },
   {
-    path: "/create-exercise",
+    path: "/create-exercise/:id",
     name: "CreateHomeWork",
     components: {
       default: CreateHomeWork,
