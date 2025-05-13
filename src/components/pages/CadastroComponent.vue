@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import api from '@/services/api';
+import { api } from '@/services/api';
 import { Modal } from 'bootstrap';
 export default {
   data() {

@@ -2,13 +2,12 @@
     <div class="container">
         <form @submit.prevent="submitForm" class="d-flex flex-column ">
             <div class="mb-3">
-                <label for="titulo" class="form-label">Nome do Curso</label>
-                <input type="text" class="form-control" id="titulo" name="titulo" v-model="course.name" required>
+                <label for="courseName" class="form-label">Nome do Curso</label>
+                <input type="text" class="form-control" id="courseName" v-model="course.titulo" required>
             </div>
             <div class="mb-3">
-                <label for="descricao" class="form-label">Descrição</label>
-                <textarea class="form-control" id="descricao" name="titulo" v-model="course.description"
-                    required></textarea>
+                <label for="courseDescription" class="form-label">Descrição</label>
+                <textarea class="form-control" id="courseDescription" v-model="course.descricao" required></textarea>
             </div>
             <div class="col-12 mb-3 flex-row d-flex justify-content-between">
                 <div class="col-sm-6 w-50">
@@ -16,8 +15,8 @@
                     <input type="file" class="form-control" id="img" @change="handleImageUpload">
                 </div>
                 <div class="col-sm-6 w-50 mx-1">
-                    <label for="categoria" class="form-label">Tipo do curso</label>
-                    <select name="categoria" v-model="course.type" class="form-control" id="type" required
+                    <label for="type" class="form-label">Tipo do curso</label>
+                    <select name="type" v-model="course.categoria" class="form-control" id="type" required
                         placeholder="Selecione o tipo de curso">
                         <option value="1">Deficiência visual</option>
                         <option value="2">Deficiência auditiva</option>
@@ -37,9 +36,8 @@
 </template>
 
 <script>
-import axios from 'axios';
 import Toast from '@/components/organisms/Toast.vue';
-
+import cursoService from '@/services/cursoService';
 
 export default {
     name: 'FormCreateCourse',
@@ -49,57 +47,46 @@ export default {
     data() {
         return {
             course: {
-                name: '',
-                type: '',
-                description: '',
-                image: null,
+                titulo: '',
+                categoria: '',
+                descricao: '',
+                capa: null,
             },
             showToast: false,
         };
     },
     methods: {
         handleImageUpload(event) {
-            this.course.image = event.target.files[0];
-        },
-        async submitForm() {
-            const formData = new FormData();
-            formData.append('titulo', this.course.name);
-            formData.append('categoria', this.course.type);
-            formData.append('descricao', this.course.description);
-            formData.append('image', this.course.image);
+            const file = event.target.files[0];
+            const reader = new FileReader();
 
-            try {
-                const response = await this.createCourse(formData);
-                this.showToast = true;
+            reader.onloadend = () => {
+                this.course.capa = reader.result;
+            };
 
-                if (response.data.status) {
-                    this.$toast({
-                        title: 'Sucesso',
-                        message: 'Curso criado com sucesso',
-                        background: '#28a745' // Green background for success
-                    });
-                    this.$router.push(`/curso/${response.data.id}`);
-                } else {
-                    this.$toast({
-                        title: 'Erro',
-                        message: 'Erro ao criar o curso',
-                        background: '#dc3545' // Red background for error
-                    });
-                }
-            } catch (error) {
-                console.error('Erro ao criar o curso:', error);
-                this.$toast({
-                    title: 'Erro',
-                    message: 'Ocorreu um erro inesperado ao criar o curso',
-                    background: '#dc3545' // Red background for error
-                });
-                this.showToast = true;
+            if (file) {
+                reader.readAsDataURL(file);
             }
         },
-        async createCourse(courseData) {
-            const response = await axios.post('http://127.0.0.1:8000/api/cursos/create', courseData);
-            return response;
+        async submitForm() {
+            console.log('Dados do curso:', this.course);
+            // Aqui você pode adicionar a lógica para enviar os dados do curso para o backend
+            const response = await cursoService.createCurso(this.course)
+            if (!response.success) {
+                this.$toast({
+                    message: "Não foi possível criar curso: " + response.message,
+                    title: "Erro ao criar curso",
+                    type: 'error'
+                })
+            } else {
+                this.$toast({
+                    message: 'Curso criado com sucesso',
+                    title: 'Curso criado com sucesso',
+                    type: 'success'
+                    })
+                this.$router.push('/courses')
+            }
         },
-    }
-}
+    },
+} 
 </script>

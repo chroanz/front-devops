@@ -35,6 +35,7 @@
 import CardCurso from '@/components/organisms/CardCurso.vue';
 import axios from 'axios';
 
+
 export default {
     name: 'CoursesPage',
     components: {

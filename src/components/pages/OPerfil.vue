@@ -3,7 +3,9 @@
     <!-- Header do perfil com nome do usuário e botão editar -->
     <div class="bg-purple py-3 px-5 d-flex justify-content-between align-items-center">
       <h2 class="m-0 text-black">Perfil de {{ usuario.nome }}</h2>
-      <button class="btn btn-light btn-sm"> <a style="text-decoration: none; color: black;" href="/edituser">Editar Perfil</a></button>
+      <button class="btn btn-light btn-sm">
+        <a style="text-decoration: none; color: black;" href="/edituser">Editar Perfil</a>
+      </button>
     </div>
 
     <!-- Foto e informações do perfil -->
@@ -172,7 +174,7 @@
           <div class="col-md-3">
             <h6 class="text-black mb-2">Quem somos</h6>
             <ul class="list-unstyled">
-              <li><a href="/SobreNos" class="text-black text-decoration-none">MSobre nós</a></li>
+              <li><a href="/SobreNos" class="text-black text-decoration-none">Sobre nós</a></li>
               <li><a href="/OPerfil" class="text-black text-decoration-none">Outros clientes</a></li>
             </ul>
           </div>
@@ -183,6 +185,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'PerfilUsuario',
   data() {
@@ -231,12 +235,29 @@ export default {
             dataConclusao: new Date(2025, 0, 20)
           }
         ]
-      }
+      },
+      cursos: []
     }
   },
+  mounted() {
+    this.buscarCursos();
+  },
   methods: {
+    async buscarCursos() {
+      try {
+        const token = localStorage.getItem('token');
+        console.log('Token no localStorage:', token);
+        const response = await axios.get('http://localhost:8000/api/meus-cursos', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        this.cursos = response.data;
+      } catch (error) {
+        console.error('Erro ao buscar cursos:', error);
+      }
+    },
     formatarData(data) {
-      // Formatar data no formato DD/MM/YYYY
       return new Date(data).toLocaleDateString('pt-BR');
     }
   }
@@ -326,6 +347,4 @@ footer .social-icons a:hover {
 .text-black {
   color: black !important;
 }
-</style> 
-
- <!-- fun  -->
+</style>

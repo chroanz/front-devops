@@ -2,7 +2,7 @@
     <div class="card_curso">
         <div class="top">
             <div>
-                <img :src="curso.imagem_url || ''" alt="Imagem do curso" />
+                <img :src="getImageUrl(curso.capa) || ''" alt="Imagem do curso" />
             </div>
             <div class="textos">
                 <h2>{{ curso.nome }}</h2>
@@ -13,26 +13,14 @@
         <div class="bottom">
             <div>{{ curso.aulas?.length ?? 0 }} Aulas</div>
             <div class="d-flex justify-content-between w-75">
-                <button 
-                    class="btn-matricula" 
-                    @click="handleMatricula" 
-                    v-if="matriculavel && curso.id"
-                >
+                <button class="btn-matricula" @click="handleMatricula" v-if="matriculavel && curso.id">
                     {{ textoBotao }}
                 </button>
-                <div v-if="curso.id">
-                    <router-link 
-                        :to="getCreateLessonRoute" 
-                        class="btn btn-primary me-2"
-                        v-if="canShowButtons"
-                    >
+                <div v-if="curso && curso.id">
+                    <router-link :to="getCreateLessonRoute" class="btn btn-primary me-2">
                         Adicionar Aula
                     </router-link>
-                    <router-link 
-                        :to="getCreateHomeWorkRoute" 
-                        class="btn btn-secondary"
-                        v-if="canShowButtons"
-                    >
+                    <router-link :to="getCreateHomeWorkRoute" class="btn btn-secondary">
                         Adicionar Leitura
                     </router-link>
                 </div>
@@ -43,7 +31,7 @@
 </template>
 <script>
 import info from '@/assets/images/info.svg';
-
+import { baseURL } from '@/services/api';
 export default {
     name: "CardCurso",
     props: {
@@ -82,15 +70,15 @@ export default {
             return this.curso && this.curso.id;
         },
         getCreateLessonRoute() {
-            return this.curso.id ? {
+            return this.curso?.id ? {
                 name: 'CreateLessons',
-                params: { cursoId: this.curso.id }
+                params: { id: this.curso.id }
             } : { name: 'Home' };
         },
         getCreateHomeWorkRoute() {
-            return this.curso.id ? {
+            return this.curso?.id ? {
                 name: 'CreateHomeWork',
-                params: { cursoId: this.curso.id }
+                params: { id: this.curso.id }
             } : { name: 'Home' };
         }
     },
@@ -113,12 +101,10 @@ export default {
             if (!name) {
                 return undefined
             }
-            try {
-                return require(`@/assets/images/${name}`);
-            } catch (error) {
-                console.warn(`Imagem não encontrada: ${name}`)
-                return undefined;
+            if (name.startsWith('http')) {
+                return name;
             }
+            return baseURL + '/' + name;
         },
         handleMatricula() {
             if (this.matriculado) {
