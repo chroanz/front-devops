@@ -1,9 +1,13 @@
 import { api } from "./api";
 
 const cursoService = {
-  async listarCursos() {
+  async listarCursos(searchTerm) {
     try {
-      const response = await api.get("cursos");
+      let url = "cursos";
+      if (searchTerm) {
+        url += `/search/${searchTerm}`;
+      }
+      const response = await api.get(url);
       return response.data;
     } catch (error) {
       return { success: false, message: error.message };

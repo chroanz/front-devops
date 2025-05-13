@@ -22,7 +22,7 @@
 
 <script>
 import CardCurso from '@/components/organisms/CardCurso.vue';
-import axios from 'axios';
+import cursoService from '@/services/cursoService.js';
 
 export default {
     name: 'CoursesPage',
@@ -58,12 +58,8 @@ export default {
             this.loading = true;
             this.error = null;
             try {
-                let url = 'http://localhost:8000/api/cursos';
-                if (searchTerm) {
-                    url += `/search/${searchTerm}`;
-                }
-                const response = await axios.get(url);
-                this.cursos = response.data;
+                const response = await cursoService.listarCursos(searchTerm);
+                this.cursos = response;
             } catch (err) {
                 console.error('Erro ao buscar cursos:', err);
                 this.error = 'Não foi possível carregar os cursos. Tente novamente mais tarde.';
