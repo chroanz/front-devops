@@ -2,25 +2,25 @@
     <div class="container">
         <form @submit.prevent="submitForm" class="d-flex flex-column ">
             <div class="mb-3">
-                <label for="aulaName" class="form-label">Titulo</label>
-                <input type="text" class="form-control" id="aulaName" v-model="aula.titulo" required
+                <label for="titulo" class="form-label">Titulo</label>
+                <input type="text" class="form-control" id="titulo" name="titulo" v-model="lesson.title" required
                     placeholder="Nome da aula">
             </div>
             <div class="mb-3">
-                <label for="lessonVideo" class="form-label">Video</label>
-                <input type="url" class="form-control" id="lessonVideo" v-model="aula.video" required
+                <label for="duracaoMinutos" class="form-label">Video</label>
+                <input type="url" class="form-control" id="duracaoMinutos" name="duracaoMinutos" v-model="lesson.video" required
                     placeholder="URL do video no youtube">
             </div>
             <div class="col-12 mb-3 flex-row d-flex justify-content-between">
                 <div class="col-sm-6 w-50">
-                    <label for="lessonDescription" class="form-label">Sequencia</label>
-                    <input type="text" class="form-control" id="aulaName" v-model="aula.sequencia" required
+                    <label for="sequencia" class="form-label">Sequencia</label>
+                    <input type="text" class="form-control" id="sequencia" name="sequencia" v-model="lesson.sequencia" required
                         placeholder="Numero da sequencia">
                 </div>
                 <div class="col-sm-6 w-50 mx-1">
-                    <label for="lessonDuration" class="form-label">Duração</label>
-                    <input type="number" class="form-control" id="lessonDuration" name="lessonDuration"
-                        v-model="aula.duracaoMinutos" required placeholder="Duração em minutos">
+                    <label for="duracaoMinutos" class="form-label">Duração</label>
+                    <input type="number" class="form-control" id="duracaoMinutos" name="duracaoMinutos"
+                        v-model="lesson.duracaoMinutos" required placeholder="Duração em minutos">
                 </div>
             </div>
             <div class="d-flex align-items-end">
@@ -57,12 +57,12 @@ export default {
     methods: {
         getUuidFromUrl() {
             const urlSegments = window.location.pathname.split('/');
-            return urlSegments.find(segment => /^[0-9a-fA-F-]{36}$/.test(segment)) || null;
+            return urlSegments.at(-1);
         },
         async submitForm() {
             const formData = new FormData();
-            formData.append('title', this.lesson.title);
-            formData.append('video', this.lesson.video);
+            formData.append('titulo', this.lesson.title);
+            formData.append('videoUrl', this.lesson.video);
             formData.append('sequencia', this.lesson.sequencia);
             formData.append('duracaoMinutos', this.lesson.duracaoMinutos);
             formData.append('curso_id', this.getUuidFromUrl());
@@ -70,14 +70,14 @@ export default {
             try {
                 const response = await this.createLesson(formData);
                 this.showToast = true;
-
-                if (response.data.status) {
+                console.log('Resposta do servidor:', response.data);
+                if (response.data.aula != null) {
                     this.$toast({
                         title: 'Sucesso',
                         message: 'Aula criada com sucesso',
                         background: '#28a745'
                     });
-                    this.$router.push(`/aulas/${response.data.id}`);
+                    this.$router.push(`/aulas/${response.data.aula.id}`);
                 } else {
                     this.$toast({
                         title: 'Erro',
