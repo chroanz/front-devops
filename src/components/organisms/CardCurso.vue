@@ -2,10 +2,10 @@
     <div class="card_curso">
         <div class="top">
             <div>
-                <img :src="getImageUrl(curso.capa) || ''" alt="Imagem do curso" />
+                <img :src="getImageUrl(curso.capa_url) || ''" alt="Imagem do curso" />
             </div>
             <div class="textos">
-                <h2>{{ curso.nome }}</h2>
+                <h2>{{ curso.titulo }}</h2>
                 <p>{{ curso.descricao }}</p>
             </div>
             <div><img :src="infoSrc" class="icone"></div>
