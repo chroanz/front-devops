@@ -55,81 +55,71 @@
       </div>
     </div>
 
-    <!-- Cursos em andamento -->
-    <div class="container my-3">
-      <h3 class="mb-3 text-black">Cursos em andamento</h3>
-      
-      <div class="row">
-        <div v-for="(curso, index) in usuario.cursosEmAndamento" :key="'andamento-'+index" class="col-md-4 mb-3">
-          <div class="card custom-card">
-            <div class="card-img-top" style="height: 180px; overflow: hidden; border-top-left-radius: 15px; border-top-right-radius: 15px;">
-              <img
-                :src="curso.imagem"
-                :alt="curso.titulo"
-                class="w-100 h-100"
-                style="object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px;"
-              >
-            </div>
-            <div class="card-body">
-              <h5 class="card-title text-black">{{ curso.titulo }}</h5>
-              <div class="star-rating mb-2">
-                <span v-for="i in 5" :key="i" class="star" :class="{ 'filled': i <= curso.avaliacao }">★</span>
-              </div>
-              <div class="progress mb-2" style="height: 8px;">
-                <div 
-                  class="progress-bar" 
-                  role="progressbar" 
-                  :style="{ width: curso.progresso + '%', backgroundColor: '#b070b0' }" 
-                  :aria-valuenow="curso.progresso" 
-                  aria-valuemin="0" 
-                  aria-valuemax="100">
-                </div>
-              </div>
-              <p class="text-end mb-0"><small>{{ curso.progresso }}% concluído</small></p>
-              <a href="#" class="btn btn-custom mt-2">Continuar</a>
-            </div>
-          </div>
+
+<!-- Cursos em andamento -->
+<div class="container my-5">
+  <h3 class="mb-4 text-black">📚 Cursos em andamento</h3>
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <div v-for="curso in cursos" :key="curso.id" class="col">
+      <div class="custom-card p-3 h-100 d-flex flex-column justify-content-between">
+        <div>
+          <div class="mb-3">
+          <img
+            :src="curso.imagem || require('@/assets/images/logo.png')"
+            alt="Imagem do curso"
+            class="img-fluid rounded"
+            style="width: 100%; height: 160px; object-fit: cover;"
+          />
         </div>
-        
-        <!-- Mensagem quando não há cursos em andamento -->
-        <div v-if="usuario.cursosEmAndamento.length === 0" class="col-12 text-center py-3">
-          <p>Você ainda não iniciou nenhum curso. <a href="#" class="text-decoration-none" style="color: #b070b0;">Ver cursos disponíveis</a></p>
+          <h5 class="text-black mb-2">{{ curso.titulo }}</h5>
+          <p class="text-muted medium mb-1"><strong>Categoria:</strong> {{ curso.categoria }}</p>
+          <p class="text-muted medium">{{ curso.descricao }}</p>
+          <p class="text-muted medium">
+            <strong>Progresso:</strong> {{ curso.progresso }}%
+          </p>
+        </div>
+        <div class="mt-2 text-end">
+          <a href="#" class="btn btn-custom btn-sm">Continuar Curso</a>
         </div>
       </div>
     </div>
+  </div>
+</div>
+
 
     <!-- Últimos cursos concluídos -->
     <div class="container my-3">
-      <h3 class="mb-3 text-black">Últimos cursos concluídos</h3>
+      <h3 class="mb-3 text-black"> ✅ Últimos cursos concluídos</h3>
       
-      <div class="row">
-        <div v-for="(curso, index) in usuario.cursosConcluidos" :key="'concluido-'+index" class="col-md-4 mb-3">
-          <div class="card custom-card">
-            <div class="card-img-top" style="height: 180px; overflow: hidden; border-top-left-radius: 15px; border-top-right-radius: 15px;">
-              <img
-                :src="curso.imagem"
-                :alt="curso.titulo"
-                class="w-100 h-100"
-                style="object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px;"
-              >
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+         <div v-for="curso in usuario.cursosConcluidos" :key="curso.id" class="col">
+          <div class="custom-card p-3 h-100 d-flex flex-column justify-content-between" style="background-color: #f1eff4;">
+            <div>
+              <!-- Imagem do curso -->
+              <div class="mb-3">
+                <img
+                  :src="curso.imagem || require('@/assets/images/logo.png')"
+                  alt="Imagem do curso"
+                  class="img-fluid rounded"
+                  style="width: 100%; height: 160px; object-fit: cover;"
+                />
+              </div>
+
+              <!-- Título e informações -->
+              <h5 class="text-black mb-2">{{ curso.titulo }}</h5>
+              <p class="text-muted medium mb-1"><strong>Categoria:</strong> {{ curso.categoria }}</p>
+              <p class="text-muted medium">{{ curso.descricao }}</p>
+              <p class="text-success medium">
+                <strong>Status:</strong> Concluído ✅
+              </p>
             </div>
-            <div class="card-body">
-              <h5 class="card-title text-black">{{ curso.titulo }}</h5>
-              <div class="star-rating mb-2">
-                <span v-for="i in 5" :key="i" class="star" :class="{ 'filled': i <= curso.avaliacao }">★</span>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="badge rounded-pill" style="background-color: #b070b0;">Concluído</span>
-                <small class="text-muted">{{ formatarData(curso.dataConclusao) }}</small>
-              </div>
-              <a href="#" class="btn btn-custom mt-2">Ver Certificado</a>
+
+            <!-- Botão de certificado ou revisão -->
+            <div class="mt-2 text-end">
+              <a href="#" class="btn btn-success btn-sm">Ver Certificado</a>
             </div>
           </div>
-        </div>
-        
-        <!-- Mensagem quando não há cursos concluídos -->
-        <div v-if="usuario.cursosConcluidos.length === 0" class="col-12 text-center py-3">
-          <p>Você ainda não concluiu nenhum curso.</p>
         </div>
       </div>
     </div>
@@ -185,83 +175,54 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { api } from '@/services/api';
 
+
+
+//const user = JSON.stringify(sessionStorage.getItem("user"))
+//console.log(user)
 export default {
-  name: 'PerfilUsuario',
   data() {
     return {
+      cursos: [],
       usuario: {
-        nome: 'Ana Beatriz Silveira',
-        foto: null,
-        videosAssistidos: 80,
-        exerciciosRealizados: 75,
-        cursosEmAndamento: [
-          {
-            id: 1,
-            titulo: 'Aprendendo Libras',
-            imagem: require('@/assets/images/Libras.png'),
-            avaliacao: 5,
-            progresso: 45
-          },
-          {
-            id: 2,
-            titulo: 'Ensino de Libras',
-            imagem: require('@/assets/images/Libras.png'),
-            avaliacao: 4,
-            progresso: 30
-          }
-        ],
-        cursosConcluidos: [
-          {
-            id: 3,
-            titulo: 'Recebendo alunos com surdez',
-            imagem: require('@/assets/images/defau.png'),
-            avaliacao: 5,
-            dataConclusao: new Date(2025, 2, 15)
-          },
-          {
-            id: 4,
-            titulo: 'Recebendo alunos com deficiência auditiva',
-            imagem: require('@/assets/images/defau.png'),
-            avaliacao: 5,
-            dataConclusao: new Date(2025, 1, 10)
-          },
-          {
-            id: 5,
-            titulo: 'Escrita em Braille',
-            imagem: require('@/assets/images/Cegueira.png'),
-            avaliacao: 4,
-            dataConclusao: new Date(2025, 0, 20)
-          }
-        ]
-      },
-      cursos: []
+      nome: this.buscarPerfil().name,
+      foto: null,
+      videosAssistidos: 80,
+      exerciciosRealizados: 75,
+      cursosEmAndamento: [],  // Dados reais após a busca
+      cursosConcluidos: []    // Dados reais após a busca
+    }
     }
   },
   mounted() {
+    this.buscarPerfil();
     this.buscarCursos();
   },
   methods: {
-    async buscarCursos() {
-      try {
-        const token = localStorage.getItem('token');
-        console.log('Token no localStorage:', token);
-        const response = await axios.get('http://localhost:8000/api/meus-cursos', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        this.cursos = response.data;
-      } catch (error) {
-        console.error('Erro ao buscar cursos:', error);
-      }
+
+    // Método para buscar o perfil do usuário logado
+    buscarPerfil() {
+      return JSON.parse(sessionStorage.getItem("user"));
     },
+
+    // Método para buscar os cursos
+    async buscarCursos() {
+  try {
+    const response = await api.get("/cursos/meus_cursos");
+    // Supondo que a API retorna { cursosEmAndamento: [...], cursosConcluidos: [...] }
+    console.log(response.data)
+    this.cursos = response.data; 
+  } catch (error) {
+    console.error('Erro ao buscar cursos:', error);
+  }
+},
+
     formatarData(data) {
       return new Date(data).toLocaleDateString('pt-BR');
     }
   }
-}
+} 
 </script>
 
 <style scoped>
@@ -283,11 +244,18 @@ body, html {
   background-color: #B288C0;
 }
 
+
+.rowc{
+  background-color: #b070b0;
+  height: 900x
+}
+
 .custom-card {
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   transition: transform 0.3s ease;
-  height: 100%;
+  width: 500px;
+  height: 80px;
   background-color: #ffffff;
 }
 

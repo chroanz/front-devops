@@ -80,20 +80,20 @@ export default {
         modal.show();
         return;
       }
-
+      console.log('Teste 01');
       try {
         const response = await api.post('/login', {
           email: this.email,
           password: this.password,
         });
-
+        console.log('Teste 02');
         sessionStorage.setItem('access_token', response.data.access_token);
         const userResponse = await api.get("/user/me", {
           headers: {
             'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
           }
         });
-        
+        console.log('Teste 03');
         sessionStorage.setItem("user", JSON.stringify(userResponse.data));
         this.$router.push('/');
       } catch (error) {
