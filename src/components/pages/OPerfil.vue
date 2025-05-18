@@ -41,13 +41,13 @@
           </div>
           <div class="col-md-3 col-sm-4 text-center mb-2 mb-md-0">
             <div class="py-2 rounded" style="background-color: #b070b0;">
-              <h3 class="mb-1 text-black">{{ usuario.videosAssistidos }}</h3>
+              <h3 class="mb-1 text-black">{{ usuario.videosAssistidos.length}}</h3>
               <p class="m-0 text-black">Vídeos Assistidos</p>
             </div>
           </div>
           <div class="col-md-3 col-sm-4 text-center">
             <div class="py-2 rounded" style="background-color: #b070b0;">
-              <h3 class="mb-1 text-black">{{ usuario.exerciciosRealizados }}</h3>
+              <h3 class="mb-1 text-black">{{ usuario.exerciciosRealizados.length }}</h3>
               <p class="m-0 text-black">Exercícios Realizados</p>
             </div>
           </div>
@@ -80,7 +80,10 @@
           </p>
         </div>
         <div class="mt-2 text-end">
-          <a href="#" class="btn btn-custom btn-sm">Continuar Curso</a>
+          <router-link to="/cursos" class="btn btn-custom btn-sm">
+              Continuar Curso
+          </router-link>
+
         </div>
       </div>
     </div>
@@ -188,8 +191,8 @@ export default {
       usuario: {
       nome: this.buscarPerfil().name,
       foto: null,
-      videosAssistidos: 80,
-      exerciciosRealizados: 75,
+      videosAssistidos: [],
+      exerciciosRealizados: [],
       cursosEmAndamento: [],  // Dados reais após a busca
       cursosConcluidos: []    // Dados reais após a busca
     }
