@@ -46,11 +46,11 @@
         <BarraDeBusca @search="handleSearch" />
       </div>
 
-      <a class="navbar-brand2" href="#">
-
-          <div class="info-login-icon"></div> <!-- Ícone de informação -->
+        <router-link to="/OPerfil" class="navbar-brand2">
+          <div class="info-login-icon"></div>
           <img :src="require('@/assets/login-icon.png')" alt="Login">
-      </a>
+        </router-link>
+
 
     </div>
   </nav>
