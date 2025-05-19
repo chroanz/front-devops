@@ -117,7 +117,7 @@ export default {
 .deficiencias {
   position: fixed;
   bottom: 5%;
-  right: 10px;
+  right: 15px;
   display: flex;
   align-items: center;
   z-index: 100;

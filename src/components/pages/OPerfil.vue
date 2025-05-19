@@ -14,12 +14,8 @@
         <!-- Foto do perfil -->
         <div class="position-relative d-inline-block mb-2">
           <div class="rounded-circle overflow-hidden" style="width: 120px; height: 120px; border: 3px solid #b070b0;">
-            <img 
-              :src="usuario.foto || require('@/assets/images/logo.png')" 
-              alt="Foto de perfil" 
-              class="img-fluid w-100 h-100"
-              style="object-fit: cover;"
-            >
+            <img :src="usuario.foto || require('@/assets/images/logo.png')" alt="Foto de perfil"
+              class="img-fluid w-100 h-100" style="object-fit: cover;">
           </div>
         </div>
 
@@ -35,20 +31,20 @@
         <div class="row justify-content-center">
           <div class="col-md-3 col-sm-4 text-center mb-2 mb-md-0">
             <div class="py-2 rounded" style="background-color: #b070b0;">
-              <h3 class="mb-1 text-black">{{ usuario.cursosConcluidos.length }}</h3>
+              <h3 class="mb-1 text-black">{{ usuario.cursosConcluidos?.length }}</h3>
               <p class="m-0 text-black">Cursos Concluídos</p>
             </div>
           </div>
           <div class="col-md-3 col-sm-4 text-center mb-2 mb-md-0">
             <div class="py-2 rounded" style="background-color: #b070b0;">
-              <h3 class="mb-1 text-black">{{ usuario.videosAssistidos.length}}</h3>
+              <h3 class="mb-1 text-black">{{ usuario.videosAssistidos }}</h3>
               <p class="m-0 text-black">Vídeos Assistidos</p>
             </div>
           </div>
           <div class="col-md-3 col-sm-4 text-center">
             <div class="py-2 rounded" style="background-color: #b070b0;">
-              <h3 class="mb-1 text-black">{{ usuario.exerciciosRealizados.length }}</h3>
-              <p class="m-0 text-black">Exercícios Realizados</p>
+              <h3 class="mb-1 text-black">{{ usuario.leiturasRealizadas }}</h3>
+              <p class="m-0 text-black">Leituras Realizadas</p>
             </div>
           </div>
         </div>
@@ -56,57 +52,56 @@
     </div>
 
 
-<!-- Cursos em andamento -->
-<div class="container my-5">
-  <h3 class="mb-4 text-black">📚 Cursos em andamento</h3>
+    <!-- Cursos em andamento -->
+    <div class="container my-5">
+      <h3 class="mb-4 text-black">📚 Cursos em andamento</h3>
 
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-    <div v-for="curso in cursos" :key="curso.id" class="col">
-      <div class="custom-card p-3 h-100 d-flex flex-column justify-content-between">
-        <div>
-          <div class="mb-3">
-          <img
-            :src="curso.imagem || require('@/assets/images/logo.png')"
-            alt="Imagem do curso"
-            class="img-fluid rounded"
-            style="width: 100%; height: 160px; object-fit: cover;"
-          />
-        </div>
-          <h5 class="text-black mb-2">{{ curso.titulo }}</h5>
-          <p class="text-muted medium mb-1"><strong>Categoria:</strong> {{ curso.categoria }}</p>
-          <p class="text-muted medium">{{ curso.descricao }}</p>
-          <p class="text-muted medium">
-            <strong>Progresso:</strong> {{ curso.progresso }}%
-          </p>
-        </div>
-        <div class="mt-2 text-end">
-          <router-link to="/cursos" class="btn btn-custom btn-sm">
-              Continuar Curso
-          </router-link>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div v-for="curso in usuario.cursosEmAndamento" :key="curso.id" class="col">
+          <div class="custom-card p-3 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <div class="mb-3">
+                <img :src="curso.capa_url || require('@/assets/images/logo.png')" alt="Imagem do curso"
+                  class="img-fluid rounded" style="width: 100%; height: 160px; object-fit: cover;" />
+              </div>
+              <h5 class="text-black mb-2">{{ curso.titulo }}</h5>
+              <p class="text-muted medium mb-1"><strong>Categoria:</strong> {{ curso.categoria }}</p>
+              <p class="text-muted medium">{{ curso.descricao }}</p>
+              <div style="display:flex; gap: 10px; align-items: center;">
+                <span>Progresso: </span>
+                <ProgressBar :progress="curso.percentual_conclusao"
+                  :color="curso.percentual_conclusao < 100 ? '#B288C0' : '#57CA22'" />
+                <span>{{ curso.percentual_conclusao }}%</span>
+              </div>
+              <!-- <p class="text-muted medium">
+            <strong>Progresso:</strong> {{ curso.percentual_conclusao }}%
+          </p> -->
+            </div>
+            <div class="mt-2 text-end">
+              <router-link :to="`/curso/${curso.id}/acompanhar`" class="btn btn-custom btn-sm">
+                Continuar Curso
+              </router-link>
 
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
 
 
     <!-- Últimos cursos concluídos -->
     <div class="container my-3">
       <h3 class="mb-3 text-black"> ✅ Últimos cursos concluídos</h3>
-      
+
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-         <div v-for="curso in usuario.cursosConcluidos" :key="curso.id" class="col">
-          <div class="custom-card p-3 h-100 d-flex flex-column justify-content-between" style="background-color: #f1eff4;">
+        <div v-for="curso in usuario.cursosConcluidos" :key="curso.id" class="col">
+          <div class="custom-card p-3 h-100 d-flex flex-column justify-content-between"
+            style="background-color: #f1eff4;">
             <div>
               <!-- Imagem do curso -->
               <div class="mb-3">
-                <img
-                  :src="curso.imagem || require('@/assets/images/logo.png')"
-                  alt="Imagem do curso"
-                  class="img-fluid rounded"
-                  style="width: 100%; height: 160px; object-fit: cover;"
-                />
+                <img :src="curso.capa_url || require('@/assets/images/logo.png')" alt="Imagem do curso"
+                  class="img-fluid rounded" style="width: 100%; height: 160px; object-fit: cover;" />
               </div>
 
               <!-- Título e informações -->
@@ -133,12 +128,7 @@
         <div class="row">
           <!-- Coluna da Logo e Redes Sociais -->
           <div class="col-md-3 text-center mb-3 mb-md-0">
-            <img 
-              :src="require('@/assets/images/logo.png')" 
-              alt="Logo" 
-              class="img-fluid mb-2" 
-              style="max-width: 150px;"
-            >
+            <img :src="require('@/assets/images/logo.png')" alt="Logo" class="img-fluid mb-2" style="max-width: 150px;">
             <div class="social-icons">
               <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
               <a href="#" class="text-white me-3"><i class="bi bi-instagram"></i></a>
@@ -179,23 +169,27 @@
 
 <script>
 import { api } from '@/services/api';
+import ProgressBar from '../molecules/ProgressBar.vue';
 
 
 
 //const user = JSON.stringify(sessionStorage.getItem("user"))
 //console.log(user)
 export default {
+  components: {
+    ProgressBar
+  },
   data() {
     return {
       cursos: [],
       usuario: {
-      nome: this.buscarPerfil().name,
-      foto: null,
-      videosAssistidos: [],
-      exerciciosRealizados: [],
-      cursosEmAndamento: [],  // Dados reais após a busca
-      cursosConcluidos: []    // Dados reais após a busca
-    }
+        nome: this.buscarPerfil().name,
+        foto: null,
+        videosAssistidos: [],
+        leiturasRealizadas: [],
+        cursosEmAndamento: [],  // Dados reais após a busca
+        cursosConcluidos: []    // Dados reais após a busca
+      }
     }
   },
   mounted() {
@@ -211,15 +205,25 @@ export default {
 
     // Método para buscar os cursos
     async buscarCursos() {
-  try {
-    const response = await api.get("/cursos/meus_cursos");
-    // Supondo que a API retorna { cursosEmAndamento: [...], cursosConcluidos: [...] }
-    console.log(response.data)
-    this.cursos = response.data; 
-  } catch (error) {
-    console.error('Erro ao buscar cursos:', error);
-  }
-},
+      try {
+        const response = await api.get("/cursos/meus_cursos");
+        // Supondo que a API retorna { cursosEmAndamento: [...], cursosConcluidos: [...] }
+        console.log(response.data)
+        sessionStorage.setItem('meus_cursos', JSON.stringify(response.data))
+        this.cursos = response.data;
+        this.usuario.cursosConcluidos = this.cursos.filter((curso) => curso.percentual_conclusao == 100)
+        this.usuario.cursosEmAndamento = this.cursos.filter((curso) => curso.percentual_conclusao < 100)
+        this.usuario.leiturasRealizadas = this.cursos.reduce((accumulator, currValue) => {
+          return accumulator + currValue.leituras.filter((leitura) => leitura.visto).length
+        }, 0)
+        this.usuario.videosAssistidos = this.cursos.reduce((accumulator, currValue) => {
+          return accumulator + currValue.aulas.filter((aula) => aula.visto).length
+        }, 0)
+
+      } catch (error) {
+        console.error('Erro ao buscar cursos:', error);
+      }
+    },
 
     formatarData(data) {
       return new Date(data).toLocaleDateString('pt-BR');
@@ -235,7 +239,8 @@ export default {
   font-family: 'Poppins', sans-serif;
 }
 
-body, html {
+body,
+html {
   background-color: #f8f9fa;
 }
 
@@ -248,14 +253,14 @@ body, html {
 }
 
 
-.rowc{
+.rowc {
   background-color: #b070b0;
   height: 900x
 }
 
 .custom-card {
   border-radius: 15px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   width: 500px;
   height: 80px;

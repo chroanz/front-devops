@@ -81,10 +81,20 @@ export default {
                     const meus_cursos = JSON.parse(sessionStorage.getItem('meus_cursos') ?? []);
                     meus_cursos.push(this.curso)
                     sessionStorage.setItem('meus_cursos', JSON.stringify(meus_cursos));
+                    this.matriculado = true;
+                    this.$toast({
+                        message: "Matrícula realizada com sucesso",
+                        title: "Sucesso",
+                        type: 'success'
+                    })
                 } catch (error) {
                     console.error("Erro ao matricular: ", error)
+                    this.$toast({
+                        message: "Não foi possível realizar matrícula: " + error.message,
+                        title: "Erro ao matricular usuário",
+                        type: 'error'
+                    })
                 }
-                this.matriculado = true;
             } else {
                 this.$emit('navigate', '/login');
             }

@@ -52,6 +52,7 @@
 
 <script>
 import { api } from '@/services/api';
+import cursoService from '@/services/cursoService';
 import { Modal } from 'bootstrap';
 
 export default {
@@ -88,12 +89,10 @@ export default {
         });
         console.log('Teste 02');
         sessionStorage.setItem('access_token', response.data.access_token);
-        const userResponse = await api.get("/user/me", {
-          headers: {
-            'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
-          }
-        });
-        console.log('Teste 03');
+        const userResponse = await api.get("/user/me");
+        const cursosResponse = await cursoService.meusCursos();
+        sessionStorage.setItem('meus_cursos', JSON.stringify(cursosResponse))
+        
         sessionStorage.setItem("user", JSON.stringify(userResponse.data));
         window.dispatchEvent(new Event('userLogin'));
         this.$router.push('/');
