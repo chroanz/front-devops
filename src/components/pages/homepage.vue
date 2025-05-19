@@ -245,13 +245,6 @@ export default {
     return {
       // Dados da página
     }
-  }, mounted() {
-    const user = {
-      id: 1,
-      nome: "Ususário de Teste",
-      cursos_matriculados: [1,3]
-    }
-    localStorage.setItem('loggedUser', JSON.stringify(user));
   }
 }
 </script>

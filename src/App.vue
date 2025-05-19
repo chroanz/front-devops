@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <LoaderComponent />
     <div class="visual-overlay" :class="currentFilter"></div>
     <div id="deficiencias" class="deficiencias">
       <div class="icon-wrapper" @click="toggleMenu">
@@ -29,12 +30,14 @@
 import '@/assets/css/styles.css';
 import AppNavbar from './components/organisms/AppNavbar.vue';
 import SvgIcon from './components/atoms/SvgIcon.vue';
+import LoaderComponent from './components/atoms/LoaderComponent.vue';
 
 export default {
   name: 'App',
   components: {
     AppNavbar,
-    SvgIcon
+    SvgIcon,
+    LoaderComponent
   },
   data() {
     return {
@@ -114,7 +117,7 @@ export default {
 .deficiencias {
   position: fixed;
   bottom: 5%;
-  right: 10px;
+  right: 15px;
   display: flex;
   align-items: center;
   z-index: 100;
