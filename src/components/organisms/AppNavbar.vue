@@ -1,21 +1,21 @@
-
-
 <template>
- 
 
-   <nav class="navbar navbar-light">
+
+  <nav class="navbar navbar-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">
         <img :src="require('@/assets/logosur.png')" alt="Logo">
       </a>
 
       <!-- OFFCANVAS -->
-      <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+      <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+        aria-controls="offcanvasExample">
         <img :src="require('@/assets/menu.png')" alt="Menu">
         Categorias
       </a>
 
-      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+        aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
           <a class="navbar-brand" href="#">
             <img :src="require('@/assets/logosur.png')" alt="Logo">
@@ -46,10 +46,10 @@
         <BarraDeBusca @search="handleSearch" />
       </div>
 
-        <router-link to="/OPerfil" class="navbar-brand2">
-          <div class="info-login-icon"></div>
-          <img :src="require('@/assets/login-icon.png')" alt="Login">
-        </router-link>
+      <router-link :to="logged ? '/OPerfil' : '/login'" class="navbar-brand2">
+        <div class="info-login-icon"></div>
+        <img :src="require('@/assets/login-icon.png')" alt="Login">
+      </router-link>
 
 
     </div>
@@ -67,38 +67,57 @@ export default {
   components: {
     BarraDeBusca,
   },
+  created() {
+    this.checkLoginState();
+  },
+  data() {
+    return {
+      logged: false
+    }
+  },
   mounted() {
-    this.moveBarraDeBusca(); 
-    this.addInfoLoginClickListener(); 
+    this.moveBarraDeBusca();
+    this.addInfoLoginClickListener();
     window.addEventListener("resize", this.moveBarraDeBusca);
+    window.addEventListener("userLogin", this.checkLoginState);
   },
   beforeUnmount() {
     window.removeEventListener("resize", this.moveBarraDeBusca);
+    window.removeEventListener("userLogin", this.checkLoginState);
   },
   methods: {
     handleSearch(url) {
       window.location.href = url;
     },
-  moveBarraDeBusca() {
-    const barraDeBusca = this.$refs.barraDeBusca;
-    const offcanvasBody = document.querySelector(".offcanvas-body");
-    const navbar = document.querySelector(".container-fluid");
-
-    if (!barraDeBusca || !offcanvasBody || !navbar) return;
-
-    if (window.innerWidth <= 1063) { 
-      if (!offcanvasBody.contains(barraDeBusca)) {
-        offcanvasBody.insertBefore(barraDeBusca, offcanvasBody.firstChild);
+    checkLoginState() {
+      try {
+        const user = JSON.parse(sessionStorage.getItem('user'));
+        this.logged = !!(user && user.id)
+      } catch {
+        this.logged = false;
       }
-    } else {
-      navbar.insertBefore(barraDeBusca, navbar.children[2]); 
     }
-  },
+    ,
+    moveBarraDeBusca() {
+      const barraDeBusca = this.$refs.barraDeBusca;
+      const offcanvasBody = document.querySelector(".offcanvas-body");
+      const navbar = document.querySelector(".container-fluid");
+
+      if (!barraDeBusca || !offcanvasBody || !navbar) return;
+
+      if (window.innerWidth <= 1063) {
+        if (!offcanvasBody.contains(barraDeBusca)) {
+          offcanvasBody.insertBefore(barraDeBusca, offcanvasBody.firstChild);
+        }
+      } else {
+        navbar.insertBefore(barraDeBusca, navbar.children[2]);
+      }
+    },
 
     addInfoLoginClickListener() {
       const infoLoginIcon = document.querySelector('.info-login-icon');
       if (infoLoginIcon) {
-        infoLoginIcon.addEventListener('click', () => { 
+        infoLoginIcon.addEventListener('click', () => {
           infoLoginIcon.classList.toggle('active');
         });
       }
@@ -107,7 +126,7 @@ export default {
     addInfoCampClickListener() {
       const infoIcon = document.querySelector('.info-icon');
       if (infoIcon) {
-        infoIcon.addEventListener('click', () => { 
+        infoIcon.addEventListener('click', () => {
           infoIcon.classList.toggle('active');
         });
       }
@@ -116,194 +135,193 @@ export default {
 };
 </script>
 
-  
-  <style scoped>
+
+<style scoped>
+/* NAV */
+
+.navbar {
+  background-color: rgba(178, 136, 192, 1);
+  margin-bottom: 1px;
+}
 
 
-  /* NAV */
-
-  .navbar {
-    background-color: rgba(178, 136, 192, 1);
-    margin-bottom: 1px;
-  }
-
-
-  .container-fluid {
+.container-fluid {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 0 50px 0 50px; 
-  }
+  padding: 0 50px 0 50px;
+}
 
 
 
-  .navbar-light .navbar-nav .nav-link {
-    color: #ffffff;
-  }
+.navbar-light .navbar-nav .nav-link {
+  color: #ffffff;
+}
 
-  .navbar-light .navbar-nav .nav-link:hover {
-    color: #f8f9fa;
-  }
-
-
-  .navbar-collapse.show {
-    display: block !important;
-  }
-  .dropdown-menu.show {
-    display: block !important;
-  }
+.navbar-light .navbar-nav .nav-link:hover {
+  color: #f8f9fa;
+}
 
 
+.navbar-collapse.show {
+  display: block !important;
+}
 
-  /* BOTÃO OFFCANVAS */
-
-  .btn-primary {
-    background-color: transparent; 
-    border: none;
-    font-size: 19px;
-  }
-
-
-  .btn-primary:hover,
-  .btn-primary:focus,
-  .btn-primary:active {
-    background-color: transparent !important; 
-    border: none !important; 
-  }
+.dropdown-menu.show {
+  display: block !important;
+}
 
 
-  /* OFFCANVAS */
 
-  .offcanvas-body .titulo-offcanvas{
-    font-size: 20px;
-    margin-bottom: 50px;
-  }
+/* BOTÃO OFFCANVAS */
 
-  .offcanvas-body ul {
-    list-style-type: none; 
-    padding-left: 0; 
-  }
-
-  .offcanvas-body .nav-link {
-    margin-top: 30px;
-    font-size: 17px; 
-  }
+.btn-primary {
+  background-color: transparent;
+  border: none;
+  font-size: 19px;
+}
 
 
-  /* CAMPO DE BUSCA */
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+
+/* OFFCANVAS */
+
+.offcanvas-body .titulo-offcanvas {
+  font-size: 20px;
+  margin-bottom: 50px;
+}
+
+.offcanvas-body ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.offcanvas-body .nav-link {
+  margin-top: 30px;
+  font-size: 17px;
+}
+
+
+/* CAMPO DE BUSCA */
 
 
 .div-barra-de-busca {
-         width: clamp(300px, 100%, 680px);
-         margin: 0 auto;
-         
-     }
- 
-     .lupa-icon {
-         width: 1.2rem;
-         position: absolute;
-         z-index: 1;
-         top: 1.1rem;
-         left: 1rem;
-     }
- 
-     .barra-de-busca {
-         width: 100%;
-         border-radius: 5rem;
-         font-size: 1rem;
-         font-weight: 400;
-         line-height: 1.5;
-         color: var(--bs-body-color);
-         -webkit-appearance: none;
-         -moz-appearance: none;
-         appearance: none;
-         background-color: var(--bs-body-bg);
-         background-clip: padding-box;
-         border: var(--bs-border-width) solid var(--bs-border-color);
-         transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-     }
+  width: clamp(300px, 100%, 680px);
+  margin: 0 auto;
+
+}
+
+.lupa-icon {
+  width: 1.2rem;
+  position: absolute;
+  z-index: 1;
+  top: 1.1rem;
+  left: 1rem;
+}
+
+.barra-de-busca {
+  width: 100%;
+  border-radius: 5rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--bs-body-color);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: var(--bs-body-bg);
+  background-clip: padding-box;
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
 
 
 
 
 .info-icon {
-    position: absolute;
-    top: 50%;
-    right: 10px; 
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    background-image: url('/src/assets/info-icon.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    cursor: pointer;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-image: url('/src/assets/info-icon.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 
 .info-icon:hover::after {
-    content: "Para realizar pesquisa, digite o termo a ser buscado e clique na lupa ou aperte 'Enter' no teclado";
-    position: absolute;
-    top: 30px; 
-    left: -220px; 
-    width: 250px;
-    font-size: 14px;
-    color: #777;
-    background-color: #fff;
-    padding: 5px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    white-space: wrap;
+  content: "Para realizar pesquisa, digite o termo a ser buscado e clique na lupa ou aperte 'Enter' no teclado";
+  position: absolute;
+  top: 30px;
+  left: -220px;
+  width: 250px;
+  font-size: 14px;
+  color: #777;
+  background-color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  white-space: wrap;
 }
 
 
 
-  /* ICON LOGIN */
+/* ICON LOGIN */
 
 
-  .navbar-brand2 {
-    display: flex;
-    align-items: center;
-    gap: 10px; 
-    position: relative;
+.navbar-brand2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
 }
 
 
 .info-login-icon {
-    width: 20px;
-    height: 20px;
-    background-image: url('@/assets/info-login-icon.png');
-    margin-top: 20px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    position: relative;
+  width: 20px;
+  height: 20px;
+  background-image: url('@/assets/info-login-icon.png');
+  margin-top: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  position: relative;
 }
 
 
 .info-login-icon:hover::after {
-    content: "Faça seu login para visualizar seus cursos ou alterar seus dados pessoais";
-    position: absolute;
-    top: 30px; 
-    left: 50%;
-    transform: translateX(-50%);
-    width: 250px;
-    font-size: 14px;
-    color: #777;
-    background-color: #fff;
-    padding: 8px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    white-space: wrap;
-    text-align: center;
+  content: "Faça seu login para visualizar seus cursos ou alterar seus dados pessoais";
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 250px;
+  font-size: 14px;
+  color: #777;
+  background-color: #fff;
+  padding: 8px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  white-space: wrap;
+  text-align: center;
 }
 
 
-  .dropdown-info{
-    display: none;
-  }
+.dropdown-info {
+  display: none;
+}
 
-  @media (min-width: 1492px) { 
+@media (min-width: 1492px) {
   .div-barra-de-busca {
     display: block !important;
     width: clamp(300px, 100%, 750px);
@@ -311,8 +329,8 @@ export default {
   }
 }
 
-  @media (max-width: 1201px) and (min-width: 1050px) {
-    .container-fluid {
+@media (max-width: 1201px) and (min-width: 1050px) {
+  .container-fluid {
     padding: 0 10px 0 10px !important;
   }
 }
@@ -328,35 +346,35 @@ export default {
 }
 
 
-  @media (max-width: 768px) { 
+@media (max-width: 768px) {
 
-    .container-fluid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 0 2px 0 2px; 
+  .container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0 2px 0 2px;
   }
 
 
-    .btn-primary {
-    background-color: transparent; 
+  .btn-primary {
+    background-color: transparent;
     border: none;
     font-size: 24px;
   }
 
   .offcanvas-body .barra-de-busca {
-    width: 100%; 
+    width: 100%;
     font-size: 16px;
-    background-position: 10px center; 
+    background-position: 10px center;
     margin-bottom: 40px;
     border-color: black;
   }
 
-    .info-icon {
+  .info-icon {
     position: absolute;
     top: 30%;
-    right: 14px; 
+    right: 14px;
     transform: translateY(-50%);
     width: 20px;
     height: 20px;
@@ -364,10 +382,10 @@ export default {
     background-size: contain;
     background-repeat: no-repeat;
     cursor: pointer;
-}
+  }
 
 
-    .info-login-icon {
+  .info-login-icon {
     width: 20px;
     height: 20px;
     background-image: url('@/assets/info-login-icon.png');
@@ -376,20 +394,18 @@ export default {
     background-repeat: no-repeat;
     cursor: pointer;
     position: relative;
-}
+  }
 
 }
 
 
-@media (max-width: 428px){
-  .info-login-icon{
+@media (max-width: 428px) {
+  .info-login-icon {
     display: none !important;
   }
 
-  .navbar-brand2{
+  .navbar-brand2 {
     display: none !important;
   }
 }
-
-  </style>
-  
+</style>

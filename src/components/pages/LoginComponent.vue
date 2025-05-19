@@ -95,6 +95,7 @@ export default {
         });
         console.log('Teste 03');
         sessionStorage.setItem("user", JSON.stringify(userResponse.data));
+        window.dispatchEvent(new Event('userLogin'));
         this.$router.push('/');
       } catch (error) {
         console.error('Erro no login:', error);
