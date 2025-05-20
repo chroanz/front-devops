@@ -10,10 +10,10 @@
                 <button class="btn btn-sm btn-secondary">Ações</button>
                 <ul v-show="dropdownOpen" class="dropdown-menu show" style="display:block; position:absolute; right:0; z-index:10;">
                     <li>
-                        <button class="dropdown-item" @click="$emit('editar', leitura)">Editar</button>
+                        <button class="dropdown-item" @click="editarLeitura">Editar</button>
                     </li>
                     <li>
-                        <button class="dropdown-item text-danger" @click="$emit('deletar', leitura)">Deletar</button>
+                        <button class="dropdown-item text-danger" @click="deletarLeitura">Deletar</button>
                     </li>
                 </ul>
             </div>
@@ -32,6 +32,14 @@ export default {
     data() {
         return {
             dropdownOpen: false
+        }
+    },
+    methods: {
+        editarLeitura() {
+            this.$router.push({ path: `/leituras/edit/${this.leitura.id}` });
+        },
+        deletarLeitura() {
+            this.$emit('deletar', this.leitura);
         }
     }
 }
