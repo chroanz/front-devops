@@ -35,6 +35,7 @@
 
 <script>
 import { onMounted, ref } from 'vue';
+import { api } from '@/services/api';
 
 export default {
     name: 'FormRecuperarSenha',
@@ -74,11 +75,7 @@ export default {
                 };
                 
                 // Fazer requisição AJAX
-                const response = await fetch('http://127.0.0.1:8000/api/reset-password', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                const response = await api.post('/reset-password', {
                     body: JSON.stringify(dados)
                 });
                 
