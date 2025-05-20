@@ -19,6 +19,10 @@ import SobreNos from "@/components/pages/SobreNos.vue";
 import CardShowClass from "@/components/CardShowClass.vue";
 import OPerfil from "@/components/pages/OPerfil.vue";
 import EditUser from "@/components/pages/EditUser.vue";
+import FormEditLesson from "@/components/organisms/FormEditLesson.vue";
+import FormEditCourse from "@/components/organisms/FormEditCourse.vue";
+import FormEditHomeWork from "@/components/organisms/FormEditHomeWork.vue";
+
 const routes = [
   {
     path: "/",
@@ -107,6 +111,14 @@ const routes = [
     },
   },
   {
+    path: "/aulas/edit-lesson/:id",
+    name: "EditLesson",
+    components: {
+      default: FormEditLesson,
+      header: AppNavbar,
+    },
+  },
+  {
     path: "/create-exercise/:id",
     name: "CreateHomeWork",
     components: {
@@ -167,6 +179,22 @@ const routes = [
       default: EditUser,
       header: AppNavbar,
     }
+  },
+  {
+    path: "/cursos/edit/:id",
+    name: "EditCourse",
+    components: {
+      default: FormEditCourse,
+      header: AppNavbar,
+    },
+  },
+  {
+    path: "/leituras/edit/:id",
+    name: "EditHomeWork",
+    components: {
+      default: FormEditHomeWork,
+      header: AppNavbar,
+    },
   },
 ];
 
