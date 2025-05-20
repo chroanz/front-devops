@@ -8,14 +8,8 @@
     </div>
   </div>
 
-  <Toast
-      v-if="showToast"
-      message="{{  }}"
-      title="{{  }}"
-      background="#28a745"
-      color="#ffffff"
-      @close="showToast = false"
-  />
+  <Toast v-if="showToast" message="{{  }}" title="{{  }}" background="#28a745" color="#ffffff"
+    @close="showToast = false" />
 </template>
 
 <script>
@@ -46,26 +40,38 @@ export default {
       formData.append('file', homeWorkData.file);
       formData.append('curso_id', this.getUuidFromUrl());
       try {
-        const response = await axios.post('/api/homeworks/create', formData, {
+        const response = await axios.post('http://localhost:8000/api/leituras', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         });
-        if (response.data.success) {
-          this.showToast = true;
-          this.$toast.success(response.data.message || 'Leitura criada com sucesso!');
-        } else {
-          this.showToast = true;
-
-          this.$toast.error(response.data.message || 'Erro ao criar a leitura!');
-        }
-      } catch (error) {
+      if (response.data.success) {
+        this.showToast = true;
+        this.$toast({
+          title: 'Sucesso',
+          message: 'Leitura criada com sucesso',
+          background: '#28a745'
+        });
+      } else {
         this.showToast = true;
 
-        this.$toast.error('Erro ao criar a leitura!');
+        this.$toast({
+          title: 'Erro',
+          message: 'Erro ao criar a leitura',
+          background: '#dc3545'
+        });
       }
-    },
+    } catch(error) {
+      this.showToast = true;
+
+      this.$toast({
+        title: 'Erro',
+        message: 'Ocorreu um erro inesperado ao criar a leitura',
+        background: '#dc3545'
+      });
+    }
   },
+},
 };
 </script>
 

@@ -13,6 +13,10 @@ const aulaService = {
     const response = await api.patch(`aulas/${id}/visto`);
     return response.data;
   },
+  async deletar(id) {
+    const response = await api.delete(`aulas/${id}`);
+    return response.data;
+  }
 };
 
 export default aulaService;
