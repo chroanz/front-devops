@@ -32,7 +32,7 @@
             <hr>
             <li class="nav-item"><a class="nav-link" href="/courses/auditiva">Deficiência Auditiva</a></li>
             <hr>
-            <li class="nav-item"><a class="nav-link" href="/couses/surdocegueira">Surdocegueira</a></li>
+            <li class="nav-item"><a class="nav-link" href="/courses/surdocegueira">Surdocegueira</a></li>
             <hr>
             <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
             <hr>
