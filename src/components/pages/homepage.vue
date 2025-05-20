@@ -245,13 +245,6 @@ export default {
     return {
       // Dados da página
     }
-  }, mounted() {
-    const user = {
-      id: 1,
-      nome: "Ususário de Teste",
-      cursos_matriculados: [1,3]
-    }
-    localStorage.setItem('loggedUser', JSON.stringify(user));
   }
 }
 </script>
@@ -322,7 +315,7 @@ export default {
 }
 
 .star-rating {
-  color: #b070b0;
+  color: var(--color-secondary);
   font-size: 1.2rem;
 }
 
@@ -331,18 +324,18 @@ export default {
 }
 
 .star.filled {
-  color: #b070b0;
+  color: var(--color-secondary);
 }
 
 .btn-custom {
-  background-color: #b070b0;
+  background-color: var(--color-secondary);
   color: white;
   border-radius: 20px;
   transition: background-color 0.3s ease;
 }
 
 .btn-custom:hover {
-  background-color: #9c5f9c;
+  background-color: var(--color-secondary-hover);
 }
 
 .card-body {
@@ -352,7 +345,7 @@ export default {
 /*footer*/
 
 .bg-purple {
-background-color: #b070b0;
+background-color: var(--color-secondary);
 }
 
 .list-unstyled a:hover{
@@ -371,7 +364,7 @@ opacity: 0.7;
 }
 
 .btn:hover {
-  background-color: #925aa3 !important;
+  background-color: var(--color-secondary-hover) !important;
 }
 
 .text-black {

@@ -56,6 +56,10 @@ export default {
     padding: 0.5rem;
 }
 
+.cards:hover {
+    background-color: var(--color-secondary-hover) !important;
+}
+
 @media (max-width: 767px) {
     .cards {
         font-size: 0.875em;

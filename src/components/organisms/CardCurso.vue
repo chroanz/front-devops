@@ -22,6 +22,7 @@
 <script>
 import info from '@/assets/images/info.svg';
 import { baseURL } from '@/services/api';
+import cursoService from '@/services/cursoService';
 export default {
     name: "CardCurso",
     data() {
@@ -46,9 +47,10 @@ export default {
     emits: ['navigate'],
     mounted() {
         this.matriculado = false;
-        const user = JSON.parse(localStorage.getItem('loggedUser') ?? '{}');
+        const user = JSON.parse(sessionStorage.getItem('user') ?? '{}');
+        const meus_cursos = JSON.parse(sessionStorage.getItem('meus_cursos') ?? '[]');
         this.user = user;
-        const matriculados = user.cursos_matriculados ?? [];
+        const matriculados = meus_cursos.map((curso) => curso.id);
         this.matriculado = matriculados.includes(this.curso.id ?? 0);
     },
     methods: {
@@ -67,20 +69,33 @@ export default {
             }
             return baseURL + '/' + name;
         },
-        handleMatricula() {
+        async handleMatricula() {
             if (this.matriculado) {
                 const url = `/curso/${this.curso.id}/acompanhar`;
                 this.$emit('navigate', url)
                 return;
             }
             if (this.getUser()) {
-                alert('Matrícula realizada!')
-                const user = this.getUser();
-                user.cursos_matriculados.push(this.curso.id);
-                localStorage.setItem('loggedUser', JSON.stringify(user));
-                this.matriculado = true;
+                try {
+                    await cursoService.matricular(this.curso.id);
+                    const meus_cursos = JSON.parse(sessionStorage.getItem('meus_cursos') ?? []);
+                    meus_cursos.push(this.curso)
+                    sessionStorage.setItem('meus_cursos', JSON.stringify(meus_cursos));
+                    this.matriculado = true;
+                    this.$toast({
+                        message: "Matrícula realizada com sucesso",
+                        title: "Sucesso",
+                        type: 'success'
+                    })
+                } catch (error) {
+                    console.error("Erro ao matricular: ", error)
+                    this.$toast({
+                        message: "Não foi possível realizar matrícula: " + error.message,
+                        title: "Erro ao matricular usuário",
+                        type: 'error'
+                    })
+                }
             } else {
-                alert('Não logado');
                 this.$emit('navigate', '/login');
             }
         }

@@ -20,7 +20,7 @@
         </div>
         <div id="inferior" class="content-container">
             <div id="centro" class="content-principal">
-                <router-view @atividade-concluida="atualizarProgresso"></router-view>
+                <router-view :key="$route.fullPath" @atividade-concluida="atualizarProgresso"></router-view>
             </div>
             <div id="direita" class="lista-atividades" :class="{ 'menu-active': menuActive }">
                 <div class="lista-header d-md-none">
@@ -90,7 +90,7 @@ export default {
             }
         },
         isAtividadeAtual(item) {
-            return item.id == this.$route.params.atividadeId
+            return item.id == this.$route.params.atividadeId && this.$route.fullPath.includes(item.tipo)
         },
         proximaAtividade() {
             const indexAtual = this.listaAtividades.findIndex(item =>
