@@ -90,7 +90,7 @@
                       <span class="star">★</span>
                   </div>
                   <p class="card-text text-muted mb-3">Estratégias para acolher e ensinar alunos com deficiência visual.</p>
-                  <a href="#" class="btn btn-custom">Ver Detalhes</a>
+                  <a href="/curso/1" class="btn btn-custom">Ver Detalhes</a>
               </div>
           </div>
       </div>
@@ -114,7 +114,7 @@
                       <span class="star">★</span>
                   </div>
                   <p class="card-text text-muted mb-3">Técnicas de comunicação em Libras para pessoas com surdocegueira.</p>
-                  <a href="#" class="btn btn-custom">Ver Detalhes</a>
+                  <a href="/curso/2" class="btn btn-custom">Ver Detalhes</a>
               </div>
           </div>
       </div>
@@ -138,7 +138,7 @@
               </div>
               <div class="card-body">
                   <h5 class="card-title text-black">Deficiência visual</h5>
-                  <a href="#" class="btn btn-custom">Ver Detalhes</a>
+                  <a href="/courses/visual" class="btn btn-custom">Ver Detalhes</a>
               </div>
           </div>
       </div>
@@ -154,7 +154,7 @@
               </div>
               <div class="card-body">
                   <h5 class="card-title text-black">Deficiência auditiva</h5>
-                  <a href="#" class="btn btn-custom">Ver Detalhes</a>
+                  <a href="/courses/auditiva" class="btn btn-custom">Ver Detalhes</a>
               </div>
           </div>
       </div>
@@ -170,7 +170,7 @@
               </div>
               <div class="card-body">
                   <h5 class="card-title text-black">Surdocegueira</h5>
-                  <a href="#" class="btn btn-custom">Ver Detalhes</a>
+                  <a href="/courses/surdocegueira" class="btn btn-custom">Ver Detalhes</a>
               </div>
           </div>
 
