@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { api } from '@/services/api';
     export default {
         name: 'PreRecuperarSenha',
         data() {
@@ -38,11 +39,7 @@
             async submitForm() {
                 try {
                     this.isSubmitting = true;
-                    const response = await fetch('http://127.0.0.1:8000/api/forgot-password', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
+                    const response = await api.post('/forgot-password', {
                         body: JSON.stringify({ email: this.email }),
                     });
                     

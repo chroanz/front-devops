@@ -76,7 +76,7 @@ export default {
                 
                 // Fazer requisição AJAX
                 const response = await api.post('/reset-password', {
-                    body: JSON.stringify(dados)
+                    body: JSON.stringify(dados) 
                 });
                 
                 const resultado = await response.json();
