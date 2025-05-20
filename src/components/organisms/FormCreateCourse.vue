@@ -18,9 +18,9 @@
                     <label for="type" class="form-label">Tipo do curso</label>
                     <select name="type" v-model="course.categoria" class="form-control" id="type" required
                         placeholder="Selecione o tipo de curso">
-                        <option value="1">Deficiência visual</option>
-                        <option value="2">Deficiência auditiva</option>
-                        <option value="3">Surdocegueira</option>
+                        <option value="Deficiência Visual">Deficiência visual</option>
+                        <option value="Deficiência Auditiva">Deficiência auditiva</option>
+                        <option value="SurdoCegueira">Surdocegueira</option>
                     </select>
                 </div>
             </div>

@@ -49,7 +49,6 @@ export default {
     },
     async mounted() {
         const id = this.$route.params.id;
-        console.log(id)
         const existente = await cursoService.get(id);
         this.curso = existente;
     }

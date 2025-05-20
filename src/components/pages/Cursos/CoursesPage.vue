@@ -33,7 +33,7 @@
 
 <script>
 import CardCurso from '@/components/organisms/CardCurso.vue';
-import axios from 'axios';
+import cursoService from '@/services/cursoService.js';
 
 
 export default {
@@ -78,18 +78,8 @@ export default {
             this.error = null;
             
             try {
-                let url = `${this.baseUrl}/cursos`;
-                if (searchTerm?.trim()) {
-                    url += `/search/${encodeURIComponent(searchTerm.trim())}`;
-                }
-                
-                const response = await axios.get(url);
-                
-                if (response.data) {
-                    this.cursos = Array.isArray(response.data) ? response.data : [];
-                } else {
-                    throw new Error('Formato de dados inválido');
-                }
+                const response = await cursoService.listarCursos(searchTerm);
+                this.cursos = response;
             } catch (err) {
                 console.error('Erro ao buscar cursos:', err);
                 this.error = 'Não foi possível carregar os cursos. Tente novamente mais tarde.';
