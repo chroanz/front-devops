@@ -140,7 +140,7 @@ export default {
 /* NAV */
 
 .navbar {
-  background-color: rgba(178, 136, 192, 1);
+  background-color: var(--color-secondary);
   margin-bottom: 1px;
 }
 

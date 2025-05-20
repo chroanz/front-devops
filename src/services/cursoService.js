@@ -26,7 +26,7 @@ const cursoService = {
       const response = await api.post("cursos/create", data);
       return { success: true, data: response.data };
     } catch (error) {
-      return { success: false, message: error.response.data.message };
+      return { success: false, message: error.response.data.msg };
     }
   },
   async matricular(id) {

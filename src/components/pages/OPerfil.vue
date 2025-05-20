@@ -30,19 +30,19 @@
         <!-- Estatísticas do usuário -->
         <div class="row justify-content-center">
           <div class="col-md-3 col-sm-4 text-center mb-2 mb-md-0">
-            <div class="py-2 rounded" style="background-color: #b070b0;">
+            <div class="py-2 rounded info_card">
               <h3 class="mb-1 text-black">{{ usuario.cursosConcluidos?.length }}</h3>
               <p class="m-0 text-black">Cursos Concluídos</p>
             </div>
           </div>
           <div class="col-md-3 col-sm-4 text-center mb-2 mb-md-0">
-            <div class="py-2 rounded" style="background-color: #b070b0;">
+            <div class="py-2 rounded info_card">
               <h3 class="mb-1 text-black">{{ usuario.videosAssistidos }}</h3>
               <p class="m-0 text-black">Vídeos Assistidos</p>
             </div>
           </div>
           <div class="col-md-3 col-sm-4 text-center">
-            <div class="py-2 rounded" style="background-color: #b070b0;">
+            <div class="py-2 rounded info_card">
               <h3 class="mb-1 text-black">{{ usuario.leiturasRealizadas }}</h3>
               <p class="m-0 text-black">Leituras Realizadas</p>
             </div>
@@ -56,7 +56,7 @@
     <div class="container my-5">
       <h3 class="mb-4 text-black">📚 Cursos em andamento</h3>
 
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <div class="row g-2">
         <div v-for="curso in usuario.cursosEmAndamento" :key="curso.id" class="col">
           <div class="custom-card p-3 h-100 d-flex flex-column justify-content-between">
             <div>
@@ -70,7 +70,7 @@
               <div style="display:flex; gap: 10px; align-items: center;">
                 <span>Progresso: </span>
                 <ProgressBar :progress="curso.percentual_conclusao"
-                  :color="curso.percentual_conclusao < 100 ? '#B288C0' : '#57CA22'" />
+                  :color="curso.percentual_conclusao < 100 ? '#57CA22' : '#57CA22'" />
                 <span>{{ curso.percentual_conclusao }}%</span>
               </div>
               <!-- <p class="text-muted medium">
@@ -249,12 +249,12 @@ html {
 }
 
 .bg-purple {
-  background-color: #B288C0;
+  background-color: var(--color-secondary);
 }
 
 
 .rowc {
-  background-color: #b070b0;
+  background-color: var(--color-secondary);
   height: 900x
 }
 
@@ -271,8 +271,12 @@ html {
   transform: scale(1.03);
 }
 
+.info_card{
+  background-color: var(--color-secondary);
+}
+
 .star-rating {
-  color: #b070b0;
+  color: var(--color-secondary);
   font-size: 1.2rem;
 }
 
@@ -281,18 +285,18 @@ html {
 }
 
 .star.filled {
-  color: #B288C0;
+  color: var(--color-secondary);
 }
 
 .btn-custom {
-  background-color: #B288C0;
+  background-color: var(--color-secondary-active);
   color: white;
   border-radius: 20px;
   transition: background-color 0.3s ease;
 }
 
 .btn-custom:hover {
-  background-color: #B288C0;
+  background-color: var(--color-secondary-hover);
   color: white;
 }
 
@@ -303,7 +307,7 @@ html {
 }
 
 .social-icons a:hover {
-  color: #B288C0;
+  color: var(--color-secondary-hover);
 }
 
 footer .social-icons a {
