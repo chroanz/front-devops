@@ -12,9 +12,84 @@
         </div>
         <div class="bottom">
             <div>{{ curso.aulas?.length ?? 0 }} Aulas</div>
-            <div> <button class="btn-matricula" @click="handleMatricula" v-if="matriculavel">
-                    {{ this.textoBotao }}
-                </button></div>
+            <div class="d-flex justify-content-between w-75 align-items-center">
+                <button class="btn-matricula" @click="handleMatricula" v-if="matriculavel && curso.id">
+                    {{ textoBotao }}
+                </button>
+                <div v-if="curso && curso.id" style="display: inline-block; margin-left: 10px; position: relative;"
+                    @mouseenter="dropdownOpen = true" @mouseleave="dropdownOpen = false">
+                    <button class="btn btn-secondary" type="button" style="position: relative; z-index: 2;"
+                        tabindex="-1">
+                        Ações
+                    </button>
+                    <ul v-show="dropdownOpen" class="dropdown-menu show"
+                        style="display: block; position: absolute; z-index: 10;">
+                        <li class="dropdown-item-hover">
+                            <router-link :to="getCreateLessonRoute" class="dropdown-item" @click="dropdownOpen = false">
+                                Adicionar Aula
+                            </router-link>
+                        </li>
+                        <li class="dropdown-item-hover">
+                            <router-link :to="getCreateHomeWorkRoute" class="dropdown-item"
+                                @click="dropdownOpen = false">
+                                Adicionar Leitura
+                            </router-link>
+                        </li>
+                        <li class="dropdown-item-hover">
+                            <button class="dropdown-item" @click="navegarParaEditarCurso">
+                                Editar
+                            </button>
+                        </li>
+                        <li class="dropdown-item-delete">
+                            <button class="dropdown-item" @click="handleDeleteCurso"
+                                style="background:none;border:none;width:100%;text-align:left;">
+                                <span style="display: flex; align-items: center;">
+                                    Deletar Curso
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between w-75 align-items-center">
+                <button class="btn-matricula" @click="handleMatricula" v-if="matriculavel && curso.id">
+                    {{ textoBotao }}
+                </button>
+                <div v-if="curso && curso.id" style="display: inline-block; margin-left: 10px; position: relative;"
+                    @mouseenter="dropdownOpen = true" @mouseleave="dropdownOpen = false">
+                    <button class="btn btn-secondary" type="button" style="position: relative; z-index: 2;"
+                        tabindex="-1">
+                        Ações
+                    </button>
+                    <ul v-show="dropdownOpen" class="dropdown-menu show"
+                        style="display: block; position: absolute; z-index: 10;">
+                        <li class="dropdown-item-hover">
+                            <router-link :to="getCreateLessonRoute" class="dropdown-item" @click="dropdownOpen = false">
+                                Adicionar Aula
+                            </router-link>
+                        </li>
+                        <li class="dropdown-item-hover">
+                            <router-link :to="getCreateHomeWorkRoute" class="dropdown-item"
+                                @click="dropdownOpen = false">
+                                Adicionar Leitura
+                            </router-link>
+                        </li>
+                        <li class="dropdown-item-hover">
+                            <button class="dropdown-item" @click="navegarParaEditarCurso">
+                                Editar
+                            </button>
+                        </li>
+                        <li class="dropdown-item-delete">
+                            <button class="dropdown-item" @click="handleDeleteCurso"
+                                style="background:none;border:none;width:100%;text-align:left;">
+                                <span style="display: flex; align-items: center;">
+                                    Deletar Curso
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <div>{{ curso.leituras?.length ?? 0 }} Leituras</div>
         </div>
     </div>
@@ -25,11 +100,50 @@ import { baseURL } from '@/services/api';
 import cursoService from '@/services/cursoService';
 export default {
     name: "CardCurso",
+    props: {
+        curso: {
+            type: Object,
+            required: true,
+            default: () => ({
+                id: null,
+                nome: '',
+                descricao: '',
+                imagem_url: '',
+                aulas: [],
+                leituras: []
+            })
+        },
+        matriculavel: {
+            type: Boolean,
+            default: false
+        }
+    },
+    props: {
+        curso: {
+            type: Object,
+            required: true,
+            default: () => ({
+                id: null,
+                nome: '',
+                descricao: '',
+                imagem_url: '',
+                aulas: [],
+                leituras: []
+            })
+        },
+        matriculavel: {
+            type: Boolean,
+            default: false
+        }
+    },
     data() {
         return {
             user: {},
             infoSrc: info,
-            matriculado: Boolean
+            matriculado: false,
+            dropdownOpen: false
+            matriculado: false,
+            dropdownOpen: false
         }
     },
     computed: {
@@ -38,13 +152,25 @@ export default {
                 return 'Entrar no Curso'
             }
             return 'Fazer Matrícula'
+        },
+        canShowButtons() {
+            return this.curso && this.curso.id;
+        },
+        getCreateLessonRoute() {
+            return this.curso.id ? {
+                name: 'CreateLessons',
+                params: { cursoId: this.curso.id }
+            } : { name: 'Home' };
+        },
+        getCreateHomeWorkRoute() {
+            return this.curso.id ? {
+                name: 'CreateHomeWork',
+                params: { cursoId: this.curso.id }
+            } : { name: 'Home' };
         }
     },
-    props: {
-        curso: Object,
-        matriculavel: Boolean
-    },
-    emits: ['navigate'],
+    emits: ['navigate', 'cursoDeletado'],
+    emits: ['navigate', 'cursoDeletado'],
     mounted() {
         this.matriculado = false;
         const user = JSON.parse(sessionStorage.getItem('user') ?? '{}');
@@ -97,6 +223,68 @@ export default {
                 }
             } else {
                 this.$emit('navigate', '/login');
+            }
+        },
+        async handleDeleteCurso() {
+            if (!this.curso?.id) return;
+            try {
+                await cursoService.deletar(this.curso.id);
+                this.$toast({
+                    message: "Curso deletado com sucesso",
+                    title: "Sucesso",
+                    type: 'success'
+                });
+                this.$emit('cursoDeletado', this.curso.id);
+                this.$emit('navigate', '/courses');
+            } catch (error) {
+                console.error("Erro ao deletar curso: ", error);
+                this.$toast({
+                    message: "Não foi possível deletar o curso: " + error.message,
+                    title: "Erro ao deletar curso",
+                    type: 'error'
+                });
+            }
+        },
+        fecharDropdown() {
+            setTimeout(() => {
+                this.dropdownOpen = false;
+            }, 150);
+        },
+        navegarParaEditarCurso() {
+            if (this.curso?.id) {
+                this.$router.push({ name: 'EditCourse', params: { id: this.curso.id } });
+                this.dropdownOpen = false;
+            }
+        },
+        async handleDeleteCurso() {
+            if (!this.curso?.id) return;
+            try {
+                await cursoService.deletar(this.curso.id);
+                this.$toast({
+                    message: "Curso deletado com sucesso",
+                    title: "Sucesso",
+                    type: 'success'
+                });
+                this.$emit('cursoDeletado', this.curso.id);
+                this.$emit('navigate', '/courses');
+            } catch (error) {
+                console.error("Erro ao deletar curso: ", error);
+                this.$toast({
+                    message: "Não foi possível deletar o curso: " + error.message,
+                    title: "Erro ao deletar curso",
+                    type: 'error'
+                });
+            }
+        },
+        fecharDropdown() {
+            setTimeout(() => {
+                this.dropdownOpen = false;
+            }, 150);
+        },
+        navegarParaEditarCurso() {
+            if (this.curso?.id) {
+                this.$router.push({ name: 'EditCourse', params: { id: this.curso.id } });
+                this.dropdownOpen = false;
             }
         }
     }
