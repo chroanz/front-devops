@@ -2,7 +2,7 @@
   <div class="container-login">
     <div class="form-login-area">
       <div class="form-area-img">
-        <img src="../../assets/images/logo.png" alt="Logo Librear">
+        <img src="../../assets/images/logo.png" alt="Logo Librear" />
       </div>
       <form action="#" class="form-login" @submit.prevent="handleLogin">
         <h2>Bem-vindo de volta!</h2>
@@ -19,7 +19,9 @@
 
         <button type="submit">Entrar</button>
         <a href="/pre-recuperar-senha" class="link-btn">Esqueci a senha</a>
-        <router-link to="/cadastro" class="link-btn">Não possui conta? Cadastre-se</router-link>
+        <router-link to="/cadastro" class="link-btn"
+          >Não possui conta? Cadastre-se</router-link
+        >
       </form>
     </div>
 
@@ -34,7 +36,12 @@
         <div class="modal-content">
           <div class="modal-header bg-danger text-white">
             <h5 class="modal-title" id="errorModalLabel">Erro no Login</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Fechar"
+            ></button>
           </div>
           <div class="modal-body">
             <ul>
@@ -42,7 +49,13 @@
             </ul>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Fechar
+            </button>
           </div>
         </div>
       </div>
@@ -51,55 +64,56 @@
 </template>
 
 <script>
-import { api } from '@/services/api';
-import cursoService from '@/services/cursoService';
-import { Modal } from 'bootstrap';
+import { api } from "@/services/api";
+import cursoService from "@/services/cursoService";
+import { Modal } from "bootstrap";
 
 export default {
   data() {
     return {
-      email: '',
-      password: '',
-      errors: []
+      email: "",
+      password: "",
+      errors: [],
     };
   },
   methods: {
     async handleLogin() {
-      this.errors = []; 
+      this.errors = [];
 
       if (!this.email || !this.password) {
-        this.errors.push('Por favor, preencha todos os campos.');
+        this.errors.push("Por favor, preencha todos os campos.");
       }
 
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook|yahoo|admin)\.com$/;
+      const emailRegex =
+        /^[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook|yahoo|admin)\.com$/;
       if (this.email && !emailRegex.test(this.email)) {
-        this.errors.push('Insira um e-mail válido (gmail, hotmail, outlook ou yahoo com .com).');
+        this.errors.push(
+          "Insira um e-mail válido (gmail, hotmail, outlook ou yahoo com .com)."
+        );
       }
 
       if (this.errors.length > 0) {
-        const modal = new Modal(document.getElementById('errorModal'));
+        const modal = new Modal(document.getElementById("errorModal"));
         modal.show();
         return;
       }
-      console.log('Teste 01');
       try {
-        const response = await api.post('/login', {
+        const response = await api.post("/login", {
           email: this.email,
           password: this.password,
         });
-        console.log('Teste 02');
-        sessionStorage.setItem('access_token', response.data.access_token);
+        sessionStorage.setItem("access_token", response.data.access_token);
         const userResponse = await api.get("/user/me");
         const cursosResponse = await cursoService.meusCursos();
-        sessionStorage.setItem('meus_cursos', JSON.stringify(cursosResponse))
-        
+        sessionStorage.setItem("meus_cursos", JSON.stringify(cursosResponse));
+
         sessionStorage.setItem("user", JSON.stringify(userResponse.data));
-        window.dispatchEvent(new Event('userLogin'));
-        this.$router.push('/');
+        window.dispatchEvent(new Event("userLogin"));
+        this.$router.push("/");
       } catch (error) {
-        console.error('Erro no login:', error);
-        this.errors.push('Credenciais inválidas!');
-        const modal = new Modal(document.getElementById('errorModal'));
+        console.error("Erro no login:", error);
+        this.errors.push("Credenciais inválidas!");
+        const modal = new Modal(document.getElementById("errorModal"));
         modal.show();
       }
     },
@@ -107,9 +121,8 @@ export default {
 };
 </script>
 
-
 <style>
-.link-btn:hover{
+.link-btn:hover {
   color: #00000091;
 }
 .container-login {
@@ -132,7 +145,7 @@ export default {
 
 .form-area-img {
   margin-top: 4em;
-  background-color: #FFF;
+  background-color: #fff;
   width: 240px;
   height: 228px;
   border-radius: 50%;
@@ -196,8 +209,7 @@ export default {
   padding: 0 5px;
 }
 
-.form-login button
-{
+.form-login button {
   width: 300px;
   border: none;
   padding: 10px 88px;
@@ -206,21 +218,19 @@ export default {
   color: var(--color-primary);
 }
 
-.form-login a
-{
+.form-login a {
   color: #000;
   text-decoration: none;
 }
 
-@media (max-height: 1200px)  and (max-width: 700px){
-
+@media (max-height: 1200px) and (max-width: 700px) {
   .form-login-area {
     max-width: 100%;
     border-radius: 0px;
     height: calc(100vh - 72px);
   }
 
-    .form-login h2 {
+  .form-login h2 {
     font-size: 28px;
     max-width: 320px;
   }
@@ -237,20 +247,19 @@ export default {
   }
 
   .form-area-img {
-  margin-top: 4em;
-  background-color: #FFF;
-  width: 200px;
-  height: 180px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    margin-top: 4em;
+    background-color: #fff;
+    width: 200px;
+    height: 180px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.form-area-img img {
-  height: 90%;
-  width: 100%;
-}
-
+  .form-area-img img {
+    height: 90%;
+    width: 100%;
+  }
 }
 </style>
