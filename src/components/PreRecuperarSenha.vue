@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { api } from '@/services/api';
     export default {
         name: 'PreRecuperarSenha',
         data() {
@@ -38,20 +39,15 @@
             async submitForm() {
                 try {
                     this.isSubmitting = true;
-                    const response = await fetch('http://127.0.0.1:8000/api/forgot-password', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ email: this.email }),
+                    const response = await api.post('/forgot-password', {
+                        "email": this.email 
                     });
                     
-                    if (response.ok) {
+                    if (response.status === 200) {
                         alert('Solicitação enviada com sucesso! Verifique seu e-mail para recuperar sua senha.');
                         this.email = '';
                     } else {
-                        const data = await response.json();
-                        alert(data.message || 'Ocorreu um erro ao enviar a solicitação. Tente novamente.');
+                        alert(response.data.message || 'Ocorreu um erro ao enviar a solicitação. Tente novamente.');
                     }
                 } catch (error) {
                     console.error('Erro:', error);
