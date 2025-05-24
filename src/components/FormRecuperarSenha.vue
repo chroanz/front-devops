@@ -75,14 +75,12 @@ export default {
                 };
                 
                 // Fazer requisição AJAX
-                const response = await api.post('/reset-password', {
-                    body: JSON.stringify(dados) 
-                });
-                
-                const resultado = await response.json();
-                
+                const response = await api.post('/reset-password', 
+                   dados 
+                );
+                                
                 // Mostrar alerta com a resposta
-                alert(resultado.message || 'Senha alterada com sucesso!');
+                alert(response.message || 'Senha alterada com sucesso!');
                 
                 // Redirecionar para login em caso de sucesso
                 if (response.ok) {
