@@ -51,6 +51,45 @@
                     </ul>
                 </div>
             </div>
+            <div class="d-flex justify-content-between w-75 align-items-center">
+                <button class="btn-matricula" @click="handleMatricula" v-if="matriculavel && curso.id">
+                    {{ textoBotao }}
+                </button>
+                <div v-if="curso && curso.id" style="display: inline-block; margin-left: 10px; position: relative;"
+                    @mouseenter="dropdownOpen = true" @mouseleave="dropdownOpen = false">
+                    <button class="btn btn-secondary" type="button" style="position: relative; z-index: 2;"
+                        tabindex="-1">
+                        Ações
+                    </button>
+                    <ul v-show="dropdownOpen" class="dropdown-menu show"
+                        style="display: block; position: absolute; z-index: 10;">
+                        <li class="dropdown-item-hover">
+                            <router-link :to="getCreateLessonRoute" class="dropdown-item" @click="dropdownOpen = false">
+                                Adicionar Aula
+                            </router-link>
+                        </li>
+                        <li class="dropdown-item-hover">
+                            <router-link :to="getCreateHomeWorkRoute" class="dropdown-item"
+                                @click="dropdownOpen = false">
+                                Adicionar Leitura
+                            </router-link>
+                        </li>
+                        <li class="dropdown-item-hover">
+                            <button class="dropdown-item" @click="navegarParaEditarCurso">
+                                Editar
+                            </button>
+                        </li>
+                        <li class="dropdown-item-delete">
+                            <button class="dropdown-item" @click="handleDeleteCurso"
+                                style="background:none;border:none;width:100%;text-align:left;">
+                                <span style="display: flex; align-items: center;">
+                                    Deletar Curso
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <div>{{ curso.leituras?.length ?? 0 }} Leituras</div>
         </div>
     </div>
@@ -79,10 +118,30 @@ export default {
             default: false
         }
     },
+    props: {
+        curso: {
+            type: Object,
+            required: true,
+            default: () => ({
+                id: null,
+                nome: '',
+                descricao: '',
+                imagem_url: '',
+                aulas: [],
+                leituras: []
+            })
+        },
+        matriculavel: {
+            type: Boolean,
+            default: false
+        }
+    },
     data() {
         return {
             user: {},
             infoSrc: info,
+            matriculado: false,
+            dropdownOpen: false
             matriculado: false,
             dropdownOpen: false
         }
@@ -110,6 +169,7 @@ export default {
             } : { name: 'Home' };
         }
     },
+    emits: ['navigate', 'cursoDeletado'],
     emits: ['navigate', 'cursoDeletado'],
     mounted() {
         this.matriculado = false;
@@ -163,6 +223,37 @@ export default {
                 }
             } else {
                 this.$emit('navigate', '/login');
+            }
+        },
+        async handleDeleteCurso() {
+            if (!this.curso?.id) return;
+            try {
+                await cursoService.deletar(this.curso.id);
+                this.$toast({
+                    message: "Curso deletado com sucesso",
+                    title: "Sucesso",
+                    type: 'success'
+                });
+                this.$emit('cursoDeletado', this.curso.id);
+                this.$emit('navigate', '/courses');
+            } catch (error) {
+                console.error("Erro ao deletar curso: ", error);
+                this.$toast({
+                    message: "Não foi possível deletar o curso: " + error.message,
+                    title: "Erro ao deletar curso",
+                    type: 'error'
+                });
+            }
+        },
+        fecharDropdown() {
+            setTimeout(() => {
+                this.dropdownOpen = false;
+            }, 150);
+        },
+        navegarParaEditarCurso() {
+            if (this.curso?.id) {
+                this.$router.push({ name: 'EditCourse', params: { id: this.curso.id } });
+                this.dropdownOpen = false;
             }
         },
         async handleDeleteCurso() {

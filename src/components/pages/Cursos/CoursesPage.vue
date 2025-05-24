@@ -35,6 +35,7 @@
 import CardCurso from '@/components/organisms/CardCurso.vue';
 import cursoService from '@/services/cursoService.js';
 
+
 export default {
     name: 'CoursesPage',
     components: {

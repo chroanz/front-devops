@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import Toast from '@/components/organisms/Toast.vue';
 import cursoService from '@/services/cursoService';
 
 export default {
