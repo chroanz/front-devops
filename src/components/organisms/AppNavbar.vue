@@ -1,41 +1,69 @@
 <template>
-
-
   <nav class="navbar navbar-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">
-        <img :src="require('@/assets/logosur.png')" alt="Logo">
+        <img :src="require('@/assets/logosur.png')" alt="Logo" />
       </a>
 
       <!-- OFFCANVAS -->
-      <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-        aria-controls="offcanvasExample">
-        <img :src="require('@/assets/menu.png')" alt="Menu">
+      <a
+        class="btn btn-primary"
+        data-bs-toggle="offcanvas"
+        href="#offcanvasExample"
+        role="button"
+        aria-controls="offcanvasExample"
+      >
+        <img :src="require('@/assets/menu.png')" alt="Menu" />
         Categorias
       </a>
 
-      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
-        aria-labelledby="offcanvasExampleLabel">
+      <div
+        class="offcanvas offcanvas-start"
+        tabindex="-1"
+        id="offcanvasExample"
+        aria-labelledby="offcanvasExampleLabel"
+      >
         <div class="offcanvas-header">
           <a class="navbar-brand" href="#">
-            <img :src="require('@/assets/logosur.png')" alt="Logo">
+            <img :src="require('@/assets/logosur.png')" alt="Logo" />
           </a>
-          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          <button
+            type="button"
+            class="btn-close text-reset"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="offcanvas-body">
           <div class="titulo-offcanvas">Veja nossas categorias de aulas</div>
 
           <ul>
-            <li class="nav-item"><a class="nav-link" href="/courses">Todos os cursos</a></li>
-            <hr>
-            <li class="nav-item"><a class="nav-link" href="/courses/visual">Deficiência Visual</a></li>
-            <hr>
-            <li class="nav-item"><a class="nav-link" href="/courses/auditiva">Deficiência Auditiva</a></li>
-            <hr>
-            <li class="nav-item"><a class="nav-link" href="/courses/surdocegueira">Surdocegueira</a></li>
-            <hr>
-            <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-            <hr>
+            <li class="nav-item">
+              <a class="nav-link" href="/courses">Todos os cursos</a>
+            </li>
+            <hr />
+            <li class="nav-item">
+              <a class="nav-link" href="/courses/visual">Deficiência Visual</a>
+            </li>
+            <hr />
+            <li class="nav-item">
+              <a class="nav-link" href="/courses/auditiva"
+                >Deficiência Auditiva</a
+              >
+            </li>
+            <hr />
+            <li class="nav-item">
+              <a class="nav-link" href="/courses/surdocegueira"
+                >Surdocegueira</a
+              >
+            </li>
+            <hr />
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="handleAuth">
+                {{ logged ? "Logout" : "Login" }}
+              </a>
+            </li>
+            <hr />
           </ul>
         </div>
       </div>
@@ -48,18 +76,14 @@
 
       <router-link :to="logged ? '/OPerfil' : '/login'" class="navbar-brand2">
         <div class="info-login-icon"></div>
-        <img :src="require('@/assets/login-icon.png')" alt="Login">
+        <img :src="require('@/assets/login-icon.png')" alt="Login" />
       </router-link>
-
-
     </div>
   </nav>
 </template>
 
-
-
 <script>
-
+import { api } from "@/services/api";
 import BarraDeBusca from "../BarraDeBusca.vue";
 
 export default {
@@ -72,8 +96,8 @@ export default {
   },
   data() {
     return {
-      logged: false
-    }
+      logged: false,
+    };
   },
   mounted() {
     this.moveBarraDeBusca();
@@ -89,15 +113,31 @@ export default {
     handleSearch(url) {
       window.location.href = url;
     },
+    handleAuth() {
+      if (this.logged) {
+        api.post("/logout").finally(() => {
+          sessionStorage.removeItem("user");
+          sessionStorage.removeItem("access_token");
+          sessionStorage.removeItem("meus_cursos");
+
+          this.logged = false;
+
+          this.$nextTick(() => {
+            window.location.href = "/login";
+          });
+        });
+      } else {
+        window.location.href = "/login";
+      }
+    },
     checkLoginState() {
       try {
-        const user = JSON.parse(sessionStorage.getItem('user'));
-        this.logged = !!(user && user.id)
+        const user = JSON.parse(sessionStorage.getItem("user"));
+        this.logged = !!(user && user.id);
       } catch {
         this.logged = false;
       }
-    }
-    ,
+    },
     moveBarraDeBusca() {
       const barraDeBusca = this.$refs.barraDeBusca;
       const offcanvasBody = document.querySelector(".offcanvas-body");
@@ -115,26 +155,25 @@ export default {
     },
 
     addInfoLoginClickListener() {
-      const infoLoginIcon = document.querySelector('.info-login-icon');
+      const infoLoginIcon = document.querySelector(".info-login-icon");
       if (infoLoginIcon) {
-        infoLoginIcon.addEventListener('click', () => {
-          infoLoginIcon.classList.toggle('active');
+        infoLoginIcon.addEventListener("click", () => {
+          infoLoginIcon.classList.toggle("active");
         });
       }
     },
 
     addInfoCampClickListener() {
-      const infoIcon = document.querySelector('.info-icon');
+      const infoIcon = document.querySelector(".info-icon");
       if (infoIcon) {
-        infoIcon.addEventListener('click', () => {
-          infoIcon.classList.toggle('active');
+        infoIcon.addEventListener("click", () => {
+          infoIcon.classList.toggle("active");
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>
-
 
 <style scoped>
 /* NAV */
@@ -144,7 +183,6 @@ export default {
   margin-bottom: 1px;
 }
 
-
 .container-fluid {
   display: flex;
   align-items: center;
@@ -152,8 +190,6 @@ export default {
   width: 100%;
   padding: 0 50px 0 50px;
 }
-
-
 
 .navbar-light .navbar-nav .nav-link {
   color: #ffffff;
@@ -163,7 +199,6 @@ export default {
   color: #f8f9fa;
 }
 
-
 .navbar-collapse.show {
   display: block !important;
 }
@@ -171,8 +206,6 @@ export default {
 .dropdown-menu.show {
   display: block !important;
 }
-
-
 
 /* BOTÃO OFFCANVAS */
 
@@ -182,14 +215,12 @@ export default {
   font-size: 19px;
 }
 
-
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active {
   background-color: transparent !important;
   border: none !important;
 }
-
 
 /* OFFCANVAS */
 
@@ -208,14 +239,11 @@ export default {
   font-size: 17px;
 }
 
-
 /* CAMPO DE BUSCA */
-
 
 .div-barra-de-busca {
   width: clamp(300px, 100%, 680px);
   margin: 0 auto;
-
 }
 
 .lupa-icon {
@@ -239,11 +267,8 @@ export default {
   background-color: var(--bs-body-bg);
   background-clip: padding-box;
   border: var(--bs-border-width) solid var(--bs-border-color);
-  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-
-
-
 
 .info-icon {
   position: absolute;
@@ -252,12 +277,11 @@ export default {
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  background-image: url('/src/assets/info-icon.png');
+  background-image: url("/src/assets/info-icon.png");
   background-size: contain;
   background-repeat: no-repeat;
   cursor: pointer;
 }
-
 
 .info-icon:hover::after {
   content: "Para realizar pesquisa, digite o termo a ser buscado e clique na lupa ou aperte 'Enter' no teclado";
@@ -274,10 +298,7 @@ export default {
   white-space: wrap;
 }
 
-
-
 /* ICON LOGIN */
-
 
 .navbar-brand2 {
   display: flex;
@@ -286,18 +307,16 @@ export default {
   position: relative;
 }
 
-
 .info-login-icon {
   width: 20px;
   height: 20px;
-  background-image: url('@/assets/info-login-icon.png');
+  background-image: url("@/assets/info-login-icon.png");
   margin-top: 20px;
   background-size: contain;
   background-repeat: no-repeat;
   cursor: pointer;
   position: relative;
 }
-
 
 .info-login-icon:hover::after {
   content: "Faça seu login para visualizar seus cursos ou alterar seus dados pessoais";
@@ -315,7 +334,6 @@ export default {
   white-space: wrap;
   text-align: center;
 }
-
 
 .dropdown-info {
   display: none;
@@ -335,9 +353,6 @@ export default {
   }
 }
 
-
-
-
 @media (max-width: 1024px) {
   .div-barra-de-busca {
     width: 100%;
@@ -345,9 +360,7 @@ export default {
   }
 }
 
-
 @media (max-width: 768px) {
-
   .container-fluid {
     display: flex;
     align-items: center;
@@ -355,7 +368,6 @@ export default {
     width: 100%;
     padding: 0 2px 0 2px;
   }
-
 
   .btn-primary {
     background-color: transparent;
@@ -378,26 +390,23 @@ export default {
     transform: translateY(-50%);
     width: 20px;
     height: 20px;
-    background-image: url('/src/assets/info-icon.png');
+    background-image: url("/src/assets/info-icon.png");
     background-size: contain;
     background-repeat: no-repeat;
     cursor: pointer;
   }
 
-
   .info-login-icon {
     width: 20px;
     height: 20px;
-    background-image: url('@/assets/info-login-icon.png');
+    background-image: url("@/assets/info-login-icon.png");
     margin-top: 20px;
     background-size: contain;
     background-repeat: no-repeat;
     cursor: pointer;
     position: relative;
   }
-
 }
-
 
 @media (max-width: 428px) {
   .info-login-icon {
