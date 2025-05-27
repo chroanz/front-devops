@@ -108,44 +108,54 @@ export default {
             this.percentualProgresso = Math.round((atividadesConcluidas / this.listaAtividades.length) * 100)
         }
     },
+
+    //Carol
     async created() {
         const cursoId = parseInt(this.$route.params.id)
-        const cursoAtual = await cursoService.get(cursoId);
-        this.curso = cursoAtual
-        if (this.curso) {
-            // Combina aulas e leituras em uma única lista ordenada
-            const aulas = this.curso.aulas.map(aula => ({
-                ...aula,
-                sequencia: aula.sequencia,
-                tipo: 'aula',
-                visto: aula.visto
-            }))
+        try {
+            const cursoAtual = await cursoService.get(cursoId);
+            this.curso = cursoAtual
+            if (this.curso) {
+                const aulas = this.curso.aulas.map(aula => ({
+                    ...aula,
+                    sequencia: aula.sequencia,
+                    tipo: 'aula',
+                    visto: aula.visto
+                }))
 
-            const leituras = this.curso.leituras.map(leitura => ({
-                ...leitura,
-                sequencia: leitura.sequencia,
-                tipo: 'leitura',
-                visto: leitura.visto
-            }))
+                const leituras = this.curso.leituras.map(leitura => ({
+                    ...leitura,
+                    sequencia: leitura.sequencia,
+                    tipo: 'leitura',
+                    visto: leitura.visto
+                }))
 
-            this.listaAtividades = [...aulas, ...leituras]
-                .sort((a, b) => a.sequencia - b.sequencia)
+                this.listaAtividades = [...aulas, ...leituras]
+                    .sort((a, b) => a.sequencia - b.sequencia)
 
-            // Se não houver atividade selecionada, seleciona a primeira
-            if (!this.$route.params.atividadeId && this.listaAtividades.length > 0) {
-                await this.navegarPara(this.listaAtividades[0])
-            } else {
-                // Atualiza a aula atual
-                const atividadeAtual = this.listaAtividades.find(item =>
-                    this.isAtividadeAtual(item)
-                )
-                this.atividadeAtual = atividadeAtual
+                
+                if (!this.$route.params.atividadeId && this.listaAtividades.length > 0) {
+                    await this.navegarPara(this.listaAtividades[0])
+                } else {
+                    // Atualiza a aula atual
+                    const atividadeAtual = this.listaAtividades.find(item =>
+                        this.isAtividadeAtual(item)
+                    )
+                    this.atividadeAtual = atividadeAtual
+                }
+                const atividadesConcluidas = this.listaAtividades.filter(item => item.visto).length
+                this.percentualProgresso = Math.round((atividadesConcluidas / this.listaAtividades.length) * 100)
             }
-            const atividadesConcluidas = this.listaAtividades.filter(item => item.visto).length
-            this.percentualProgresso = Math.round((atividadesConcluidas / this.listaAtividades.length) * 100)
-
+        } catch (error) {
+            if (error.response && error.response.status === 403) {
+                alert('Você não está matriculado nesse curso');
+                this.$router.push('/cursos'); // Redireciona para a lista de cursos
+            } else {
+                alert('Ocorreu um erro ao carregar o curso');
+            }
         }
-    }
+    },
+
 }
 </script>
 
