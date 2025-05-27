@@ -28,12 +28,28 @@
                 </div>
             </div>
         </div>
+      </div>
+      <div v-else-if="error" class="alert alert-danger" role="alert">
+        {{ error }}
+      </div>
+      <div v-else class="d-flex flex-column p-3 gap-4">
+        <div class="row" v-for="curso in cursos" :key="curso.id">
+          <span role="button" @click="goToCourse(curso.id)">
+            <CardCurso
+              :curso="curso"
+              :matriculavel="false"
+              @navigate="handleNavigate"
+            />
+          </span>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-import CardCurso from '@/components/organisms/CardCurso.vue';
-import cursoService from '@/services/cursoService.js';
+import CardCurso from "@/components/organisms/CardCurso.vue";
+import cursoService from "@/services/cursoService.js";
 
 
 export default {
