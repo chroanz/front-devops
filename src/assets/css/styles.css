@@ -7,7 +7,7 @@
     --color-action: #2176AE;
     --color-verde: #57CA22;
     --color-secondary-hover: rgba(82, 255, 91, 0.5);
-    --color-secondary-active: rgba(82, 255, 91, 0.3);
+    --color-secondary-active: rgba(82, 255, 91, 1);
     --text-color: rgba(33,37,41);
     
 }

@@ -25,14 +25,14 @@ export default {
         backgroundColor() {
             
             return this.active
-                ? getComputedStyle(document.documentElement)?.getPropertyValue('--color-secondary-active')?.trim()
-                : 'transparent'
+                ? getComputedStyle(document.documentElement)?.getPropertyValue('--color-secondary')?.trim()
+                : this.color
         }
     },
     props: {
         leitura: Leitura,
         color: {
-            default: getComputedStyle(document.documentElement)?.getPropertyValue('--color-secondary')?.trim() ?? '#ffffff'
+            default: getComputedStyle(document.documentElement)?.getPropertyValue('--color-primary')?.trim() ?? '#ffffff'
         },
         active: {
             type: Boolean,
