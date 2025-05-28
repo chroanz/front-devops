@@ -285,19 +285,19 @@ html {
 }
 
 .star.filled {
-  color: var(--color-secondary);
+  color: var(--color-action);
 }
 
 .btn-custom {
   background-color: var(--color-secondary-active);
-  color: white;
+  color: var(--text-color);
   border-radius: 20px;
   transition: background-color 0.3s ease;
 }
 
 .btn-custom:hover {
   background-color: var(--color-secondary-hover);
-  color: white;
+  color: var(--text-color);
 }
 
 .social-icons a {

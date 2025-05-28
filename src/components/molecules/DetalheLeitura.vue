@@ -19,13 +19,14 @@ export default {
     computed: {
         iconColor() {
             return this.leitura.visto
-                ? getComputedStyle(document.documentElement)?.getPropertyValue('--color-verde')?.trim()
+                ? getComputedStyle(document.documentElement)?.getPropertyValue('--color-action')?.trim()
                 : '#000000'
         },
         backgroundColor() {
+            
             return this.active
                 ? getComputedStyle(document.documentElement)?.getPropertyValue('--color-secondary-active')?.trim()
-                : this.color
+                : 'transparent'
         }
     },
     props: {
