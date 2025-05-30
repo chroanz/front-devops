@@ -29,12 +29,28 @@ const cursoService = {
       return { success: false, message: error.response.data.msg };
     }
   },
+  async deletar(id) {
+    try {
+      const response = await api.delete(`cursos/delete/${id}`);
+      return { success: true, data: response.data };
+    } catch (error) {
+      return { success: false, message: error.response.data.msg };
+    }
+  },
   async matricular(id) {
     try {
       const response = await api.post(`cursos/subscribe/${id}`);
       return { success: true, data: response.data };
     } catch (error) {
       return { success: false, message: error.response.data.message };
+    }
+  },
+  async atualizar(id, data) {
+    try {
+      const response = await api.put(`cursos/update/${id}`, data);
+      return { success: true, data: response.data };
+    } catch (error) {
+      return { success: false, message: error.response.data.msg };
     }
   },
 };
