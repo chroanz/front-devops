@@ -7,7 +7,7 @@
     <div class="col-8 text-truncate px-2">{{ leitura.titulo }}</div>
     <div class="col-2 text-end">
       <div
-        class="dropdown"
+        class="dropdown" v-if="user?.user?.isAdmin"
         :class="{ dropup }"
         @mouseenter="showDropdown"
         @mouseleave="closeDropdown"
@@ -45,7 +45,8 @@ export default {
   data() {
     return {
       dropdownOpen: false,
-      dropup: false
+      dropup: false,
+      user: JSON.parse(sessionStorage.getItem('user') || '{}')
     }
   },
   methods: {

@@ -7,7 +7,7 @@
         <div class="col-8 text-truncate px-2">{{ aula.titulo }}</div>
         <div class="col-2 text-end">
             {{ aula.duracaoMinutos }} min
-            <div class="dropdown d-inline-block ms-2" @mouseenter="dropdownOpen = true" @mouseleave="dropdownOpen = false">
+            <div class="dropdown d-inline-block ms-2" @mouseenter="dropdownOpen = true" @mouseleave="dropdownOpen = false" v-if="user.user?.isAdmin">
                 <button class="btn btn-sm btn-secondary">Ações</button>
                 <ul v-show="dropdownOpen" class="dropdown-menu show" style="display:block; position:absolute; right:0; z-index:10;">
                     <li>
@@ -32,7 +32,8 @@ export default {
     },
     data() {
         return {
-            dropdownOpen: false
+            dropdownOpen: false,
+            user: JSON.parse(sessionStorage.getItem('user') || '{}')
         }
     },
     methods: {

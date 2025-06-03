@@ -17,7 +17,7 @@
                 <button class="btn-matricula" @click="handleMatricula" v-if="matriculavel && curso.id">
                     {{ textoBotao }}
                 </button>
-                <div v-if="curso && curso.id" style="display: inline-block; margin-left: 10px; position: relative;"
+                <div v-if="user?.user?.isAdmin && curso && curso.id" style="display: inline-block; margin-left: 10px; position: relative;"
                     @mouseenter="dropdownOpen = true" @mouseleave="dropdownOpen = false">
                     <button class="btn btn-secondary" type="button" style="position: relative; z-index: 2;"
                         tabindex="-1">
@@ -85,7 +85,7 @@ export default {
     emits: ['navigate', 'cursoDeletado'],
     data() {
         return {
-            user: {},
+            user: JSON.parse(sessionStorage.getItem('user') || '{}'),
             infoSrc: info,
             matriculado: false,
             dropdownOpen: false
@@ -97,12 +97,12 @@ export default {
         },
         getCreateLessonRoute() {
             return this.curso.id
-                ? { name: 'CreateLessons', params: { cursoId: this.curso.id } }
+                ? { name: 'CreateLessons', params: { id: this.curso.id } }
                 : { name: 'Home' };
         },
         getCreateHomeWorkRoute() {
             return this.curso.id
-                ? { name: 'CreateHomeWork', params: { cursoId: this.curso.id } }
+                ? { name: 'CreateHomeWork', params: { id: this.curso.id } }
                 : { name: 'Home' };
         }
     },
