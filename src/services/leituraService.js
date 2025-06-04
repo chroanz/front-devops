@@ -13,6 +13,14 @@ const leituraService = {
     const response = await api.patch(`leituras/${id}/visto`);
     return response.data;
   },
+  async deletar(id) {
+    const response = await api.delete(`leituras/${id}`);
+    return response.data;
+  },
+  async atualizar(id, data) {
+    const response = await api.put(`leituras/update/${id}`, data);
+    return response.data;
+  }
 };
 
 export default leituraService;
