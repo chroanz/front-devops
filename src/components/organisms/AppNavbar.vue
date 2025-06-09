@@ -182,6 +182,9 @@ export default {
   background-color: var(--color-secondary);
   margin-bottom: 1px;
 }
+.navbar a {
+  color: var(--text-color);
+}
 
 .container-fluid {
   display: flex;

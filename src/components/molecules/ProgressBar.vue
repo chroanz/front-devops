@@ -18,7 +18,7 @@ export default {
     color: {
       type: String,
       required: false,
-      default: getComputedStyle(document.documentElement)?.getPropertyValue('--color-verde')?.trim() ?? '#4caf50'
+      default: getComputedStyle(document.documentElement)?.getPropertyValue('--color-action')?.trim() ?? '#4caf50'
     }
   },
   computed: {

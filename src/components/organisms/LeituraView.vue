@@ -5,7 +5,7 @@
             <div v-html="texto"></div>
         </div>
     </div>
-    <button @click="marcarComoConcluida" class="btn btn-primary action">
+    <button @click="marcarComoConcluida" class="btn btn-primary action" :disabled="disabled">
         Marcar como concluída
     </button>
 </template>
@@ -37,7 +37,8 @@ export default {
     data() {
         return {
             leituraAtual: null,
-            loading: true
+            loading: true,
+            disabled: true
         }
     },
     computed: {
@@ -55,6 +56,9 @@ export default {
         try {
             const leitura = await leituraService.get(this.leituraId);
             this.leituraAtual = leitura;
+            setTimeout(() => {
+            this.disabled = false;
+        }, this.texto.length * 10);
             this.loading = false;
         }
         catch (error) {

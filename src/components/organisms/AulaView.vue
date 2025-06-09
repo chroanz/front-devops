@@ -13,7 +13,7 @@
             <h3>Transcrição</h3>
             <div v-html="transcricao"></div>
         </div>
-        <button @click="marcarComoConcluida" class="btn btn-primary action">
+        <button @click="marcarComoConcluida" class="btn btn-primary action" :disabled="disabled">
             Marcar como concluída
         </button>
     </div>
@@ -27,7 +27,8 @@ export default {
     data() {
         return {
             aulaAtual: null,
-            loading: true
+            loading: true,
+            disabled: true
         }
     },
     computed: {
@@ -55,6 +56,9 @@ export default {
         const aula = await aulaService.get(this.aulaId);
         this.aulaAtual = aula;
         this.loading = false;
+        setTimeout(() => {
+            this.disabled = false;
+        }, 5000);
     },
     methods: {
         getYoutubeVideoId(url) {
@@ -62,11 +66,16 @@ export default {
             const match = url.match(regExp)
             return (match && match[2].length === 11) ? match[2] : null
         },
-        marcarComoConcluida() {
+        async marcarComoConcluida() {
             try {
-                aulaService.marcarVisto(this.aulaId);
+                await aulaService.marcarVisto(this.aulaId);
                 this.aulaAtual.visto = true;
             } catch (error) {
+                this.$toast({
+            message: error.response.data.msg || "Erro ao marcar atividade como concluída",
+            title: "Erro ao marcar atividade",
+            type: "error",
+          });
                 console.log(error)
             }
             this.$emit('atividade-concluida', this.$route.params.atividadeId, 'aula');

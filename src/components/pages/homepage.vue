@@ -287,11 +287,11 @@ export default {
 }
 
 .star.filled {
-  color: var(--color-secondary);
+  color: var(--color-action);
 }
 
 .btn-custom {
-  background-color: var(--color-secondary);
+  background-color: var(--color-action);
   color: white;
   border-radius: 20px;
   transition: background-color 0.3s ease;

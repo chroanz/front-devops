@@ -180,7 +180,7 @@ export default {
     cursor: pointer;
     font-weight: bold;
     font-size: 14px;
-    color: #b070b0;
+    color: var(--color-secondary);
     transition: all 0.2s ease;
   }
   
@@ -297,7 +297,7 @@ export default {
   }
   
   .star.filled {
-    color: #b070b0;
+    color: var(--color-action);
   }
   
   /* Responsivo */

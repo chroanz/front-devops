@@ -20,12 +20,12 @@ export default {
     computed: {
         iconColor() {
             return this.aula.visto
-                ? getComputedStyle(document.documentElement)?.getPropertyValue('--color-verde')?.trim()
+                ? getComputedStyle(document.documentElement)?.getPropertyValue('--color-action')?.trim()
                 : '#000000'
         },
         backgroundColor() {
             return this.active
-                ? getComputedStyle(document.documentElement)?.getPropertyValue('--color-secondary-active')?.trim()
+                ? getComputedStyle(document.documentElement)?.getPropertyValue('--color-secondary')?.trim()
                 : this.color
         }
     },
@@ -33,7 +33,7 @@ export default {
         aula: Aula,
         color: {
             type: String,
-            default: getComputedStyle(document.documentElement)?.getPropertyValue('--color-secondary')?.trim() ?? '#ffffff'
+            default: getComputedStyle(document.documentElement)?.getPropertyValue('--color-primary')?.trim() ?? '#ffffff'
         },
         active: {
             type: Boolean,

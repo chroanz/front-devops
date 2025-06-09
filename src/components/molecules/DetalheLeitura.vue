@@ -19,19 +19,20 @@ export default {
     computed: {
         iconColor() {
             return this.leitura.visto
-                ? getComputedStyle(document.documentElement)?.getPropertyValue('--color-verde')?.trim()
+                ? getComputedStyle(document.documentElement)?.getPropertyValue('--color-action')?.trim()
                 : '#000000'
         },
         backgroundColor() {
+            
             return this.active
-                ? getComputedStyle(document.documentElement)?.getPropertyValue('--color-secondary-active')?.trim()
+                ? getComputedStyle(document.documentElement)?.getPropertyValue('--color-secondary')?.trim()
                 : this.color
         }
     },
     props: {
         leitura: Leitura,
         color: {
-            default: getComputedStyle(document.documentElement)?.getPropertyValue('--color-secondary')?.trim() ?? '#ffffff'
+            default: getComputedStyle(document.documentElement)?.getPropertyValue('--color-primary')?.trim() ?? '#ffffff'
         },
         active: {
             type: Boolean,
