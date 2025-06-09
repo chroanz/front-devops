@@ -4,6 +4,12 @@ const aulaService = {
   async listarAulas(cursoId) {
     const response = await api.get("aulas?curso_id=" + cursoId );
     return response.data;
+  }, async criar(aula) {
+    const response = await api.post("aulas/create", aula);
+    return response.data;
+  },  async atualizar(id, data) {
+    const response = await api.put(`aulas/update/${id}`, data);
+    return response.data;
   },
   async get(id) {
     const response = await api.get("aulas/show/" + id);

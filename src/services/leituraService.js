@@ -4,6 +4,9 @@ const leituraService = {
   async listarLeituras(idCurso) {
     const response = await api.get("leituras?curso_id=" + idCurso)
     return response.data;
+  },async criar(leitura) {
+    const response = await api.post("leituras/", leitura);
+    return response.data;
   },
   async get(id) {
     const response = await api.get("leituras/" + id);
