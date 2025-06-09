@@ -21,7 +21,7 @@ const leituraService = {
     return response.data;
   },
   async atualizar(id, data) {
-    const response = await api.put(`leituras/update/${id}`, data);
+    const response = await api.put(`leituras/${id}`, data);
     return response.data;
   }
 };
