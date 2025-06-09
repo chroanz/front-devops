@@ -7,17 +7,13 @@
             </div>
             <div class="col-12 mb-3 flex-row d-flex justify-content-between">
                 <div class="col-sm-6 w-50" style="max-width: 49%;">
-                    <label for="homeWorkSequencia" class="form-label">Sequencia</label>
-                    <input type="text" class="form-control" id="homeWorkSequencia" v-model="homeWork.sequencia" required placeholder="Numero da sequencia">
-                </div>
-                <div class="col-sm-6 w-50" style="max-width: 49%;">
                     <label for="homeWorkConteudo" class="form-label">Conteúdo</label>
                     <textarea class="form-control" id="homeWorkConteudo" v-model="homeWork.conteudo" required placeholder="Conteúdo da leitura"></textarea>
                 </div>
             </div>
             <div class="d-flex align-items-end">
                 <button type="submit" class="btn btn-primary m-1">Salvar Alterações</button>
-                <a href="" class="btn btn-secondary m-1">Cancelar</a>
+                <a href="/" class="btn btn-secondary m-1">Cancelar</a>
             </div>
         </form>
     </div>
@@ -35,7 +31,6 @@ export default {
         return {
             homeWork: {
                 titulo: '',
-                sequencia: '',
                 conteudo: '',
             },
             showToast: false,
@@ -58,8 +53,8 @@ export default {
                 const leitura = await leituraService.get(id);
                 this.homeWork = {
                     titulo: leitura.titulo,
-                    sequencia: leitura.sequencia,
                     conteudo: leitura.conteudo,
+                    curso_id: leitura.curso_id
                 };
             } catch (error) {
                 this.showToast = true;
@@ -73,7 +68,8 @@ export default {
             try {
                 const response = await leituraService.atualizar(id, this.homeWork);
                 this.showToast = true;
-                if (response.leitura != null) {
+                if (response != null) {
+                    console.log(response)
                     this.toastTitle = 'Sucesso';
                     this.toastMessage = 'Leitura atualizada com sucesso';
                     this.toastBg = '#28a745';
