@@ -1,23 +1,19 @@
 <template>
-    <div class="container">
+    <div class="container p-5">
         <form @submit.prevent="submitForm" class="d-flex flex-column ">
             <div class="mb-3">
                 <label for="homeWorkName" class="form-label">Titulo</label>
                 <input type="text" class="form-control" id="homeWorkName" v-model="homeWork.titulo" required placeholder="Nome da Leitura">
             </div>
-            <div class="col-12 mb-3 flex-row d-flex justify-content-between">
-                <div class="col-sm-6 w-50" style="max-width: 49%;">
-                    <label for="homeWorkSequencia" class="form-label">Sequencia</label>
-                    <input type="text" class="form-control" id="homeWorkSequencia" v-model="homeWork.sequencia" required placeholder="Numero da sequencia">
-                </div>
-                <div class="col-sm-6 w-50" style="max-width: 49%;">
+            <div class="flex-row d-flex justify-content-between">
+                <div class="w-100">
                     <label for="homeWorkConteudo" class="form-label">Conteúdo</label>
-                    <textarea class="form-control" id="homeWorkConteudo" v-model="homeWork.conteudo" required placeholder="Conteúdo da leitura"></textarea>
+                    <textarea class="form-control" style="height: 200px;" id="homeWorkConteudo" v-model="homeWork.conteudo" required placeholder="Conteúdo da leitura"></textarea>
                 </div>
             </div>
-            <div class="d-flex align-items-end">
+            <div class="d-flex align-items-end mt-3">
                 <button type="submit" class="btn btn-primary m-1">Salvar Alterações</button>
-                <a href="" class="btn btn-secondary m-1">Cancelar</a>
+                <a href="" class="btn btn-secondary m-1" @click="cancel">Cancelar</a>
             </div>
         </form>
     </div>
@@ -35,7 +31,6 @@ export default {
         return {
             homeWork: {
                 titulo: '',
-                sequencia: '',
                 conteudo: '',
             },
             showToast: false,
@@ -58,7 +53,6 @@ export default {
                 const leitura = await leituraService.get(id);
                 this.homeWork = {
                     titulo: leitura.titulo,
-                    sequencia: leitura.sequencia,
                     conteudo: leitura.conteudo,
                 };
             } catch (error) {
@@ -73,10 +67,11 @@ export default {
             try {
                 const response = await leituraService.atualizar(id, this.homeWork);
                 this.showToast = true;
-                if (response.leitura != null) {
+                if (response.curso_id != null) {
                     this.toastTitle = 'Sucesso';
                     this.toastMessage = 'Leitura atualizada com sucesso';
                     this.toastBg = '#28a745';
+                    this.$router.push(`/curso/${response.course_id}`);
                 } else {
                     this.toastTitle = 'Erro';
                     this.toastMessage = 'Erro ao atualizar a leitura';
@@ -88,7 +83,15 @@ export default {
                 this.toastMessage = 'Ocorreu um erro inesperado ao atualizar a leitura';
                 this.toastBg = '#dc3545';
             }
-        },
+        }, cancel() {
+            this.$router.push(`/cursos/`);
+        }
     }
 }
 </script>
+<style scoped>
+.container {
+  max-width: 75%;
+  height: 100%;
+}
+</style>

@@ -12,11 +12,6 @@
                     placeholder="URL do video no youtube">
             </div>
             <div class="col-12 mb-3 flex-row d-flex justify-content-between">
-                <div class="col-sm-6 w-50">
-                    <label for="sequencia" class="form-label">Sequencia</label>
-                    <input type="text" class="form-control" id="sequencia" name="sequencia" v-model="lesson.sequencia"
-                        required placeholder="Numero da sequencia">
-                </div>
                 <div class="col-sm-6 w-50 mx-1">
                     <label for="duracaoMinutos" class="form-label">Duração</label>
                     <input type="number" class="form-control" id="duracaoMinutos" name="duracaoMinutos"
@@ -35,7 +30,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import Toast from '@/components/organisms/Toast.vue';
 import aulaService from '@/services/aulaService';
 
@@ -90,17 +84,16 @@ export default {
             const formData = new FormData();
             formData.append('titulo', this.lesson.title);
             formData.append('videoUrl', this.lesson.video);
-            formData.append('sequencia', this.lesson.sequencia);
             formData.append('duracaoMinutos', this.lesson.duracaoMinutos);
 
             try {
-                const response = await axios.put(`http://127.0.0.1:8000/api/aulas/update/${id}`, formData);
+                const response = await aulaService.atualizar(id, formData);
                 this.showToast = true;
                 if (response.data.aula != null) {
                     this.toastTitle = 'Sucesso';
                     this.toastMessage = 'Aula atualizada com sucesso';
                     this.toastBg = '#28a745';
-                    // Redirecionar ou atualizar a página se desejar
+                    this.$router.push(`/curso/${response.aula.curso_id}`);
                 } else {
                     this.toastTitle = 'Erro';
                     this.toastMessage = 'Erro ao atualizar a aula';
@@ -116,3 +109,9 @@ export default {
     }
 }
 </script>
+<style scoped>
+.container {
+  max-width: 100%;
+  height: 100%;
+}
+</style>
