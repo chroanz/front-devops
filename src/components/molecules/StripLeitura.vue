@@ -56,26 +56,17 @@ export default {
     },
     deletarLeitura() {
       let response = leituraService.deletar(this.leitura.id)
-      response.then((res) => {
-        if (res.status === 200) {
-          this.$toast({
-            title: 'Sucesso',
-            message: 'Leitura deletada com sucesso',
-            background: '#28a745'
-          });
-          this.$router.push(`/curso/${this.leitura.curso_id}`);
-        } else {
-          this.$toast({
-            title: 'Erro',
-            message: 'Erro ao deletar a leitura',
-            background: '#dc3545'
-          });
-        }
+      response.then(() => {
+        this.$toast({
+          title: 'Sucesso',
+          message: 'Leitura deletada com sucesso',
+          background: '#28a745'
+        });
+        this.$router.push(`/curso/${this.leitura.curso_id}`);
       }).catch((error) => {
-        console.error('Erro ao deletar aula:', error);
         this.$toast({
           title: 'Erro',
-          message: 'Erro ao deletar a aula',
+          message: 'Erro ao deletar a leitura: ',
           background: '#dc3545'
         });
       });
