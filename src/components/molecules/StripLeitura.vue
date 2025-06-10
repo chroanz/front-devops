@@ -6,7 +6,7 @@
     <div class="col-1 text-center">{{ leitura.sequencia }}</div>
     <div class="col-8 text-truncate px-2">{{ leitura.titulo }}</div>
     <div class="col-2 text-end">
-      <div class="dropdown" v-if="user?.user?.isAdmin" :class="{ dropup }" @mouseenter="showDropdown"
+      <div class="dropdown" v-if="user?.isAdmin" :class="{ dropup }" @mouseenter="showDropdown"
         @mouseleave="closeDropdown" ref="dropdown" style="display:inline-block;">
         <button class="btn btn-sm btn-secondary">Ações</button>
         <ul v-show="dropdownOpen" class="dropdown-menu show" ref="menu"

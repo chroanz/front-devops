@@ -156,7 +156,7 @@
       <h6 class="text-black mb-3">Negócios</h6>
       <ul class="list-unstyled">
         <li><a href="#" class="text-black text-decoration-none">Nossos planos</a></li>
-        <li v-if="user?.user?.isAdmin"><a href="/create-course" class="text-black text-decoration-none">Cadastrar curso</a></li>
+        <li v-if="user?.isAdmin"><a href="/create-course" class="text-black text-decoration-none">Cadastrar curso</a></li>
       </ul>
     </div>
 

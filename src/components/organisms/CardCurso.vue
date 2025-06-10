@@ -17,7 +17,7 @@
                 <button class="btn-matricula" @click="handleMatricula" v-if="matriculavel && curso.id">
                     {{ textoBotao }}
                 </button>
-                <div v-if="user?.user?.isAdmin && curso && curso.id" style="display: inline-block; margin-left: 10px; position: relative;"
+                <div v-if="user?.isAdmin && curso && curso.id" style="display: inline-block; margin-left: 10px; position: relative;"
                     @mouseenter="dropdownOpen = true" @mouseleave="dropdownOpen = false">
                     <button class="btn btn-secondary" type="button" style="position: relative; z-index: 2;"
                         tabindex="-1">
