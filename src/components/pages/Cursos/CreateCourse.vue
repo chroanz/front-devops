@@ -1,7 +1,7 @@
 <template class="h-100">
-  <div class="create-course h-100 container d-flex justify-content-center align-items-center pb-5"
+  <div class="create-course h-100 container d-flex justify-content-center align-items-center p-5"
     style="min-height: 100%;">
-    <div class="card bg-purple text-white w-50">
+    <div class="w-100">
       <div class="card-body">
         <h5 class="card-title">Criar Novo Curso</h5>
         <FormCreateCourse @submit="createCourse" />
@@ -24,11 +24,6 @@ export default {
 </script>
 
 <style scoped>
-.bg-purple {
-  background-color: #B288C0 !important;
-  /* Cor roxa do Bootstrap 5 */
-}
-
 .alert-modal {
   position: fixed;
   top: 0;
