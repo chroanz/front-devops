@@ -195,6 +195,7 @@ export default {
   data() {
     return {
       cursos: [],
+      user: JSON.parse(localStorage.getItem('user')) || null,
     }
   }, mounted() {
     this.fetchCursos();
