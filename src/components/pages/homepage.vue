@@ -46,78 +46,27 @@
   <h2 class="mb-4 text-black">Uma Grande Variedade de Cursos</h2>
   <p class="mb-3 mb-md-4 mb-lg-5 text-black" style="text-align: justify;">Na nossa plataforma você terá acesso a diversos cursos relacionados ao aprendizado e ensino relacionados à acessibilidade de alunos com deficiência visual, deficiência auditiva ou surdocegueira. Você terá oportunidade de compreender como esses alunos percebem o mundo à sua volta, bem como diversas ferramentas que possam permitir seu acolhimento e comunicação.</p>
   <div class="row">
-      <div class="col-md-4 mb-4">
-          <div class="card custom-card">
-              <div class="card-img-top" style="height: 250px; overflow: hidden; border-top-left-radius: 15px; border-top-right-radius: 15px;">
-                  <img
-                      :src="require('@/assets/images/Libras.png')"
-                      alt="Descrição da imagem"
-                      class="w-100 h-100"
-                      style="object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px;"
-                  >
-              </div>
-              <div class="card-body">
-                  <h5 class="card-title text-black">Ensino de Libras</h5>
-                  <div class="star-rating mb-3">
-                      <span class="star filled">★</span>
-                      <span class="star filled">★</span>
-                      <span class="star filled">★</span>
-                      <span class="star filled">★</span>
-                      <span class="star filled">★</span>
-                  </div>
-                  <p class="card-text text-muted mb-3">Aprenda a comunicação em Língua Brasileira de Sinais (Libras).</p>
-                  <a href="/curso/3" class="btn btn-custom">Ver Detalhes</a>
-              </div>
-          </div>
+
+    <div v-for="curso in cursos.slice(0, 3)" :key="curso.id" class="col-md-4 mb-4">
+      <div class="card custom-card">
+        <div class="card-img-top" style="height: 250px; overflow: hidden; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+          <img
+            :src="curso.capa_url || require('@/assets/images/logo.png')"
+            alt="Descrição da imagem"
+            class="w-100 h-100"
+            style="object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px;"
+          >
+        </div>
+        <div class="card-body">
+          <h5 class="card-title text-black">{{ curso.titulo }}</h5>
+          <p class="card-text text-muted">{{ curso.descricao }}</p>
+          <router-link :to="`/curso/${curso.id}/`" class="btn btn-custom">
+            Ver mais detalhes
+          </router-link>
+        </div>
       </div>
-      <div class="col-md-4 mb-4">
-          <div class="card custom-card">
-              <div class="card-img-top" style="height: 250px; overflow: hidden; border-top-left-radius: 15px; border-top-right-radius: 15px;">
-                  <img
-                      :src="require('@/assets/images/Cegueira.png')"
-                      alt="Descrição da imagem"
-                      class="w-100 h-100"
-                      style="object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px;"
-                  >
-              </div>
-              <div class="card-body">
-                  <h5 class="card-title text-black">Recebendo Alunos com Cegueira</h5>
-                  <div class="star-rating mb-3">
-                      <span class="star filled">★</span>
-                      <span class="star filled">★</span>
-                      <span class="star filled">★</span>
-                      <span class="star filled">★</span>
-                      <span class="star">★</span>
-                  </div>
-                  <p class="card-text text-muted mb-3">Estratégias para acolher e ensinar alunos com deficiência visual.</p>
-                  <a href="/curso/1" class="btn btn-custom">Ver Detalhes</a>
-              </div>
-          </div>
-      </div>
-      <div class="col-md-4 mb-4">
-          <div class="card custom-card">
-              <div class="card-img-top" style="height: 250px; overflow: hidden; border-top-left-radius: 15px; border-top-right-radius: 15px;">
-                  <img
-                      :src="require('@/assets/images/tátil.png')"
-                      alt="Descrição da imagem"
-                      class="w-100 h-100"
-                      style="object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px;"
-                  >
-              </div>
-              <div class="card-body">
-                  <h5 class="card-title text-black">Libras Táctil</h5>
-                  <div class="star-rating mb-3">
-                      <span class="star filled">★</span>
-                      <span class="star filled">★</span>
-                      <span class="star filled">★</span>
-                      <span class="star filled">★</span>
-                      <span class="star">★</span>
-                  </div>
-                  <p class="card-text text-muted mb-3">Técnicas de comunicação em Libras para pessoas com surdocegueira.</p>
-                  <a href="/curso/2" class="btn btn-custom">Ver Detalhes</a>
-              </div>
-          </div>
-      </div>
+    </div>
+     
   </div>
 </div>
 
@@ -239,13 +188,27 @@
 
 
 <script>
+import { api } from '@/services/api';
+
 export default {
   name: 'HomePage',
   data() {
     return {
-      user: JSON.parse(sessionStorage.getItem('user') || '{}'),
+      cursos: [],
     }
-  }
+  }, mounted() {
+    this.fetchCursos();
+  },
+  methods: {
+    async fetchCursos() {
+      try {
+        const response = await api.get('/cursos');
+        this.cursos = response.data;
+      } catch (error) {
+        console.error('Erro ao buscar cursos:', error);
+      }
+    }
+  },
 }
 </script>
 

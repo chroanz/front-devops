@@ -112,11 +112,6 @@
                 <strong>Status:</strong> Concluído ✅
               </p>
             </div>
-
-            <!-- Botão de certificado ou revisão -->
-            <div class="mt-2 text-end">
-              <a href="#" class="btn btn-success btn-sm">Ver Certificado</a>
-            </div>
           </div>
         </div>
       </div>
