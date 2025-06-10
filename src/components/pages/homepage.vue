@@ -243,7 +243,7 @@ export default {
   name: 'HomePage',
   data() {
     return {
-      // Dados da página
+      user: JSON.parse(sessionStorage.getItem('user') || '{}'),
     }
   }
 }
