@@ -63,10 +63,10 @@ export default {
           background: '#28a745'
         });
         this.$router.push(`/curso/${this.leitura.curso_id}`);
-      }).catch((error) => {
+      }).catch(() => {
         this.$toast({
           title: 'Erro',
-          message: 'Erro ao deletar a leitura: ',
+          message: 'Erro ao deletar a leitura. ',
           background: '#dc3545'
         });
       });
