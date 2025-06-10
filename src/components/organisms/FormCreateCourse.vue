@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container h-100 d-flex justify-content-center align-items-center p-5">
         <form @submit.prevent="submitForm" class="d-flex flex-column ">
             <div class="mb-3">
                 <label for="titulo" class="form-label">Nome do Curso</label>
@@ -69,8 +69,6 @@ export default {
             }
         },
         async submitForm() {
-            console.log('Dados do curso:', this.course);
-            // Aqui você pode adicionar a lógica para enviar os dados do curso para o backend
             const response = await cursoService.createCurso(this.course)
             if (!response.success) {
                 this.$toast({
@@ -90,3 +88,10 @@ export default {
     },
 } 
 </script>
+
+<style scoped>
+.container {
+  max-width: 100%;
+  height: 100%;
+}
+</style>

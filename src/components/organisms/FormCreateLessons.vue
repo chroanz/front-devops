@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container h-100 d-flex justify-content-center align-items-center p-5">
         <form @submit.prevent="submitForm" class="d-flex flex-column ">
             <div class="mb-3">
                 <label for="titulo" class="form-label">Titulo</label>
@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="d-flex align-items-end">
-                <button type="submit" class="btn btn-primary m-1">Criar Curso</button>
+                <button type="submit" class="btn btn-primary m-1">Criar Aula</button>
                 <a href="" class="btn btn-secondary m-1">Cancelar</a>
             </div>
         </form>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import aulaService from '@/services/aulaService';
 import Toast from '@/components/organisms/Toast.vue';
 
 export default {
@@ -70,14 +70,13 @@ export default {
             try {
                 const response = await this.createLesson(formData);
                 this.showToast = true;
-                console.log('Resposta do servidor:', response.data);
-                if (response.data.aula != null) {
+                if (response.aula != null) {
                     this.$toast({
                         title: 'Sucesso',
                         message: 'Aula criada com sucesso',
                         background: '#28a745'
                     });
-                    this.$router.push(`/aulas/${response.data.aula.id}`);
+                    this.$router.push(`/curso/${response.aula.curso_id}`);
                 } else {
                     this.$toast({
                         title: 'Erro',
@@ -96,9 +95,15 @@ export default {
             }
         },
         async createLesson(lessonData) {
-            const response = await axios.post('http://127.0.0.1:8000/api/aulas/create', lessonData);
+            const response = await aulaService.criar(lessonData);
             return response;
         },
     }
 }
 </script>
+<style scoped>
+.container {
+  max-width: 100%;
+  height: 100%;
+}
+</style>
