@@ -114,7 +114,7 @@ export default {
     },
     methods: {
         getUser() {
-            return this.user?.user?.id ? this.user.user : undefined;
+            return this.user?.id ? this.user : undefined;
         },
         getImageUrl(name) {
             if (!name) return undefined;
