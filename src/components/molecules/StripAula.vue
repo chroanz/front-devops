@@ -55,28 +55,19 @@ export default {
         editarAula() {
             this.$router.push({ path: `/aulas/edit-lesson/${this.aula.id}` });
         },
-        deletarAula() {
+        async deletarAula() {
             let response = aulaService.deletar(this.aula.id)
-            response.then((res) => {
-                if (res.status === 200) {
-                    this.$toast({
-                        title: 'Sucesso',
-                        message: 'Aula deletada com sucesso',
-                        background: '#28a745'
-                    });
-                    this.$router.push(`/curso/${this.aula.curso_id}`);
-                } else {
-                    this.$toast({
-                        title: 'Erro',
-                        message: 'Erro ao deletar a aula',
-                        background: '#dc3545'
-                    });
-                }
-            }).catch((error) => {
-                console.error('Erro ao deletar aula:', error);
+            response.then(() => {
+                this.$toast({
+                    title: 'Sucesso',
+                    message: 'Aula deletada com sucesso',
+                    background: '#28a745'
+                });
+                this.$router.push(`/curso/${this.aula.curso_id}`);
+            }).catch(() => {
                 this.$toast({
                     title: 'Erro',
-                    message: 'Erro ao deletar a aula',
+                    message: 'Erro ao deletar a aula ',
                     background: '#dc3545'
                 });
             });
