@@ -1,9 +1,9 @@
 <template>
-    <div class="container">
+    <div class="container h-100 d-flex justify-content-center align-items-center p-5">
         <form @submit.prevent="submitForm" class="d-flex flex-column ">
             <div class="mb-3">
-                <label for="courseName" class="form-label">Nome do Curso</label>
-                <input type="text" class="form-control" id="courseName" v-model="course.titulo" required>
+                <label for="titulo" class="form-label">Nome do Curso</label>
+                <input type="text" class="form-control" id="titulo" name="titulo" v-model="course.titulo" required>
             </div>
             <div class="mb-3">
                 <label for="courseDescription" class="form-label">Descrição</label>
@@ -11,8 +11,8 @@
             </div>
             <div class="col-12 mb-3 flex-row d-flex justify-content-between">
                 <div class="col-sm-6 w-50">
-                    <label for="courseImage" class="form-label">Imagem</label>
-                    <input type="file" class="form-control" id="courseImage" @change="handleImageUpload">
+                    <label for="img" class="form-label">Imagem</label>
+                    <input type="file" class="form-control" id="img" @change="handleImageUpload">
                 </div>
                 <div class="col-sm-6 w-50 mx-1">
                     <label for="type" class="form-label">Tipo do curso</label>
@@ -30,13 +30,20 @@
             </div>
         </form>
     </div>
+
+    <Toast v-if="showToast" message="{{  }}" title="{{  }}" background="{{  }}" color="#ffffff"
+        @close="showToast = false" />
 </template>
 
 <script>
+import Toast from '@/components/organisms/Toast.vue';
 import cursoService from '@/services/cursoService';
 
 export default {
     name: 'FormCreateCourse',
+    components: {
+        Toast,
+    },
     data() {
         return {
             course: {
@@ -45,6 +52,7 @@ export default {
                 descricao: '',
                 capa: null,
             },
+            showToast: false,
         };
     },
     methods: {
@@ -61,8 +69,6 @@ export default {
             }
         },
         async submitForm() {
-            console.log('Dados do curso:', this.course);
-            // Aqui você pode adicionar a lógica para enviar os dados do curso para o backend
             const response = await cursoService.createCurso(this.course)
             if (!response.success) {
                 this.$toast({
@@ -82,3 +88,10 @@ export default {
     },
 } 
 </script>
+
+<style scoped>
+.container {
+  max-width: 100%;
+  height: 100%;
+}
+</style>

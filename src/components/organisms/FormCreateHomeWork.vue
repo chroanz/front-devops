@@ -1,49 +1,123 @@
 <template>
-    <div class="container">
-        <form @submit.prevent="submitForm" class="d-flex flex-column ">
+    <div class="container d-flex align-items-center justify-content-center p-5">
+        <form @submit.prevent="submitForm" class="d-flex w-75 flex-column">
             <div class="mb-3">
-                <label for="homeWorkName" class="form-label">Titulo</label>
-                <input type="text" class="form-control" id="homeWorkName" v-model="homeWork.titulo" required
-                    placeholder="Nome do Leitura">
+                <label for="homeWorkName" class="form-label">Título</label>
+                <input
+                    type="text"
+                    id="homeWorkName"
+                    class="form-control w-100"
+                    v-model="homeWork.titulo"
+                    required
+                    placeholder="Nome da Leitura"
+                />
             </div>
-
-            <div class="col-12 mb-3 flex-row d-flex justify-content-between">
-                <div class="col-sm-6 w-50" style="max-width: 49%;">
-                    <label for="homeWorkDescription" class="form-label">Sequencia</label>
-                    <input type="text" class="form-control" id="homeWorkName" v-model="homeWork.sequencia" required
-                        placeholder="Numero da sequencia">
-                </div>
-                <div class="col-sm-6 w-50" style="max-width: 49%;">
-                    <label for="homeWorkVideo" class="form-label">Video</label>
-                    <input type="file" class="form-control" id="homeWorkVideo" required
-                        placeholder="Arquivo do leitura">
-                </div>
+            <div class="mb-3">
+                <label for="homeWorkSequencia" class="form-label">Sequência</label>
+                <input
+                    type="number"
+                    id="homeWorkSequencia"
+                    class="form-control w-100"
+                    v-model="homeWork.sequencia"
+                    required
+                    placeholder="Número da sequência"
+                />
+            </div>
+            <div class="mb-3">
+                <label for="homeWorkConteudo" class="form-label">Conteúdo</label>
+                <textarea
+                    id="homeWorkConteudo"
+                    class="form-control w-100"
+                    v-model="homeWork.conteudo"
+                    required
+                    placeholder="Conteúdo da leitura"
+                ></textarea>
             </div>
             <div class="d-flex align-items-end">
-                <button type="submit" class="btn btn-primary m-1">Criar Curso</button>
-                <a href="" class="btn btn-secondary m-1">Cancelar</a>
+                <button type="submit" class="btn btn-primary m-1">Criar Leitura</button>
+                <button type="button" class="btn btn-secondary m-1" @click="cancel">
+                    Cancelar
+                </button>
             </div>
         </form>
     </div>
+
+    <Toast
+        v-if="showToast"
+        :title="toastTitle"
+        :message="toastMessage"
+        :background="toastBg"
+        color="#ffffff"
+        @close="showToast = false"
+    />
 </template>
 
 <script>
+import Toast from '@/components/organisms/Toast.vue';
+import leituraService from '@/services/leituraService';
+
 export default {
-    name: 'FormCreatehomeWork',
-    data() {
-        return {
-            homeWork: {
-                titulo: '',
-                sequencia: '',
-                conteudo: '',
-            },
-        };
+  name: 'FormCreateHomeWork',
+  components: { Toast },
+  data() {
+    return {
+      homeWork: {
+        titulo: '',
+        sequencia: '',
+        conteudo: '',
+      },
+      showToast: false,
+      toastTitle: '',
+      toastMessage: '',
+      toastBg: '#28a745',
+    };
+  },
+  methods: {
+    getCursoIdFromUrl() {
+      const segments = window.location.pathname.split('/');
+      return segments.at(-1);
     },
-    methods: {
-        submitForm() {
-            console.log('Dados do curso:', this.homeWork);
-            // Aqui você pode adicionar a lógica para enviar os dados do curso para o backend
-        },
+    async submitForm() {
+      const cursoId = this.getCursoIdFromUrl();
+      const payload = {
+        titulo: this.homeWork.titulo,
+        sequencia: this.homeWork.sequencia,
+        conteudo: this.homeWork.conteudo,
+        curso_id: cursoId
+      };
+      try {
+        const response = await leituraService.criar(payload);
+        if (response.id != null) {
+          this.toastTitle = 'Sucesso';
+          this.toastMessage = 'Leitura criada com sucesso';
+          this.toastBg = '#28a745';
+          this.showToast = true;
+          this.$router.push(`/curso/${cursoId}`);
+        } else {
+          this.toastTitle = 'Erro';
+          this.toastMessage = response.message || 'Falha ao criar leitura';
+          this.toastBg = '#dc3545';
+          this.showToast = true;
+        }
+      } catch (error) {
+        this.toastTitle = 'Erro';
+        this.toastMessage =
+          'Ocorreu um erro inesperado: ' + (error.message || '');
+        this.toastBg = '#dc3545';
+        this.showToast = true;
+      }
     },
-} 
+    cancel() {
+      const cursoId = this.getCursoIdFromUrl();
+      this.$router.push(`/curso/${cursoId}`);
+    }
+  }
+};
 </script>
+
+<style scoped>
+.container {
+  max-width: 100%;
+  height: 100%;
+}
+</style>
