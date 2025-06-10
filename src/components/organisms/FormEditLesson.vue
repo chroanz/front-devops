@@ -20,7 +20,7 @@
             </div>
             <div class="d-flex align-items-end">
                 <button type="submit" class="btn btn-primary m-1">Salvar Alterações</button>
-                <a href="" class="btn btn-secondary m-1">Cancelar</a>
+                <a href="" class="btn btn-secondary m-1" @click="cancel">Cancelar</a>
             </div>
         </form>
     </div>
@@ -105,7 +105,9 @@ export default {
                 this.toastMessage = 'Ocorreu um erro inesperado ao atualizar a aula';
                 this.toastBg = '#dc3545';
             }
-        },
+        }, cancel() {
+            this.$router.push(`/cursos/`);
+        }
     }
 }
 </script>

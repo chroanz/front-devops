@@ -62,7 +62,7 @@ export default {
           message: 'Leitura deletada com sucesso',
           background: '#28a745'
         });
-        this.$router.push(`/curso/${this.leitura.curso_id}`);
+        window.location.reload();
       }).catch(() => {
         this.$toast({
           title: 'Erro',

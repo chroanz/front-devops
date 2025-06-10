@@ -63,7 +63,8 @@ export default {
                     message: 'Aula deletada com sucesso',
                     background: '#28a745'
                 });
-                this.$router.push(`/curso/${this.aula.curso_id}`);
+                window.location.reload();
+
             }).catch(() => {
                 this.$toast({
                     title: 'Erro',
