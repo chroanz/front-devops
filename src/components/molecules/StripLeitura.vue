@@ -6,22 +6,11 @@
     <div class="col-1 text-center">{{ leitura.sequencia }}</div>
     <div class="col-8 text-truncate px-2">{{ leitura.titulo }}</div>
     <div class="col-2 text-end">
-      <div
-        class="dropdown" v-if="user?.user?.isAdmin"
-        :class="{ dropup }"
-        @mouseenter="showDropdown"
-        @mouseleave="closeDropdown"
-        ref="dropdown"
-        style="display:inline-block;"
-      >
+      <div class="dropdown" v-if="user?.user?.isAdmin" :class="{ dropup }" @mouseenter="showDropdown"
+        @mouseleave="closeDropdown" ref="dropdown" style="display:inline-block;">
         <button class="btn btn-sm btn-secondary">Ações</button>
-        <ul
-          v-show="dropdownOpen"
-          class="dropdown-menu show"
-          ref="menu"
-          style="display:block; position:absolute; right:0; z-index:10;"
-          @mousedown.prevent
-        >
+        <ul v-show="dropdownOpen" class="dropdown-menu show" ref="menu"
+          style="display:block; position:absolute; right:0; z-index:10;" @mousedown.prevent>
           <li>
             <button class="dropdown-item text-primary" @click="editarLeitura">Editar</button>
           </li>
@@ -36,6 +25,7 @@
 
 <script>
 import { Leitura } from '@/models/models';
+import leituraService from '@/services/leituraService';
 
 export default {
   name: "StripLeitura",
@@ -55,7 +45,6 @@ export default {
       await this.$nextTick();
       const dd = this.$refs.dropdown.getBoundingClientRect();
       const menu = this.$refs.menu.getBoundingClientRect();
-      // Se não houver espaço abaixo, abre para cima
       this.dropup = dd.bottom + menu.height > window.innerHeight;
     },
     closeDropdown() {
@@ -66,7 +55,30 @@ export default {
       this.$router.push({ path: `/leituras/edit/${this.leitura.id}` });
     },
     deletarLeitura() {
-      this.$emit('deletar', this.leitura);
+      let response = leituraService.deletar(this.leitura.id)
+      response.then((res) => {
+        if (res.status === 200) {
+          this.$toast({
+            title: 'Sucesso',
+            message: 'Leitura deletada com sucesso',
+            background: '#28a745'
+          });
+          this.$router.push(`/curso/${this.leitura.curso_id}`);
+        } else {
+          this.$toast({
+            title: 'Erro',
+            message: 'Erro ao deletar a leitura',
+            background: '#dc3545'
+          });
+        }
+      }).catch((error) => {
+        console.error('Erro ao deletar aula:', error);
+        this.$toast({
+          title: 'Erro',
+          message: 'Erro ao deletar a aula',
+          background: '#dc3545'
+        });
+      });
     }
   }
 }
@@ -81,13 +93,16 @@ export default {
   font-size: .75em;
   position: relative;
 }
+
 .img-fluid {
   max-height: 40px;
   width: auto;
 }
+
 .dropdown-menu {
   min-width: 8rem;
 }
+
 /* Quando .dropup estiver ativo, reposiciona o menu acima */
 .dropup .dropdown-menu {
   top: auto !important;

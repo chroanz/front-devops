@@ -7,9 +7,11 @@
         <div class="col-8 text-truncate px-2">{{ aula.titulo }}</div>
         <div class="col-2 text-end">
             {{ aula.duracaoMinutos }} min
-            <div class="dropdown d-inline-block ms-2" @mouseenter="dropdownOpen = true" @mouseleave="dropdownOpen = false" v-if="user.user?.isAdmin">
+            <div class="dropdown d-inline-block ms-2" @mouseenter="dropdownOpen = true"
+                @mouseleave="dropdownOpen = false" v-if="user.user?.isAdmin">
                 <button class="btn btn-sm btn-secondary">Ações</button>
-                <ul v-show="dropdownOpen" class="dropdown-menu show" style="display:block; position:absolute; right:0; z-index:10;">
+                <ul v-show="dropdownOpen" class="dropdown-menu show"
+                    style="display:block; position:absolute; right:0; z-index:10;">
                     <li>
                         <button class="dropdown-item" @click="editarAula">Editar</button>
                     </li>
@@ -20,20 +22,33 @@
             </div>
         </div>
     </div>
+
+    <Toast v-if="showToast" :message="toastMessage" :title="toastTitle" :background="toastBg" color="#ffffff"
+        @close="showToast = false" />
 </template>
 
-<script>
-import { Aula } from '@/models/models';
 
-export default { 
+<script>
+import aulaService from '@/services/aulaService';
+import Toast from '@/components/organisms/Toast.vue';
+
+
+export default {
     name: "StripAula",
+    components: {
+        Toast,
+    },
     props: {
-        aula: Aula
+        aula: {
+            type: Object,
+            required: true
+        },
     },
     data() {
         return {
             dropdownOpen: false,
-            user: JSON.parse(sessionStorage.getItem('user') || '{}')
+            user: JSON.parse(sessionStorage.getItem('user') || '{}'),
+            showToast: false,
         }
     },
     methods: {
@@ -41,7 +56,30 @@ export default {
             this.$router.push({ path: `/aulas/edit-lesson/${this.aula.id}` });
         },
         deletarAula() {
-            this.$emit('deletar', this.aula);
+            let response = aulaService.deletar(this.aula.id)
+            response.then((res) => {
+                if (res.status === 200) {
+                    this.$toast({
+                        title: 'Sucesso',
+                        message: 'Aula deletada com sucesso',
+                        background: '#28a745'
+                    });
+                    this.$router.push(`/curso/${this.aula.curso_id}`);
+                } else {
+                    this.$toast({
+                        title: 'Erro',
+                        message: 'Erro ao deletar a aula',
+                        background: '#dc3545'
+                    });
+                }
+            }).catch((error) => {
+                console.error('Erro ao deletar aula:', error);
+                this.$toast({
+                    title: 'Erro',
+                    message: 'Erro ao deletar a aula',
+                    background: '#dc3545'
+                });
+            });
         }
     }
 }
@@ -61,6 +99,7 @@ export default {
     max-height: 40px;
     width: auto;
 }
+
 .dropdown-menu {
     min-width: 8rem;
 }
