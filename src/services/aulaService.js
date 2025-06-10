@@ -20,7 +20,7 @@ const aulaService = {
     return response.data;
   },
   async deletar(id) {
-    const response = await api.delete(`aulas/${id}`);
+    const response = await api.delete(`aulas/delete/${id}`);
     return response.data;
   }
 };
