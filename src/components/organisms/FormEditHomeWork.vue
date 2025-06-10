@@ -54,6 +54,7 @@ export default {
                 this.homeWork = {
                     titulo: leitura.titulo,
                     conteudo: leitura.conteudo,
+                    curso_id: leitura.curso_id
                 };
             } catch (error) {
                 this.showToast = true;
